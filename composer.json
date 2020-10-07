@@ -1,0 +1,23 @@
+{
+    "name": "vtu/refill",
+    "description": "Api for airtime and data recharge",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "markomeje",
+            "email": "markomejeonline@gmail.com"
+        }
+    ],
+
+    "require": {
+        "vlucas/phpdotenv": "^5.0",
+        "symfony/mailer": "^5.1"
+    },
+
+    "autoload": {
+        "psr-4": {
+            "Application\\": "application/",
+            "Framework\\": "framework/"
+        }
+    }
+}
