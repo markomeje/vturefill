@@ -9,12 +9,10 @@ use Application\Library\{Session, Cookie};
 class Controller extends Application {
 
     public $controller;
-    public $backendLinks = ["dashboard", "expenses", "income", "debts", "accounts", "profile"];
-
 
     public function __construct() {
         parent::__construct();
-        $controller = strtolower(self::get("url"));
+        $controller = self::get("url");
         $this->controller = View::active($controller);
     }
 
