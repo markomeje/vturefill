@@ -22,12 +22,37 @@ class User extends Model {
 			$table = self::$table;
 			$database->prepare("INSERT INTO {$table} (email, password, phone, status) VALUES(:email, :password, :phone, :status)");
 			$database->execute($posted);
-            return $database->rowCount() > 0 ? true : false;
+			return ["rowCount" => $database->rowCount(), "lastInsertId" => $database->lastInsertId()];
 		} catch (Exception $error) {
 			Logger::log("CREATING USER ACCOUNT ERROR", $error->getMessage(), __FILE__, __LINE__);
 			return false;
 		}
+	}
 
+	public static function getUserById($id) {
+		try {
+			$database = Database::connect();
+			$table = self::$table;
+			$database->prepare("SELECT id, email, status, date, phone FROM {$table} WHERE id = :id LIMIT 1");
+			$database->execute(["id" => $id]);
+            return $database->fetch();
+		} catch (Exception $error) {
+			Logger::log("GETTING USER BY ID ERROR", $error->getMessage(), __FILE__, __LINE__);
+			return false;
+		}
+	}
+
+	public static function emailExists($email) {
+		try {
+			$database = Database::connect();
+			$table = self::$table;
+			$database->prepare("SELECT email FROM {$table} WHERE email = :email LIMIT 1");
+			$database->execute(["email" => $email]);
+            return $database->rowCount() > 0 ? true : false;
+		} catch (Exception $error) {
+			Logger::log("CHECKING USER EMAIL EXISTS ERROR", $error->getMessage(), __FILE__, __LINE__);
+			return false;
+		}
 	}
 
 }
