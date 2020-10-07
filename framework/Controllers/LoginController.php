@@ -1,7 +1,7 @@
 <?php 
 
 namespace Framework\Controllers;
-use Framework\Models\Register;
+use Framework\Models\Login;
 use Application\Core\{Controller};
 
 
@@ -9,7 +9,7 @@ use Application\Core\{Controller};
 /**
  * Register
  */
-class RegisterController extends Controller {
+class LoginController extends Controller {
 
 	
 	public function __construct() {
@@ -18,7 +18,7 @@ class RegisterController extends Controller {
 
 	public function index() {
 		if ($this->isPostRequest()) {
-			$response = Register::signup();
+			$response = Login::login();
 		    $this->jsonEncode($response);
 		}
 	}

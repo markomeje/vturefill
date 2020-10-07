@@ -13,18 +13,23 @@ class Register extends Model {
 	}
 
 	public static function signup() {
-		$posted = ["email" => self::post("email"), "password" => self::post("password"), "phone" => self::post("phone")];
-		if (empty($posted["email"]) || !Validate::email($posted["email"]) || !Validate::range($posted["email"], 11, 55)) {
+		$posted = ["username" => self::post("username"), "email" => self::post("email"), "password" => self::post("password"), "confirmpassword" => self::post("confirmpassword"), "phone" => self::post("phone")];
+		if (empty($posted["username"]) || !Validate::range($posted["username"], 8, 15)) {
+			return ["status" => "invalid-username", "message" => "Username must be between 8 - 15 characters"];
+		}elseif (empty($posted["email"]) || !Validate::email($posted["email"]) || !Validate::range($posted["email"], 11, 55)) {
 			return ["status" => "invalid-email", "message" => "Email must be between 11 - 55 characters"];
 		}elseif (User::emailExists($posted["email"]) === true) {
 			return ["status" => "email-exists", "message" => "Email already exists"];
 		}elseif (empty($posted["password"])) {
 			return ["status" => "invalid-password", "message" => "Invalid password."];
+		}elseif ($posted["password"] !== $posted["confirmpassword"]) {
+			return ["status" => "unmatched-password", "message" => "Passwords do not match."];
 		}elseif (empty($posted["phone"]) || !Validate::length($posted["phone"], 11)) {
 			return ["status" => "invalid-phone", "message" => "Invalid phone number."];
 		}
 
 		try {
+			unset($posted["confirmpassword"]);
 			$posted["password"] = password_hash($posted["password"], PASSWORD_DEFAULT);
 			$merged = array_merge($posted, ["status" => "inactive"]);
 			$result = User::register($merged);
