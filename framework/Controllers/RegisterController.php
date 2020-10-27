@@ -2,7 +2,7 @@
 
 namespace Framework\Controllers;
 use Framework\Models\Register;
-use Application\Core\{Controller};
+use Application\Core\{Controller, Request, Json};
 
 
 
@@ -17,9 +17,9 @@ class RegisterController extends Controller {
 	}
 
 	public function index() {
-		if ($this->isPostRequest()) {
+		if ($this->request->isPost()) {
 			$response = Register::signup();
-		    $this->jsonEncode($response);
+		    json::encode($response);
 		}
 	}
 

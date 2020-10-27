@@ -36,14 +36,17 @@ class Application {
     }
 
     public static function file($key){
+        $key = self::encode($key);
         return isset($_FILES[$key]) ? $_FILES[$key] : [];
     }
 
     public static function get($key){
+        $key = self::encode($key);
         return isset($_GET[$key]) ? $_GET[$key]: [];
     }
 
     public static function post($key){
+        $key = self::encode($key);
         return isset($_POST[$key]) ? $_POST[$key]: [];
     }
 
@@ -53,5 +56,8 @@ class Application {
         return preg_replace($expression, '', $agent);
     }
 
+    public static function encode($data){
+        return htmlentities($data, ENT_QUOTES, 'UTF-8');
+    }
 
 }

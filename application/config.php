@@ -8,7 +8,7 @@ define("CURRENT_URL", isset($_SERVER["REQUEST_URI"]) ? $_SERVER["REQUEST_URI"] :
 ini_set("session.referer_check", "TRUE");
 define("HTTP_REFERER", isset($_SERVER["HTTP_REFERER"]) ? $_SERVER["HTTP_REFERER"] : "");
 define("PUBLIC_URL", DOMAIN."/public");
-define("SOFWARE_NAME", "My Portfolio");
+define("SOFWARE_NAME", "VTU Refill");
 
 define("LOCAL_DATABASE_HOST", "127.0.0.1");
 define("LOCAL_DATABASE_NAME", "vturefill");
@@ -19,6 +19,17 @@ define("LOCAL_DATABASE_CHARSET", "UTF8");
 foreach (["LIVE_DATABASE_HOST", "LIVE_DATABASE_NAME", "LIVE_DATABASE_USERNAME", "LIVE_DATABASE_PASSWORD", "LIVE_DATABASE_CHARSET"] as $CREDENTIAL) {
 	define($CREDENTIAL, $_ENV[$CREDENTIAL]);
 }
+
+define("PAYSTACK_TEST_SECRET_KEY", "sk_test_260a2fa0cbc5cf57e814c76e1cd2690342675de2");
+define("PAYSTACK_TEST_PUBLIC_KEY", "pk_test_1526345662bbf69407a146ce5a981c7a34609590");
+define("PAYSTACK_LIVE_SECRET_KEY", $_ENV["PAYSTACK_LIVE_SECRET_KEY"]);
+define("PAYSTACK_LIVE_PUBLIC_KEY", $_ENV["PAYSTACK_LIVE_PUBLIC_KEY"]);
+
+define("CLUBKONNECT_API_KEY", $_ENV["CLUBKONNECT_API_KEY"]);
+define("CLUBKONNECT_USER_ID", $_ENV["CLUBKONNECT_USER_ID"]);
+
+define("CLUBKONNECT_AIRTIME_API_URL", "https://www.nellobytesystems.com/APIAirtimeV1.asp");
+define("CLUBKONNECT_DATA_BUNDLE_API_URL", "https://www.nellobytesystems.com/APIDatabundleV1.asp");
 
 define("REMEMBER_ME_COOKIE_NAME", "h89hIteIHB7nb5yh3ufer7fad2q9yv98");
 define("COOKIE_PATH", "/");

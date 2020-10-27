@@ -1,0 +1,440 @@
+.navbar-wrapper {
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
+
+.navbar-link:hover {
+	color: #2D641F;
+}
+
+.navbar-menu {
+    width: 28px;
+    height: 28px;
+	transition: 0.8s;
+}
+
+.navbar-menu .menu-lines {
+    width: 28px;
+    height: 2px;
+    border-radius: 2px;
+	transition: 0.8s;
+    background-color: #DC4805;
+}
+
+.menu-lines::before,
+.menu-lines::after {
+	content: '';
+	position: absolute;
+	width: 28px;
+    height: 2px;
+    background-color: #DC4805;
+    border-radius: 2px;
+	transition: 0.8s;
+	left: 0;
+	right: 0;
+}
+
+.menu-lines::before {
+	transform: translateY(-7px);
+}
+
+.menu-lines::after {
+	transform: translateY(7px);
+}
+
+.navbar-menu.slide .menu-lines {
+	background: transparent;
+}
+
+.navbar-menu.slide .menu-lines::before {
+	transform: rotate(45deg)
+}
+
+.navbar-menu.slide .menu-lines::after {
+	transform: rotate(-45deg)
+}
+
+.logo {
+	width: 150.25px;
+	height: 28px;
+	margin-top: -15px !important;
+}
+
+.home-banner {
+	height: 750px;
+}
+
+.home-banner .banner-content {
+	content: '';
+	top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.1);
+    height: 100%;
+    width: 100%;
+}
+
+.home-banner video {
+	position: fixed;
+	object-fit: cover;
+	top: 85px;
+	right: 0;
+	right: 0;
+	bottom: 0;
+	min-width: 100%;
+	min-height: 100%;
+	z-index: -5;
+}
+
+.about-banner,
+.donate-banner {
+	padding: 160px 0 80px;
+}
+
+.gallery-banner {
+	padding: 100px 0;
+}
+
+.donate-banner {
+	background-image: url(../images/village.jpg);
+	background-size: cover;
+	background-position: center;
+	background-repeat: no-repeat;
+}
+
+.about-banner {
+	background-image: url(../images/village.jpg);
+	background-size: cover;
+	background-position: center;
+	background-repeat: no-repeat;
+	height: 580px;
+}
+
+.about-banner:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 0;
+    background-color: rgba(0, 0, 0, 0.9);
+    width: 100%;
+    height: 100%;
+}
+
+.donate-banner:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 0;
+    background-color: rgba(0, 0, 0, 0.9);
+    width: 100%;
+    height: 100%;
+}
+
+.donate-option::hover {
+	background-color: #D3D6D1 !important;
+}
+
+.donate-banner .payment-brands {
+	height: 115px;
+}
+
+.donate-options-banner {
+	padding: 160px 0 80px;
+	background-image: url(../images/assets/child.jpg);
+	background-size: cover;
+	background-position: center;
+	background-repeat: repeat;
+}
+
+.donate-options-banner:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 0;
+    background-color: rgba(0, 0, 0, 0.9);
+    width: 100%;
+    height: 100%;
+}
+
+.apply-banner, 
+.terms-banner,
+.success-banner {
+	padding: 140px 0 10px;
+}
+
+.apply-section, 
+.terms-section,
+.success-section,
+.donate-options-section{
+	padding: 80px 0 100px;
+}
+
+.login-section {
+	padding: 140px 0;
+}
+
+.banner-content h1 {
+	font-size: 50px;
+}
+
+.about-vision,
+.about-mission {
+	padding: 130px 0 120px;
+}
+
+.mission-section {
+	padding: 100px 0;
+}
+
+.mission-section .card {
+   height: 400px;
+}
+
+.mission-section .card-img-top {
+	height: 200px;
+}
+
+.about-legal {
+	padding: 120px 0;
+}
+
+.stripe-checkout {
+	min-height: 100vh;
+	z-index: 2;
+}
+
+.stripe-checkout:after {
+	content: '';
+	top: 0;
+	right: 0;
+	background-color: #0a2540;
+	position: absolute;
+	z-index: 1;
+	width: 100%;
+	height: 45%;
+	z-index: -2;
+}
+
+.stripe-checkout .container {
+	z-index: 5;
+}
+
+.stripe-checkout .powered {
+	background-color: #00d4ff;
+}
+
+.mission-section:before {
+	content: '';
+	top: 0;
+	right: 0;
+	background-image: url(../images/banners/overlay.png);
+	background-repeat: no-repeat;
+	background-size: contain;
+	background-position: right;
+	position: absolute;
+	z-index: 1;
+	width: 50%;
+	height: 50%;
+}
+
+.generic-section {
+	padding: 125px 0 120px;
+	background-image: url(../images/village.jpg);
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: center;
+}
+
+.generic-section:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    width: 100%;
+    height: 100%;
+}
+
+
+.generic-section .icon {
+	width: 50px;
+	height: 50px;
+	line-height: 50px;
+}
+
+.action-section {
+	padding: 140px 0;
+	/*clip-path: polygon(0 0, 100% 0, 100% 70%, 0 100%);*/
+}
+
+.contact-section {
+	padding: 120px 0 0;
+	z-index: 3;
+}
+
+.contact-section:before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 0;
+    background-color: #121212;
+    width: 100%;
+    height: 30%;
+    z-index: -1;
+}
+
+.bottom-section {
+	padding: 100px 0 0;
+	/*clip-path: polygon(0 10%, 100% 0, 100% 100%, 0 100%);*/
+}
+
+.bottom-links .social-icons {
+	width: 45px;
+	height: 45px;
+	line-height: 45px;
+}
+
+.gallery img {
+	height: 192px;
+}
+
+@media (max-width: 768px) {
+
+	.navbar-center {
+		display: none;
+	}
+
+	.navbar-mobile {
+		height: 100vh;
+		z-index: 5;
+		top: 0;
+		bottom: 0;
+		transition: 0.8s;
+		right: -100%;
+	}
+
+	.navbar-mobile .inner {
+		z-index: 6;
+		height: 100vh;
+		overflow-y: scroll;
+	}
+
+	.navbar-mobile ul {
+		padding-top: 100px;
+	}
+
+	.navbar-toggle {
+		right: 0;
+		transition: 0.8s;
+	}
+
+	.home-banner {
+		height: 750px !important;
+	}
+
+	.home-banner video {
+		top: 83px;
+	}
+
+	.banner-content h1 {
+		font-size: 40px;
+	}
+
+	.mission-section .card {
+	   height: 420px;
+	}
+
+	.mission-section .card-img-top {
+		height: 160px;
+	}
+
+}
+
+@media (min-width: 768.98px) {
+	.navbar-right,
+	.navbar-mobile {
+		display: none;
+	}
+}
+
+/*Extra small devices (portrait phones, less than 576px)*/
+@media (max-width: 575.98px) {
+	.navbar-wrapper {
+		padding-top: 5px;
+		padding-bottom: 5px;
+	}
+
+	.home-banner {
+		height: 880px !important;
+	}
+
+	.about-banner {
+		min-height: 100vh;
+		height: 820px;
+	}
+
+	.navbar-mobile {
+		width: 100vw;
+	}
+
+	.navbar-mobile ul {
+		padding-top: 120px;
+	}
+
+	.navbar-left {
+		padding-left: 0;
+	}
+
+	.navbar-right {
+		padding-right: 0;
+	}
+
+	.home-banner video {
+		top: 80px;
+	}
+
+	.generic-section .icon {
+		display: none;
+	}
+
+	.mission-section .card-img-top {
+		height: 180px;
+	}
+
+	.about-mission,
+	.about-vision {
+		text-align: center !important;
+	}
+
+}
+
+@media (max-width: 375px) {
+	.navbar-mobile ul {
+		padding-top: 105px;
+	}
+
+	.home-banner video {
+		top: 75px;
+	}
+}
+
+@media (max-width: 325px) {
+	.navbar-mobile ul {
+		padding-top: 90px;
+	}
+}

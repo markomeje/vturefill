@@ -1,0 +1,6 @@
+*******************************************************************
+CLUBKONNECT DATA BUNDLE API ERROR Logged On October 27, 2020, 8:13 pm
+cURL error 6: Could not resolve host: www.nellobytesystems.com (see https://curl.haxx.se/libcurl/c/libcurl-errors.html) for https://www.nellobytesystems.com/APIDatabundleV1.asp?UserID=CK100216838&APIKey=5ATKOI70Y22XVN62K59O5VT42W6536WV826Q10MMPC9I28CGJP4607SK7FN15XY9&MobileNetwork=01&DataPlan=1000&MobileNumber=08158212666&CallBackURL=http%3A%2F%2Fvturefill.build%2Forders
+At File C:\xampp\htdocs\vturefill\vendor\guzzlehttp\guzzle\src\Handler\CurlFactory.php On Line 210
+*******************************************************************
+

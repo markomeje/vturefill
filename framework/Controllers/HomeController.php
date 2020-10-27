@@ -1,7 +1,6 @@
 <?php 
 
 namespace Framework\Controllers;
-use Framework\Models\Register;
 use Application\Core\{Controller, View};
 
 
@@ -15,6 +14,8 @@ class HomeController extends Controller {
 		parent::__construct();
 	}
 
-	public function index() {}
+	public function index() {
+		View::render("frontend", "home/index", ["title" => "Home | VTURefill"]);
+	}
 
 }

@@ -1,18 +1,14 @@
 <?php
 
 namespace Application\Core;
-use Application\Core\View;
-
+use Application\Core\{View, Logger};
+use Framework\Exceptions\RouterException;
 
 class Router {
 
 
     public function __construct() {}
-    /**
-     method that routes the url
-     * @param  [array] $url [contains an array of current url in the browser]
-     * @return [object]      [an instance ocontroller being called]
-     */
+    
     
     public static function route($url) {
         $controller = (isset($url[0]) && $url[0] !== "") ? ucwords($url[0])."Controller" : "HomeController";
@@ -21,32 +17,16 @@ class Router {
         $method = (isset($url[0]) && $url[0] !== "") ? $url[0] : "index";
         array_shift($url);
         $arguments = empty($url) ? [] : array_values($url);
-        if (self::isValidController($controller) === true) {
+        try {
+            if (class_exists($controller) === false) throw new RouterException();
             $controller = new $controller;
-            if(self::isValidMethod($controller, $method) === true) {
-                empty($arguments) ? $controller->{$method}() : call_user_func_array([$controller, $method], $arguments);
-            } else {
-                self::httpStatus("404", "Page Not Found");
-            }
-        }else {
-            self::httpStatus("404", "Page Not Found");
-        } 
-    }
-
-    private static function isValidController($controller){
-        if(!empty($controller)){
-            return (preg_match('/\A[a-z]+\z/i', $controller) || class_exists($controller) || ucwords($controller) === "HomeController") ? true : false;
-        }else { 
-            return false; 
+            if(method_exists($controller, $method) === false) throw new RouterException();
+            empty($arguments) ? $controller->{$method}() : call_user_func_array([$controller, $method], $arguments);
+        } catch (RouterException $error) {
+            Logger::log("ROUTING ERROR", $error->getMessage(), __FILE__, __LINE__);
+            exit(View::render("frontend", "codes/404", ["title" => "Page Not Found"]));
         }
-    }
-
-    private static function isValidMethod($controller, $method){
-        if(!empty($method)){
-            return (preg_match('/\A[a-z]+\z/i', $method) || method_exists($controller, $method)  || strtolower($method) === "index") ? true : false;
-        }else { 
-            return false; 
-        }
+            
     }
 
     public static function redirect($location) {
@@ -61,11 +41,6 @@ class Router {
             echo '</noscript>';
             exit;
         }
-    }
-
-    public static function httpStatus($code, $title = "") {
-        View::render("frontend", "codes/{$code}", ["title" => $title]);
-        return http_response_code($code);
     }
 
 }

@@ -4,9 +4,6 @@ namespace Application\Library;
 
 class Generate {
 
-	public static function time($duration = "") {
-		return empty($duration) ? time() + $duration : time();
-	}
 
 	public static function hash($unique = "") {
 		$unique = empty($unique) ? time() : $unique;

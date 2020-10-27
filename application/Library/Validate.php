@@ -22,6 +22,10 @@ class Validate {
         return ($range >= (int)$minimum && $range <= (int)$maximum) ? true : false;
     }
 
+    public static function url($url) {
+		return filter_var($url, FILTER_VALIDATE_URL);
+	}
+
     private static function integer($value){
         return filter_var($value, FILTER_VALIDATE_INT);
     }

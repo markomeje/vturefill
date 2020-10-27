@@ -1,17 +1,20 @@
 {
     "name": "vtu/refill",
-    "description": "Api for airtime and data recharge",
+    "description": "Api for airtime and data vending",
     "license": "MIT",
     "authors": [
         {
             "name": "markomeje",
-            "email": "markomejeonline@gmail.com"
+            "email": "developer@markomeje.com"
         }
     ],
 
     "require": {
         "vlucas/phpdotenv": "^5.0",
-        "symfony/mailer": "^5.1"
+        "yabacon/paystack-php": "2.1.20",
+        "phpmailer/phpmailer": "^6.1",
+        "guzzlehttp/guzzle": "^7.2",
+        "laminas/laminas-httphandlerrunner": "^1.2"
     },
 
     "autoload": {

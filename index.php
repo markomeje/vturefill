@@ -1,14 +1,6 @@
 <?php
 
 
-/**
- * twice a day for resident 
- * Report bonus for xray only 10%
- * Using price list
- * 4 groups xray, scan. lab. ecg . . . 
- * 
- */
-
 date_default_timezone_set("Africa/Lagos");
 /**
  * ROOT - Thats the root of server filesystem eg "C:/xampp/htdocs/herium".
@@ -23,9 +15,9 @@ define("DS", str_replace("\\", "/", DIRECTORY_SEPARATOR));
  */
 define("FRAMEWORK_PATH", ROOT . DS . "framework");
 define("APPLICATION_PATH", ROOT . DS . "application");
-define("VIEWS_PATH", FRAMEWORK_PATH . DS . "views"); 
-define("BACKEND_PATH", VIEWS_PATH . DS . "backend");
 define("PUBLIC_PATH", ROOT . DS . "public");
+define("VIEWS_PATH", PUBLIC_PATH . DS . "views"); 
+define("BACKEND_PATH", VIEWS_PATH . DS . "backend");
 define("FRONTEND_PATH", VIEWS_PATH . DS . "frontend");
 
 /**
