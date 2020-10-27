@@ -11,11 +11,10 @@ class Clubkonnect {
 
 	public static function buyDataBundle($data) {
         try{
-        	$info = ["UserID" => CLUBKONNECT_USER_ID, "APIKey" => CLUBKONNECT_API_KEY, "MobileNetwork" => $data["network"], "DataPlan" => $data["plan"], "MobileNumber" => $data["phone"], "CallBackURL" => "http://vturefill.build/orders"];
+        	$info = ["UserID" => CLUBKONNECT_USER_ID, "APIKey" => CLUBKONNECT_API_KEY, "MobileNetwork" => $data["network"], "DataPlan" => $data["plan"], "MobileNumber" => $data["phone"], "CallBackURL" => DOMAIN."/orders"];
             $query = "?".http_build_query($info);
         	$client = new Client();
-        	//echo CLUBKONNECT_DATA_BUNDLE_API_URL.$query;
-        	//header("Location: ". CLUBKONNECT_DATA_BUNDLE_API_URL.$query);
+        	header("Location: ". CLUBKONNECT_DATA_BUNDLE_API_URL.$query);
 			$response = $client->request("GET", CLUBKONNECT_DATA_BUNDLE_API_URL.$query);
 			return ["responseBody" => $response->getBody(), "contentType" => $response->getHeaderLine('content-type'), "statusCode" => $response->getStatusCode()];
         } catch(Exception $error){
