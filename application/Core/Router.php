@@ -1,46 +1,37 @@
-<?php
+<?php declare(strict_types=1);
 
-namespace Application\Core;
-use Application\Core\{View, Logger};
-use Framework\Exceptions\RouterException;
+namespace VTURefill\Core;
+use VTURefill\Core\{View};
+use VTURefill\Exceptions\RouterException;
+use VTURefill\Http\Response;
 
-class Router {
 
-
-    public function __construct() {}
+final class Router {
     
-    
-    public static function route($url) {
-        $controller = (isset($url[0]) && $url[0] !== "") ? ucwords($url[0])."Controller" : "HomeController";
-        $controller = "Framework\Controllers\\".$controller;
-        array_shift($url);
-        $method = (isset($url[0]) && $url[0] !== "") ? $url[0] : "index";
-        array_shift($url);
-        $arguments = empty($url) ? [] : array_values($url);
-        try {
-            if (class_exists($controller) === false) throw new RouterException();
-            $controller = new $controller;
-            if(method_exists($controller, $method) === false) throw new RouterException();
-            empty($arguments) ? $controller->{$method}() : call_user_func_array([$controller, $method], $arguments);
-        } catch (RouterException $error) {
-            Logger::log("ROUTING ERROR", $error->getMessage(), __FILE__, __LINE__);
-            exit(View::render("frontend", "codes/404", ["title" => "Page Not Found"]));
-        }
-            
+    public $controller;
+    public $method;
+    public $arguments = [];
+    public const CONTROLLERS_NAMESPACE = 'VTURefill\Controllers\\';
+
+
+    public function __construct($controller, $method, $arguments) {
+        $this->controller = $controller;
+        $this->method = $method;
+        $this->arguments = $arguments;
     }
 
-    public static function redirect($location) {
-        if (!headers_sent()) {
-            header('Location: '.DOMAIN.$location);
-        }else {
-            echo '<script type="text/javascript">';
-            echo 'window.location.href="'.DOMAIN.$location.'";';
-            echo '</script>';
-            echo '<noscript>';
-            echo '<meta http-equiv="refresh" content="0;url='.$location.'" />';
-            echo '</noscript>';
-            exit;
+    public function route() {
+        try {
+            $controller = self::CONTROLLERS_NAMESPACE.ucfirst($this->controller).'Controller';
+            if (class_exists($controller) === false) throw new RouterException();
+            $controller = new $controller();
+            if(method_exists($controller, $this->method) === false) throw new RouterException();
+            empty($this->arguments) ? $controller->{$this->method}() : call_user_func_array([$controller, $this->method], $this->arguments);
+        } catch (RouterException $error) {
+            (new Response)->statusCode($error->code);
+            exit(View::render('frontend', 'codes/error', ['title' => $error->getMessage(), 'code' => $error->code, 'message' => $error->getMessage()]));
         }
+
     }
 
 }

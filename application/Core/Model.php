@@ -1,14 +1,10 @@
 <?php
 
-namespace Application\Core;
-use Application\Core\Application;
+namespace VTURefill\Core;
 
 
-class Model extends Application {
+class Model {
 
-
-	public function __construct() {
-		parent::__construct();
-	}
+	public function __construct() {}
 
 }

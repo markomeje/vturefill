@@ -1,5 +1,6 @@
 <?php
 
+//https://www.nellobytesystems.com/APIDatabundleV1.asp?UserID=CK7813492&APIKey=PX31277CI5QZ7F6K42YO62DMSF5V42YKI6RM2JKH3206279TMA26J5Z732SQSI86&MobileNetwork=01&DataPlan=1000&MobileNumber=08158212666&CallBackURL=https://vturefill.markomeje.com/orders
 
 date_default_timezone_set("Africa/Lagos");
 /**
@@ -47,7 +48,7 @@ require APPLICATION_PATH . DS . "config.php";
  * Starting the session at the root
  * To avoid session error.
  */
-Application\Library\Session::start();
+VTURefill\Library\Session::start();
 
 
 /*
@@ -59,17 +60,21 @@ Application\Library\Session::start();
 | or an exception has been thrown.
 |
 */
-if (SERVER_HTTPS === true) {
-	Application\Core\Handler::register();
-}
-
-
-
+VTURefill\Core\Handler::register();
 
 /**
- * Routing the application using the url parameter from the .htaccess file
- * @var [type] Array
+ * [$request description]
+ * @var VTURefill
  */
-$url = isset($_GET["url"]) ? explode("/", filter_var(rtrim(strtolower($_GET["url"]), "/"), FILTER_SANITIZE_URL)) : [];
-Application\Core\Router::route($url);
+$request = new VTURefill\Http\Request;
+$app = new VTURefill\Core\Parser($request);
+
+/**
+ * ---------------------------------------------------------------------
+ * [Route the application]
+ * ---------------------------------------------------------------------
+ * 
+ * @var [type] Mixed
+ */
+$app->router->route();
 

@@ -1,9 +1,9 @@
 <?php
 
-namespace Application\Library;
-use Application\Http\Cookie;
-use Application\Library\Session;
-use Application\Core\Router;
+namespace VTURefill\Library;
+use VTURefill\Http\Cookie;
+use VTURefill\Library\Session;
+use VTURefill\Core\Router;
 
 class Authentication {
 

@@ -1,12 +1,12 @@
 <?php
 
 define("ENVIROMENT", "development");
+define("DEFAULT_CONTROLLER", "login");
+define("DEFAULT_METHOD", "index");
+
 define("SERVER_HTTPS", (isset($_SERVER["HTTPS"]) && strtolower($_SERVER["HTTPS"]) === "on") ? true : false);
 define("DOMAIN",  SERVER_HTTPS === true ? $_ENV["LIVE_WEBSITE_DOMAIN"] : "http://vturefill.build");
 
-define("CURRENT_URL", isset($_SERVER["REQUEST_URI"]) ? $_SERVER["REQUEST_URI"] : "");
-ini_set("session.referer_check", "TRUE");
-define("HTTP_REFERER", isset($_SERVER["HTTP_REFERER"]) ? $_SERVER["HTTP_REFERER"] : "");
 define("PUBLIC_URL", DOMAIN."/public");
 define("SOFWARE_NAME", "VTU Refill");
 
@@ -16,9 +16,14 @@ define("LOCAL_DATABASE_USERNAME", "root");
 define("LOCAL_DATABASE_PASSWORD", "");
 define("LOCAL_DATABASE_CHARSET", "UTF8");
 
-foreach (["LIVE_DATABASE_HOST", "LIVE_DATABASE_NAME", "LIVE_DATABASE_USERNAME", "LIVE_DATABASE_PASSWORD", "LIVE_DATABASE_CHARSET"] as $CREDENTIAL) {
-	define($CREDENTIAL, $_ENV[$CREDENTIAL]);
-}
+/**
+ * Live database details from .env file
+ */
+define('LIVE_DATABASE_HOST', $_ENV['LIVE_DATABASE_HOST']); 
+define('LIVE_DATABASE_NAME', $_ENV['LIVE_DATABASE_NAME']); 
+define('LIVE_DATABASE_USERNAME', $_ENV['LIVE_DATABASE_USERNAME']); 
+define('LIVE_DATABASE_PASSWORD', $_ENV['LIVE_DATABASE_PASSWORD']); 
+define('LIVE_DATABASE_CHARSET', $_ENV['LIVE_DATABASE_CHARSET']);
 
 define("PAYSTACK_TEST_SECRET_KEY", "sk_test_260a2fa0cbc5cf57e814c76e1cd2690342675de2");
 define("PAYSTACK_TEST_PUBLIC_KEY", "pk_test_1526345662bbf69407a146ce5a981c7a34609590");

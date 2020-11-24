@@ -1,6 +1,6 @@
 <?php
 
-namespace Application\Core;
+namespace VTURefill\Core;
 
 class View {
     

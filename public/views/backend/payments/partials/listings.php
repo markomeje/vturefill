@@ -4,12 +4,12 @@
 		<div class="card-body">
 			<div class="d-flex justify-content-between align-items-center pb-2 mb-2 border-bottom">
 				<a href="javascript:;" class="" data-toggle="modal" data-target="#edit-payment">
-					<?= empty($payment->email) ? "Nill" : Application\Core\Help::limitStringLength(ucfirst($payment->email), 16); ?>
+					<?= empty($payment->email) ? "Nill" : VTURefill\Core\Help::limitStringLength($payment->email, 16); ?>
 				</a>
 			</div>
 			<div class="d-flex justify-content-between">
 				<small class="">
-					NGN<?= empty($payment->amount) ? 0 : ucfirst($payment->amount); ?>
+					NGN<?= empty($payment->amount) ? 0 : number_format($payment->amount); ?>
 				</small>
 				<small class="<?= (isset($payment->status) && strtolower($payment->status) === 'paid') ? 'text-success' : 'text-danger'; ?>" id="<?= $id; ?>">
 					<?= (empty($payment->status) || strtolower($payment->status) === 'initialized') ? "Unpaid" : "Paid"; ?>
@@ -26,8 +26,6 @@
         				<i class="icofont-caret-down"></i>
         			</small>
         			<div class="dropdown-menu">
-        				<div class="dropdown-item">Edit</div>
-        				<div class="dropdown-divider"></div>
         				<div class="dropdown-item">Delete</div>
         			</div>
         		</div>

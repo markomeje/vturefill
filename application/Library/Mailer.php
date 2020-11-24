@@ -1,6 +1,6 @@
 <?php
 
-namespace Application\Library;
+namespace VTURefill\Library;
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 

@@ -93,6 +93,7 @@
         });
 
         request.done(function(response) {
+            console.trace(response);
             if(response === null) {
                 handleButton(button, spinner);
                 message.removeClass('alert-success d-none').addClass('alert-danger');
@@ -114,11 +115,19 @@
                 handleButton(button, spinner);
                 handleErrors($('.duration'), $('.duration-error'), 'Bundle duration is required');
 
+            }else if (response.status === 'invalid-code') {
+                handleButton(button, spinner);
+                handleErrors($('.code'), $('.code-error'), 'Bundle code is required');
+
+            }else if (response.status === 'invalid-status') {
+                handleButton(button, spinner);
+                handleErrors($('.status'), $('.status-error'), 'Status is required');
+
             } else if (response.status === 'success') {
                 handleButton(button, spinner);
                 message.removeClass('alert-danger d-none').addClass('alert-success');
                 message.html('Operation Successfull').fadeIn();
-                // window.location.reload();
+                window.location.reload();
 
             } else if (response.status === 'error') {
                 handleButton(button, spinner);
@@ -126,14 +135,14 @@
                 message.html('An error ocurred. Try again').fadeIn();
 
             }else {
-                alert('Network Error');
+                alert('Unknown Error');
                 handleButton(button, spinner);
             }
         });
 
-        request.fail(function() {
+        request.fail(function(response) {
             handleButton(button, spinner);
-            alert('Network Error');
+            alert('Unknown Error');
         });
 
     });

@@ -1,7 +1,7 @@
 <?php
 
-namespace Application\Library;
-use Application\Core\Logger;
+namespace VTURefill\Library;
+use VTURefill\Core\Logger;
 use \Exception;
 use \PDO;
 

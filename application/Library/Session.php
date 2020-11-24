@@ -1,6 +1,6 @@
 <?php
 
-namespace Application\Library;
+namespace VTURefill\Library;
 
 
 class Session {

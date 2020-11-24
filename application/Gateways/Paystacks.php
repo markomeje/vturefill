@@ -1,7 +1,7 @@
 <?php
 
-namespace Application\Gateways;
-use Application\Core\Logger;
+namespace VTURefill\Gateways;
+use VTURefill\Core\Logger;
 use Yabacon\Paystack;
 use Yabacon\Paystack\Exception\ApiException;
 

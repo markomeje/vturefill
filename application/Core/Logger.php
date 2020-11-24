@@ -1,7 +1,7 @@
 <?php
 
-namespace Application\Core;
-use Application\Core\Help;
+namespace VTURefill\Core;
+use VTURefill\Core\Help;
 
 
 class Logger{

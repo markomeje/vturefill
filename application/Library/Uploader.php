@@ -1,8 +1,8 @@
 <?php
 
-namespace Application\Library;
-use Application\Library\Generate;
-use Application\Core\Logger;
+namespace VTURefill\Library;
+use VTURefill\Library\Generate;
+use VTURefill\Core\Logger;
 
  /**
   * Uploader Class

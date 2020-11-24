@@ -1,13 +1,18 @@
 <div class="col-12 col-md-6 col-lg-3">
 	<div class="card">
 		<?php $id = empty($level->id) ? 0 : $level->id; ?>
-		<div class="card-body d-flex justify-content-between">
-			<a href="javascript:;" class="" data-toggle="modal" data-target="#edit-level">
-				<?= empty($level->level) ? "Nill" : ucfirst($level->level); ?>
-			</a>
-			<div class="text-muted">
-				<?= empty($level->status) ? "Nill" : ucfirst($level->status); ?>
+		<div class="card-body">
+			<div class="d-flex justify-content-between mb-2 pb-2 border-bottom">
+				<a href="javascript:;" class="" data-toggle="modal" data-target="#edit-level">
+					Level <?= empty($level->level) ? "Nill" : ucfirst($level->level); ?>
+				</a>
+				<div class="text-muted">
+					<?= empty($level->status) ? "Nill" : ucfirst($level->status); ?>
+				</div>
 			</div>
+			<div class="d-flex justify-content-between">
+				NGN<?= empty($level->minimum) ? "Nill" : number_format($level->minimum); ?> - NGN<?= empty($level->maximum) ? "Nill" : number_format($level->maximum); ?>
+			</div>	
 		</div>
 		<div class="card-footer bg-dark d-flex justify-content-between align-items-center">
 			<div class="custom-control custom-switch">

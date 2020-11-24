@@ -22,6 +22,10 @@ class ComposerStaticInitf315a6c37c4b2a45ab7ddcd3fa636b0d
         array (
             'Yabacon\\' => 8,
         ),
+        'V' => 
+        array (
+            'VTURefill\\' => 10,
+        ),
         'S' => 
         array (
             'Symfony\\Polyfill\\Php80\\' => 23,
@@ -32,7 +36,6 @@ class ComposerStaticInitf315a6c37c4b2a45ab7ddcd3fa636b0d
         array (
             'Psr\\Http\\Server\\' => 16,
             'Psr\\Http\\Message\\' => 17,
-            'Psr\\Http\\Client\\' => 16,
             'PhpOption\\' => 10,
             'PHPMailer\\PHPMailer\\' => 20,
         ),
@@ -48,17 +51,9 @@ class ComposerStaticInitf315a6c37c4b2a45ab7ddcd3fa636b0d
             'GuzzleHttp\\' => 11,
             'GrahamCampbell\\ResultType\\' => 26,
         ),
-        'F' => 
-        array (
-            'Framework\\' => 10,
-        ),
         'D' => 
         array (
             'Dotenv\\' => 7,
-        ),
-        'A' => 
-        array (
-            'Application\\' => 12,
         ),
     );
 
@@ -66,6 +61,10 @@ class ComposerStaticInitf315a6c37c4b2a45ab7ddcd3fa636b0d
         'Yabacon\\' => 
         array (
             0 => __DIR__ . '/..' . '/yabacon/paystack-php/src',
+        ),
+        'VTURefill\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/application',
         ),
         'Symfony\\Polyfill\\Php80\\' => 
         array (
@@ -86,10 +85,6 @@ class ComposerStaticInitf315a6c37c4b2a45ab7ddcd3fa636b0d
         'Psr\\Http\\Message\\' => 
         array (
             0 => __DIR__ . '/..' . '/psr/http-message/src',
-        ),
-        'Psr\\Http\\Client\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/psr/http-client/src',
         ),
         'PhpOption\\' => 
         array (
@@ -123,21 +118,15 @@ class ComposerStaticInitf315a6c37c4b2a45ab7ddcd3fa636b0d
         array (
             0 => __DIR__ . '/..' . '/graham-campbell/result-type/src',
         ),
-        'Framework\\' => 
-        array (
-            0 => __DIR__ . '/../..' . '/framework',
-        ),
         'Dotenv\\' => 
         array (
             0 => __DIR__ . '/..' . '/vlucas/phpdotenv/src',
         ),
-        'Application\\' => 
-        array (
-            0 => __DIR__ . '/../..' . '/application',
-        ),
     );
 
     public static $classMap = array (
+        'Attribute' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/Attribute.php',
+        'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
         'Stringable' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/Stringable.php',
         'UnhandledMatchError' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/UnhandledMatchError.php',
         'ValueError' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/ValueError.php',

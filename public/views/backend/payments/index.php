@@ -25,20 +25,7 @@
 			        </form>
                 </div>
 	        </div>
-			<div class="d-flex justify-content-between mb-4">
-				<div class="d-flex bg-transparent border align-items-center m-0 p-0 rounded cursor-pointer" data-toggle="modal" data-target="#add-payment">
-					<small class="border-right px-3 py-2 text-center text-muted">
-						<?= empty($allPaymentsCount) ? 0 : $allPaymentsCount; ?>
-					</small> 
-					<div class="px-3 py-2 text-muted">Payments</div>
-				</div>
-				<div class="">
-					<a href="javascript:;" class="btn text-muted border">
-						<i class="icofont-caret-down"></i>
-					</a>
-				</div>
-			</div>
-			<div class="">
+			<div class="mt-1">
 				<?php if(empty($allPayments)): ?>
 					<div class="alert alert-info">No payments yet</div>
 				<?php else: ?>

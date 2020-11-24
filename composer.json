@@ -13,14 +13,13 @@
         "vlucas/phpdotenv": "^5.0",
         "yabacon/paystack-php": "2.1.20",
         "phpmailer/phpmailer": "^6.1",
-        "guzzlehttp/guzzle": "^7.2",
+        "guzzlehttp/guzzle": "6.5",
         "laminas/laminas-httphandlerrunner": "^1.2"
     },
 
     "autoload": {
         "psr-4": {
-            "Application\\": "application/",
-            "Framework\\": "framework/"
+            "VTURefill\\": "application/"
         }
     }
 }
