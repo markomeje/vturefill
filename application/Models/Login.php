@@ -20,12 +20,12 @@ class Login extends Model {
 		}
 
 		try {
-			$user = Users::getUserByEmail($posted["email"]);
-			if(empty($user)) return ["status" => "invalid-user", "message" => "User not found."];
+			$user = User::getByEmail($posted["email"]);
+			if(empty($user)) return ["status" => 0, "message" => "User not found."];
 			$password = isset($user->password) ? $user->password : null;
-			if(!password_verify($posted["password"], $password)) return ["status" => "invalid-login", "messsage" => "Your password is incorrect"];
-			Authentication::authenticate(["id" => $user->id, "email" => $user->email, "username" => $user->username]);
-			return ["status" => "success", "message" => "User successfully logged in", "user" => Users::getUserById($user->id)];
+			if(!password_verify($posted["password"], $password)) return ["status" => 0, "messsage" => "Your password is incorrect"];
+			Authentication::authenticate(["id" => $user->id]);
+			return ["status" => 1, "message" => "User successfully logged in", "user" => User::getById($user->id)];
 		} catch (Exception $error) {
 			Logger::log("USER LOGIN ERROR", $error->getMessage(), __FILE__, __LINE__);
 			return ["status" => "error", "message" => "Login falied. Try again."];

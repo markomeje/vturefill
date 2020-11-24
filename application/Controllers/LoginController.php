@@ -18,8 +18,10 @@ class LoginController extends Controller {
 
 	public function login() {
 		if ($this->request->method('post') || $this->request->method('ajax')) {
-			$posted = ['email' => $this->request->post()['email'], 'password' => $this->request->post()['password']];
-			$response = Login::login($posted);
+			$email = isset($this->request->post()['email']) ? $this->request->post()['email'] : '';
+			$password = isset($this->request->post()['password']) ? $this->request->post()['password'] : '';
+			$data = ['email' => $email, 'password' => $password];
+			$response = Login::login($data);
 		    Json::encode($response);
 		}
 	}
