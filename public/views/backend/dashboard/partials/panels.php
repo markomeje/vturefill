@@ -1,11 +1,11 @@
 <?php $panels = [
-	"users" => ["link" => "users"], 
-	"orders" => ["link" => "orders"], 
-	"categories" => ["link" => "categories"], 
-	"tariffs" => ["link" => "tariffs"], 
-	"funds" => ["link" => "funds"], 
-	"payments" => ["link" => "payments"], 
-	"levels" => ["link" => "levels"]
+	"users" => ["link" => "users", "count" => $allUsersCount], 
+	"orders" => ["link" => "orders", "count" => $allOrdersCount], 
+	"categories" => ["link" => "categories", "count" => $allCategoriesCount], 
+	"tariffs" => ["link" => "tariffs", "count" => $allTariffsCount], 
+	"funds" => ["link" => "funds", "count" => $allFundsCount], 
+	"payments" => ["link" => "payments", "count" => $allPaymentsCount], 
+	"levels" => ["link" => "levels", "count" => $allLevelsCount]
 ]; ?>
 <?php if(empty($panels)): ?>
 	<div class="col-12">
@@ -29,9 +29,6 @@
 					</div>
 				</div>
 				<div class="card-footer bg-dark">
-					<small class="text-white">
-						<?= empty($femaleApplicantsPercentage) ? 0 : $femaleApplicantsPercentage; ?>users
-					</small>
 				</div>
 			</div>
 		</div>

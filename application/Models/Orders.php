@@ -23,27 +23,27 @@ class Orders extends Model {
 			return ['status' => 0, 'message' => 'Invalid phone number'];
 		}elseif (empty($data['plan'])) {
 			return ['status' => 0, 'message' => 'Invalid data plan'];
-		}elseif (empty($data['id'])) {
+		}elseif (empty($data['user'])) {
 			return ['status' => 0, 'message' => 'Invalid user'];
 		}
         
-        $user = User::getById($data['id']);
+        $user = User::getById($data['user']);
         if (empty($user)) return ['status' => 0, 'message' => 'Invalid user'];
 		$network = Networks::getNetworkById($data['network']);
 		if (empty($network)) {
 			return ['status' => 0, 'message' => 'Invalid network code'];
-		}elseif(isset($network->status) && strtolower($network->status) === 'manual') {
+		}elseif(strtolower($network->status) === 'manual') {
 			$fields = array_merge(['status' => 'pending', 'type' => 'manual'], $data);
-			return self::addOrder($fields) === true ? ['status' => 1, 'message' => 'success'] : ['status' => 0, 'message' => 'error', 'user' => $user];
+			return (self::addOrder($fields) > 0) ? ['status' => 1, 'message' => 'Order pending',  'user' => $user] : ['status' => 0, 'message' => 'Order failed. Try again', 'user' => $user];
 		}else {
-            $response = Clubkonnect::buyDataBundle($data);
-			$api = is_string($response) ? Json::decode($response) : [];
-			return ['api' => $api, 'code' => http_response_code()];
+            //$response = Clubkonnect::buyDataBundle($data);
+			//$api = is_string($response) ? Json::decode($response) : [];
+			return ['api' => "$api", 'code' => http_response_code()];
 			// $response = $clubkonnect->apiResponses($api->status);
 			// if(isset($response['code']) && $response['code'] === 2) {
 			// 	return ['status' => 'success'];
 			// }else {
-			// 	return ['status' => 'error'];
+			// 	return ['status' => 'error']; 
 			// }
 		}
 
@@ -53,16 +53,14 @@ class Orders extends Model {
 		try {
 			$database = Database::connect();
 			$table = self::$table;
-			$database->prepare('INSERT INTO {$table} (order, user, network, plan, phone, type status) VALUES(:order, :user, :network, :plan, :phone, :type :status)');
+			$database->prepare("INSERT INTO {$table} (user, network, plan, phone, type, status) VALUES (:user, :network, :plan, :phone, :type, :status)");
 			$database->execute($fields);
-			return ($database->rowCount() > 0) ? true : false;
+			return $database->rowCount();
 		} catch (Exception $error) {
 			Logger::log('ADDING ORDER ERROR', $error->getMessage(), __FILE__, __LINE__);
 			return false;
 		}
 	}
-
-	public static function getAllOrdersCount() {}
 
 	public static function getAllOrders() {
 		try {

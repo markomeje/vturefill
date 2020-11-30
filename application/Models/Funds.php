@@ -31,7 +31,7 @@ class Funds extends Model {
 		try {
 			$database = Database::connect();
 			$table = self::$table;
-			$database->prepare("UPDATE {$table} SET amount = :amount WHERE user = :user AND email = :email LIMIT 1");
+			$database->prepare("UPDATE {$table} SET amount = :amount WHERE user = :user LIMIT 1");
 			$database->execute($fields);
             return $database->rowCount() > 0 ? true : false;
 		} catch (Exception $error) {
@@ -40,12 +40,12 @@ class Funds extends Model {
 		}
 	}
 
-	public static function getFund($fields) {
+	public static function getFund($user) {
 		try {
 			$database = Database::connect();
 			$table = self::$table;
-			$database->prepare("SELECT * FROM {$table} WHERE user = :user AND email = :email LIMIT 1");
-			$database->execute($fields);
+			$database->prepare("SELECT * FROM {$table} WHERE user = :user LIMIT 1");
+			$database->execute(['user' => $user]);
             return $database->fetch();
 		} catch (Exception $error) {
 			Logger::log("GETTING FUND ERROR", $error->getMessage(), __FILE__, __LINE__);
@@ -55,15 +55,11 @@ class Funds extends Model {
 
 	public static function topUpFund($fields) {
 		try {
-			$condition = ["user" => $fields["user"]];
-			$fund = self::getFund($condition);
-			if(empty($fund) || $fund === false) {
-				return self::addFund($fields) ? true : false;
-			}else {
-				$currentAmount = empty($fund->amount) ? 0 : $fund->amount;
-				$merged = array_merge($condition, ["amount" => $currentAmount + $fields["amount"]]);
-				return self::updateFund($merged) ? true : false;
-			}
+			$fund = self::getFund($fields["user"]);
+			if(empty($fund) || $fund === false) return self::addFund($fields) ? true : false;
+			$currentAmount = empty($fund->amount) ? 0 : $fund->amount;
+			$data = ["user" => $fields["user"], "amount" => $currentAmount + $fields["amount"]];
+			return self::updateFund($data) ? true : false;
 		} catch (Exception $error) {
 			Logger::log("TOPING UP FUND ERROR", $error->getMessage(), __FILE__, __LINE__);
 			return false;

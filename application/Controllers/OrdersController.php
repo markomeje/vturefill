@@ -13,16 +13,16 @@ class OrdersController extends Controller {
 	}
 
 	public function index() {
-		View::render("backend", "orders/index", ["backendLinks" => $this->backendLinks, "activeController" => $this->activeController, "allUsersOrders" => Orders::getAllOrders(), "allUsersOrdersCount" => Orders::getAllOrdersCount()]);
+		View::render('backend', 'orders/index', ['backendLinks' => $this->backendLinks, 'activeController' => $this->activeController, 'allUsersOrders' => Orders::getAllOrders(), 'allUsersOrdersCount' => Orders::getAllOrdersCount()]);
 	}
 
 	public function orderData() {
-		if ($this->request->method("get")) {
-			$network = isset($this->request->post()['network']) ? $this->request->post()['network'] : ''; 
-			$phone = isset($this->request->post()['phone']) ? $this->request->post()['phone'] : ''; 
-			$plan = isset($this->request->post()['plan']) ? $this->request->post()['plan'] : ''; 
-			$id = isset($this->request->post()['id']) ? $this->request->post()['id'] : '';
-			$data = ['network' => $network, 'phone' => $phone, 'plan' => $plan, 'id' => $id];
+		if ($this->request->method('get')) {
+			$network = isset($this->request->get()['network']) ? $this->request->get()['network'] : ''; 
+			$phone = isset($this->request->get()['phone']) ? $this->request->get()['phone'] : ''; 
+			$plan = isset($this->request->get()['plan']) ? $this->request->get()['plan'] : ''; 
+			$user = isset($this->request->get()['user']) ? $this->request->get()['user'] : '';
+			$data = ['network' => $network, 'phone' => $phone, 'plan' => $plan, 'user' => (int)$user];
 			$response = Orders::orderData($data);
 			Json::encode($response);
 		}

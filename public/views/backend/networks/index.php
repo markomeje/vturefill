@@ -9,11 +9,11 @@
                     <?php require BACKEND_PATH . DS . 'layouts' . DS . 'links.php'; ?>
                 </div>
 	            <div class="col-12 col-md-6 col-lg-6 mb-4">
-                    <form action="<?= DOMAIN; ?>" method="get" class="search-dashboard">
+                    <form action="javascript:;" method="get" class="search-networks">
 			            <div class="row no-gutters">
 			                <div class="col-10">
 			                    <div class="form-group input-group-lg mb-0">
-			                        <input type="search" name="query" class="form-control backend-search-input border-right-0" placeholder="Search here" autocomplete="on" value="<?= empty($query) ? '' : $query; ?>">
+			                        <input type="search" name="query" class="form-control backend-search-input border-right-0" placeholder="Search networks" autocomplete="on" value="<?= empty($query) ? '' : $query; ?>">
 			                    </div>
 			                </div>
 			                <div class="col-2">
@@ -25,8 +25,16 @@
 			        </form>
                 </div>
 	        </div>
-	    	<div class="row mb-1">
-				<?php require BACKEND_PATH . DS . "dashboard" . DS . "partials" . DS . "panels.php"; ?>
+			<div class="mt-1">
+				<?php if(empty($allNetworks)): ?>
+					<div class="alert alert-info">No network yet</div>
+				<?php else: ?>
+					<div class="row">
+						<?php foreach($allNetworks as $network): ?>
+							<?php require BACKEND_PATH . DS . "networks" . DS . "partials" . DS . "listings.php"; ?> 
+						<?php endforeach; ?>
+					</div>
+				<?php endif; ?>
 			</div>
 	    </div>
     </div>

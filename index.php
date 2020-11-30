@@ -49,8 +49,6 @@ require APPLICATION_PATH . DS . "config.php";
  * To avoid session error.
  */
 VTURefill\Library\Session::start();
-
-
 /*
 |--------------------------------------------------------------------------
 | Register Error & Exception handlers

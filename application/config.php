@@ -36,7 +36,6 @@ define("CLUBKONNECT_USER_ID", $_ENV["CLUBKONNECT_USER_ID"]);
 define("CLUBKONNECT_AIRTIME_API_URL", "https://www.nellobytesystems.com/APIAirtimeV1.asp");
 define("CLUBKONNECT_DATA_BUNDLE_API_URL", "https://www.nellobytesystems.com/APIDatabundleV1.asp");
 
-define("REMEMBER_ME_COOKIE_NAME", "h89hIteIHB7nb5yh3ufer7fad2q9yv98");
 define("COOKIE_PATH", "/");
 define("COOKIE_DOMAIN", DOMAIN);
 define("COOKIE_SECURE", false);
@@ -48,8 +47,8 @@ define("SESSION_COOKIE_EXPIRY", 3600 * 24 * 60); /** 60 Days **/
 define("ENCRYPTION_KEY", "H43ag5js60z4D86tgEsh6w4e385Y");
 define("ACCESS_DENIED_EXPIRY", 3600 * 24); /** 60 Days **/
 
-define("REMEMBER_ME_COOKIE_EXPIRY", 3600 * 24 * 365); /** One Year **/
-define("REMEMBER_ME_SESSION_NAME", "4638295qgkh81y8");
+define("REMEMBER_ME_COOKIE_NAME", "h89hIteIHB7nb5yh3ufer7fad2q9yv98");
+define("REMEMBER_ME_COOKIE_EXPIRY", 3600 * 24 * 30); /** One Year **/
 
 define("ACCESS_DENIED_KEY", "672kbauh892ytqBGKA89jnb");
 define("LOGIN_FAILED_KEY", "hjky456778434176HJuT67438");

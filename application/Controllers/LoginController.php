@@ -16,16 +16,31 @@ class LoginController extends Controller {
 	    View::render('frontend', 'login/index', []);
 	}
 
-	public function login() {
-		if ($this->request->method('post') || $this->request->method('ajax')) {
+	/**
+     * This is for the api Login
+     */
+	public function signin() {
+		if ($this->request->method('post')) {
 			$email = isset($this->request->post()['email']) ? $this->request->post()['email'] : '';
 			$password = isset($this->request->post()['password']) ? $this->request->post()['password'] : '';
 			$data = ['email' => $email, 'password' => $password];
+			$response = Login::signin($data);
+		    Json::encode($response);
+		}
+	}
+    
+    /**
+     * Normal browser backend Login
+     */
+	public function login() {
+		if ($this->request->method('ajax')) {
+			$email = isset($this->request->post()['email']) ? $this->request->post()['email'] : '';
+			$password = isset($this->request->post()['password']) ? $this->request->post()['password'] : '';
+			$rememberme = isset($this->request->post()['rememberme']) ? $this->request->post()['rememberme'] : '';
+			$data = ['email' => $email, 'password' => $password, 'rememberme' => $rememberme];
 			$response = Login::login($data);
 		    Json::encode($response);
 		}
 	}
-
-	public function logout() {}
 
 }

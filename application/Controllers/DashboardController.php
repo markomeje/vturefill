@@ -1,7 +1,7 @@
 <?php 
 
 namespace VTURefill\Controllers;
-use VTURefill\Models\Networks;
+use VTURefill\Models\{Networks, Payments};
 use VTURefill\Core\{Controller, View};
 
 
@@ -14,7 +14,8 @@ class DashboardController extends Controller {
 
 	public function index() {
 		$allNetworks = Networks::getAllNetworks();
-		View::render("backend", "dashboard/index", ["backendLinks" => $this->backendLinks, "activeController" => $this->activeController, "allNetworks" => $allNetworks, "allNetworksCount" => count($allNetworks), "networkStatus" => Networks::$networkStatus]);
+		$allPayments = Payments::getAllPayments();
+		View::render("backend", "dashboard/index", ["backendLinks" => $this->backendLinks, "activeController" => $this->activeController, "allNetworks" => $allNetworks, "allNetworksCount" => count($allNetworks), "networkStatus" => Networks::$networkStatus, "allPaymentsCount" => $allPayments['count'], 'allUsersCount' => 0, 'allOrdersCount' => 0, 'allCategoriesCount' => 0, 'allTariffsCount' => 0, 'allFundsCount' => 0, 'allLevelsCount' => 0]);
 	}
 
 }

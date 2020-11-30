@@ -12,7 +12,9 @@ class NetworksController extends Controller {
 		parent::__construct();
 	}
 
-	public function index() {}
+	public function index() {
+		View::render('backend', 'networks/index', ['backendLinks' => $this->backendLinks, 'activeController' => $this->activeController, 'allNetworks' => Networks::getAllNetworks()]);
+	}
 
 	public function addNetwork() {
 		if ($this->request->method("ajax")) {
