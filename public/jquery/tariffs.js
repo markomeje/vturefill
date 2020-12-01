@@ -42,9 +42,9 @@
                 handleButton(button, spinner);
                 handleErrors($('.duration'), $('.duration-error'), 'Bundle duration is required');
 
-            }else if (response.status === 'invalid-code') {
+            }else if (response.status === 'invalid-plan') {
                 handleButton(button, spinner);
-                handleErrors($('.code'), $('.code-error'), 'Bundle code is required');
+                handleErrors($('.plan'), $('.plan-error'), 'Data plan is required');
 
             }else if (response.status === 'invalid-status') {
                 handleButton(button, spinner);
@@ -54,7 +54,7 @@
                 handleButton(button, spinner);
                 message.removeClass('alert-danger d-none').addClass('alert-success');
                 message.html('Operation Successfull').fadeIn();
-                // window.location.reload();
+                window.location.reload();
 
             } else if (response.status === 'error') {
                 handleButton(button, spinner);
@@ -115,9 +115,9 @@
                 handleButton(button, spinner);
                 handleErrors($('.duration'), $('.duration-error'), 'Bundle duration is required');
 
-            }else if (response.status === 'invalid-code') {
+            }else if (response.status === 'invalid-plan') {
                 handleButton(button, spinner);
-                handleErrors($('.code'), $('.code-error'), 'Bundle code is required');
+                handleErrors($('.plan'), $('.plan-error'), 'Data plan is required');
 
             }else if (response.status === 'invalid-status') {
                 handleButton(button, spinner);

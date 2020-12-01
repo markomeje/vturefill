@@ -27,7 +27,7 @@ class Funds extends Model {
 	    }
 	}
 
-	public static function updateFund($fields) {
+	public static function updateUserFundAmount($fields) {
 		try {
 			$database = Database::connect();
 			$table = self::$table;
@@ -40,7 +40,7 @@ class Funds extends Model {
 		}
 	}
 
-	public static function getFund($user) {
+	public static function getFundByUser($user) {
 		try {
 			$database = Database::connect();
 			$table = self::$table;
@@ -55,11 +55,11 @@ class Funds extends Model {
 
 	public static function topUpFund($fields) {
 		try {
-			$fund = self::getFund($fields["user"]);
+			$fund = self::getFundByUser($fields["user"]);
 			if(empty($fund) || $fund === false) return self::addFund($fields) ? true : false;
 			$currentAmount = empty($fund->amount) ? 0 : $fund->amount;
 			$data = ["user" => $fields["user"], "amount" => $currentAmount + $fields["amount"]];
-			return self::updateFund($data) ? true : false;
+			return self::updateUserFundAmount($data) ? true : false;
 		} catch (Exception $error) {
 			Logger::log("TOPING UP FUND ERROR", $error->getMessage(), __FILE__, __LINE__);
 			return false;

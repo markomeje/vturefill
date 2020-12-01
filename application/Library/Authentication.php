@@ -1,7 +1,7 @@
 <?php
 
 namespace VTURefill\Library;
-use VTURefill\Http\Cookie;
+use VTURefill\Http\{Cookie, Response};
 use VTURefill\Library\Session;
 
 class Authentication {
@@ -19,6 +19,12 @@ class Authentication {
 			Session::destroy();
 			return (new Response())->redirect('/login');
 		}
+	}
+
+	public static function unauthenticate() {
+		Session::delete('id');
+		Session::destroy();
+		return (new Response())->redirect('/login');
 	}
 
 }

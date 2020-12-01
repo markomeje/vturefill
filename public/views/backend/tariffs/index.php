@@ -44,7 +44,7 @@
 					<div class="alert alert-info">No networks added</div>
 				<?php else: ?>
 					<div class="row">
-						<?php foreach($allNetworks as $network): ?>
+						<?php foreach($allTariffs as $tariff): ?>
 							<?php require BACKEND_PATH . DS . "tariffs" . DS . "partials" . DS . "listings.php"; ?> 
 						<?php endforeach; ?>
 					</div>

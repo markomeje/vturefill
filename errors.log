@@ -1,0 +1,6 @@
+*******************************************************************
+PDOEXCEPTION Logged On December 1, 2020, 4:35 pm
+SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '} WHERE id = ? LIMIT 1' at line 1
+At File C:\xampp\htdocs\vturefill\application\Library\Database.php On Line 78
+*******************************************************************
+

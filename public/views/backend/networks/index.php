@@ -25,6 +25,20 @@
 			        </form>
                 </div>
 	        </div>
+	        <div class="d-flex justify-content-between mb-4">
+				<div class="d-flex bg-transparent border align-items-center m-0 p-0 rounded cursor-pointer" data-toggle="modal" data-target="#add-network">
+					<small class="border-right px-3 py-2 text-center text-muted">
+						<i class="icofont-plus"></i>
+					</small> 
+					<div class="px-3 py-2 text-muted">Add network</div>
+				</div>
+				<?php require BACKEND_PATH . DS . "networks" . DS . "partials" . DS . "add.php"; ?>
+				<div class="">
+					<a href="javascript:;" class="btn btn-dark">
+						<i class="icofont-caret-down"></i>
+					</a>
+				</div>
+			</div>
 			<div class="mt-1">
 				<?php if(empty($allNetworks)): ?>
 					<div class="alert alert-info">No network yet</div>
@@ -34,6 +48,9 @@
 							<?php require BACKEND_PATH . DS . "networks" . DS . "partials" . DS . "listings.php"; ?> 
 						<?php endforeach; ?>
 					</div>
+					<?php foreach($allNetworks as $network): ?>
+						<?php require BACKEND_PATH . DS . "networks" . DS . "partials" . DS . "edit.php"; ?> 
+					<?php endforeach; ?>
 				<?php endif; ?>
 			</div>
 	    </div>

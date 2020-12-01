@@ -9,4 +9,18 @@ final class Response {
         return empty($code) ? http_response_code() : http_response_code($code);
     }
 
+    public function redirect($location) {
+    	if (!headers_sent()) {
+            header('Location: '.DOMAIN.$location);
+        }else {
+            echo '<script type="text/javascript">';
+            echo 'window.location.href="'.DOMAIN.$location.'";';
+            echo '</script>';
+            echo '<noscript>';
+            echo '<meta http-equiv="refresh" content="0;url='.$location.'" />';
+            echo '</noscript>';
+            exit;
+        }
+    }
+
 }

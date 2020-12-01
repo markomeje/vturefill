@@ -3,10 +3,11 @@
 namespace VTURefill\Controllers;
 use VTURefill\Models\Login;
 use VTURefill\Core\{Controller, View, Json};
+use VTURefill\Library\{Authentication};
 
 
 class LoginController extends Controller {
-
+	
 	
 	public function __construct() {
 		parent::__construct();
@@ -41,6 +42,10 @@ class LoginController extends Controller {
 			$response = Login::login($data);
 		    Json::encode($response);
 		}
+	}
+
+	public function logout() {
+		Authentication::unauthenticate();
 	}
 
 }

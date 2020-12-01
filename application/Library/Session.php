@@ -1,6 +1,7 @@
 <?php
 
 namespace VTURefill\Library;
+use VTURefill\Http\Cookie;
 
 
 class Session {

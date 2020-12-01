@@ -5,7 +5,8 @@
 	"tariffs" => ["link" => "tariffs", "count" => $allTariffsCount], 
 	"funds" => ["link" => "funds", "count" => $allFundsCount], 
 	"payments" => ["link" => "payments", "count" => $allPaymentsCount], 
-	"levels" => ["link" => "levels", "count" => $allLevelsCount]
+	"levels" => ["link" => "levels", "count" => $allLevelsCount],
+	"networks" => ["link" => "networks", "count" => $allNetworksCount]
 ]; ?>
 <?php if(empty($panels)): ?>
 	<div class="col-12">

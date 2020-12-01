@@ -15,12 +15,34 @@ class Clubkonnect {
 
 	public static function buyDataBundle($data) {
         try{
-        	$info = ["UserID" => CLUBKONNECT_USER_ID, "APIKey" => CLUBKONNECT_API_KEY, "MobileNetwork" => $data["network"], "DataPlan" => $data["plan"], "MobileNumber" => $data["phone"], "RequestID" => 3412, "CallBackURL" => DOMAIN."/orderData"];
+        	$info = ["UserID" => CLUBKONNECT_USER_ID, "APIKey" => CLUBKONNECT_API_KEY, "MobileNetwork" => $data["network"], "DataPlan" => $data["plan"], "MobileNumber" => $data["phone"], "CallBackURL" => DOMAIN."/orders/orderData/"];
             $query = "?".http_build_query($info);
             $response = Curl::get(CLUBKONNECT_DATA_BUNDLE_API_URL.$query);
             return $response;
         } catch(Exception $error) {
             Logger::log("CLUBKONNECT BUY DATA BUNDLE API ERROR", $error->getMessage(), $error->getFile(), $error->getLine());
+            return false;
+        }
+    }
+
+    public static function cancelTransaction($orderId) {
+        try{
+            $info = ["UserID" => CLUBKONNECT_USER_ID, "APIKey" => CLUBKONNECT_API_KEY, "OrderID" => $orderId];
+            $query = "?".http_build_query($info);
+            $response = Curl::get(CLUBKONNECT_CANCEL_TRANSACTION_URL.$query);
+            return $response;
+        } catch(Exception $error) {
+            Logger::log("CLUBKONNECT CANCEL TRANSACTION API ERROR", $error->getMessage(), $error->getFile(), $error->getLine());
+            return false;
+        }
+    }
+
+    public static function queryTransaction($url) {
+        try{
+            $response = Curl::get($url);
+            return $response;
+        } catch(Exception $error) {
+            Logger::log("CLUBKONNECT CANCEL TRANSACTION API ERROR", $error->getMessage(), $error->getFile(), $error->getLine());
             return false;
         }
     }

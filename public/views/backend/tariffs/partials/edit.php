@@ -4,7 +4,7 @@
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <div class="modal-title text-muted">Edit tariff</div>
+                <div class="modal-title text-muted">Edit Tariff</div>
                 <div class="cursor-pointer" data-dismiss="modal" aria-label="Close">
                     <i class="icofont-close text-danger"></i>
                 </div>
@@ -41,7 +41,7 @@
                                 <div class="input-group-prepend">
                                     <div class="input-group-text">NGN</div>
                                 </div>
-                                <input type="number" name="amount" class="form-control amount" placeholder="e.g., 2000" value="<?= empty($tariff->amount) ? 0000 : $tariff->amount; ?>">
+                                <input type="number" name="amount" class="form-control amount" placeholder="e.g., 2000" value="<?= empty($tariff->amount) ? '' : $tariff->amount; ?>">
                             </div>
                             <small class="error amount-error text-danger"></small>
                         </div>
@@ -53,9 +53,9 @@
                     </div>
                     <div class="form-row">
                         <div class="form-group input-group-lg col-md-6">
-                            <label class="text-muted">Code</label>
-                            <input type="text" name="code" class="form-control code" placeholder="e.g., 1000" value="<?= empty($tariff->code) ? '0000' : $tariff->code; ?>">
-                            <small class="error code-error text-danger"></small>
+                            <label class="text-muted">Data Plan</label>
+                            <input type="text" name="plan" class="form-control plan" placeholder="e.g., 1000" value="<?= empty($tariff->plan) ? '' : $tariff->plan; ?>">
+                            <small class="error plan-error text-danger"></small>
                         </div>
                         <div class="form-group input-group-lg col-md-6">
                             <label class="text-muted">Status</label>

@@ -3,7 +3,7 @@
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <div class="modal-title text-muted">Add tariff</div>
+                <div class="modal-title text-muted">Add Tariff</div>
                 <div class="cursor-pointer" data-dismiss="modal" aria-label="Close">
                     <i class="icofont-close text-danger"></i>
                 </div>
@@ -52,9 +52,9 @@
                     </div>
                     <div class="form-row">
                         <div class="form-group input-group-lg col-md-6">
-                            <label class="text-muted">Code</label>
-                            <input type="text" name="code" class="form-control code" placeholder="e.g., 1000">
-                            <small class="error code-error text-danger"></small>
+                            <label class="text-muted">Data Plan</label>
+                            <input type="text" name="plan" class="form-control plan" placeholder="e.g., 1000">
+                            <small class="error plan-error text-danger"></small>
                         </div>
                         <div class="form-group input-group-lg col-md-6">
                             <label class="text-muted">Status</label>

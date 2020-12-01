@@ -13,7 +13,7 @@ class OrdersController extends Controller {
 	}
 
 	public function index() {
-		View::render('backend', 'orders/index', ['backendLinks' => $this->backendLinks, 'activeController' => $this->activeController, 'allUsersOrders' => Orders::getAllOrders(), 'allUsersOrdersCount' => Orders::getAllOrdersCount()]);
+		View::render('backend', 'orders/index', ['backendLinks' => $this->backendLinks, 'activeController' => $this->activeController, 'allUsersOrders' => Orders::getAllOrders(), 'allUsersOrdersCount' => '']);
 	}
 
 	public function orderData() {
@@ -22,7 +22,8 @@ class OrdersController extends Controller {
 			$phone = isset($this->request->get()['phone']) ? $this->request->get()['phone'] : ''; 
 			$plan = isset($this->request->get()['plan']) ? $this->request->get()['plan'] : ''; 
 			$user = isset($this->request->get()['user']) ? $this->request->get()['user'] : '';
-			$data = ['network' => $network, 'phone' => $phone, 'plan' => $plan, 'user' => (int)$user];
+			$amount = isset($this->request->get()['amount']) ? $this->request->get()['amount'] : '';
+			$data = ['network' => $network, 'phone' => $phone, 'plan' => $plan, 'user' => (int)$user, 'amount' => $amount];
 			$response = Orders::orderData($data);
 			Json::encode($response);
 		}

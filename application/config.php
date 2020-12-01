@@ -35,6 +35,7 @@ define("CLUBKONNECT_USER_ID", $_ENV["CLUBKONNECT_USER_ID"]);
 
 define("CLUBKONNECT_AIRTIME_API_URL", "https://www.nellobytesystems.com/APIAirtimeV1.asp");
 define("CLUBKONNECT_DATA_BUNDLE_API_URL", "https://www.nellobytesystems.com/APIDatabundleV1.asp");
+define("CLUBKONNECT_CANCEL_TRANSACTION_URL", "https://www.nellobytesystems.com/APIQueryV1.asp");
 
 define("COOKIE_PATH", "/");
 define("COOKIE_DOMAIN", DOMAIN);

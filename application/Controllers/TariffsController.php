@@ -19,7 +19,13 @@ class TariffsController extends Controller {
 
 	public function addTariff() {
 		if ($this->request->method('ajax')) {
-			$posted = ['network' => $this->request->post()['network'], 'amount' => $this->request->post()['amount'], 'duration' => $this->request->post()['duration'], 'bundle' => $this->request->post()['bundle'], 'code' => $this->request->post()['code'], 'status' => $this->request->post()['status']];
+			$network = isset($this->request->post()['network']) ? $this->request->post()['network'] : '';
+			$amount = isset($this->request->post()['amount']) ? $this->request->post()['amount'] : '';
+			$duration = isset($this->request->post()['duration']) ? $this->request->post()['duration'] : '';
+			$bundle = isset($this->request->post()['bundle']) ? $this->request->post()['bundle'] : '';
+			$plan = isset($this->request->post()['plan']) ? $this->request->post()['plan'] : '';
+			$status = isset($this->request->post()['status']) ? $this->request->post()['status'] : '';
+			$posted = ['network' => $network, 'amount' => $amount, 'duration' => $amount, 'bundle' => $bundle, 'plan' => $plan, 'status' => $status];
 			$response = Tariffs::addTariff($posted);
 		    Json::encode($response);
 		}
@@ -27,7 +33,13 @@ class TariffsController extends Controller {
 
 	public function editTariff($id) {
 		if ($this->request->method('ajax')) {
-			$posted = ['network' => $this->request->post()['network'], 'amount' => $this->request->post()['amount'], 'duration' => $this->request->post()['duration'], 'bundle' => $this->request->post()['bundle'], 'code' => $this->request->post()['code'], 'status' => $this->request->post()['status']];
+			$network = isset($this->request->post()['network']) ? $this->request->post()['network'] : '';
+			$amount = isset($this->request->post()['amount']) ? $this->request->post()['amount'] : '';
+			$duration = isset($this->request->post()['duration']) ? $this->request->post()['duration'] : '';
+			$bundle = isset($this->request->post()['bundle']) ? $this->request->post()['bundle'] : '';
+			$plan = isset($this->request->post()['plan']) ? $this->request->post()['plan'] : '';
+			$status = isset($this->request->post()['status']) ? $this->request->post()['status'] : '';
+			$posted = ['network' => $network, 'amount' => $amount, 'duration' => $duration, 'bundle' => $bundle, 'plan' => $plan, 'status' => $status];
 			$response = Tariffs::editTariff($posted, $id);
 		    Json::encode($response);
 		}

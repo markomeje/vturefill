@@ -49,7 +49,7 @@ class Login extends Model {
 
 		try {
 			$user = User::getByEmail($posted['email']);
-			if(empty($user)) return ['status' => 'invalid-user'];
+			if(empty($user)) return ['status' => 'invalid-login'];
 			$password = isset($user->password) ? $user->password : null;
 			$id = isset($user->id) ? $user->id : 0;
 			if(!password_verify($posted['password'], $password)) return ['status' => 'invalid-login'];
