@@ -39,26 +39,30 @@ class Orders extends Model {
 
             $response = Clubkonnect::buyDataBundle(['network' => $data['network'], 'phone' => $data['phone'], 'plan' => $data['plan']]);
 			$api = is_string($response) ? Json::decode($response) : [];
+			$fund = Funds::getFundByUser($data['user']);
 			$refundAmount = $fund->amount + $data['amount'];
-
-			if (strtoupper($api->status) === 'ORDER_ONHOLD' || strtoupper($api->status) === 'ORDER_RECEIVED') {
+            $apiStatus = isset($api->status) ? strtoupper($api->status) : '';
+          
+			if ($apiStatus === 'ORDER_ONHOLD' || $apiStatus === 'ORDER_RECEIVED') {
 				Clubkonnect::cancelTransaction($api->orderid);
-		        Funds::updateUserFundAmount(['amount' => $refundAmount]);
+		        Funds::updateUserFundAmount(['amount' => $refundAmount, 'user' => $data['user']]);
 		        $order = self::addOrder(array_merge(['status' => 'cancelled', 'type' => 'normal'], $data));
 		        return ['status' => 1, 'message' => 'Order Cancelled',  'user' => $user, 'order' => self::getOrderById($order['id'])];
 
-			}else if(strtoupper($api->status) === 'ORDER_COMPLETED'){
+			}else if($apiStatus === 'ORDER_COMPLETED'){
 				$order = self::addOrder(array_merge(['status' => 'success', 'type' => 'normal'], $data));
 		        return ['status' => 1, 'message' => 'Order Successfull',  'user' => $user, 'order' => self::getOrderById($order['id'])];
 
 			}else {
-				Funds::updateUserFundAmount(['amount' => $refundAmount]);
+				Funds::updateUserFundAmount(['amount' => $refundAmount, 'user' => $data['user']]);
 		        $order = self::addOrder(array_merge(['status' => 'failed', 'type' => 'normal'], $data));
 		        return ['status' => 1, 'message' => 'Order Failed',  'user' => $user, 'order' => self::getOrderById($order['id'])];
 			}
         } catch (Exception $error) {
         	Logger::log('ADDING ORDER ERROR', $error->getMessage(), __FILE__, __LINE__);
-			return ['status' => 0, 'message' => 'An Error Occured'];
+			Funds::updateUserFundAmount(['amount' => $refundAmount, 'user' => $data['user']]);
+		    $order = self::addOrder(array_merge(['status' => 'failed', 'type' => 'normal'], $data));
+		    return ['status' => 1, 'message' => 'Order Failed',  'user' => $user, 'order' => self::getOrderById($order['id'])];
         }
 			
 
