@@ -39,10 +39,9 @@ class Orders extends Model {
 
             $response = Clubkonnect::buyDataBundle(['network' => $data['network'], 'phone' => $data['phone'], 'plan' => $data['plan']]);
 			$api = is_string($response) ? Json::decode($response) : [];
-			return ['api' => $response];
 			$fund = Funds::getFundByUser($data['user']);
 			$refundAmount = $fund->amount + $data['amount'];
-            $apiStatus = isset($api->status) ? strtoupper($api->status) : '';
+            $apiStatus = isset($api['status']) ? strtoupper($api['status']) : '';
           
 			if ($apiStatus === 'ORDER_ONHOLD' || $apiStatus === 'ORDER_RECEIVED') {
 				Clubkonnect::cancelTransaction($api->orderid);
