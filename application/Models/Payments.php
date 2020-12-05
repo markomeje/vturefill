@@ -29,7 +29,7 @@ class Payments extends Model {
 
 		try{
 			$email = empty($user->email) ? '' : $user->email;
-	    	$transaction = (new Paystacks)->initialize(["amount" => $data["amount"] * 100, "email" => $email, "reference" => Generate::hash()]);
+	    	$transaction = (new PaystackGateway)->initialize(["amount" => $data["amount"] * 100, "email" => $email, "reference" => Generate::hash()]);
 	    	$fields = ["reference" => $transaction->data->reference, "status" => "initialized", 'email' => $email];
     		$database = Database::connect();
 			$table = self::$table;
@@ -45,16 +45,16 @@ class Payments extends Model {
 
 	public static function verifyPayment($reference) {
 		try {
-		    $transaction = (new Paystacks)->verify($reference);
-		    if (strtolower($transaction->data->status) !== "success") throw new Exception("Error Verifying Paystack Transaction");
+		    $transaction = (new PaystackGateway)->verify($reference);
+		    if (strtolower($transaction->data->status) !== 'success') throw new Exception("Error Verifying Paystack Transaction");
 		    $database = Database::connect();
 		    $database->beginTransaction();
-		    $payment = self::getPaymentByReference(["reference" => $reference]);
-			$fields = ["status" => "paid", "reference" => $reference, "user" => $payment->user];
-			if (self::updatePaymentStatus($fields) === true) {
-				$data = ["user" => $fields["user"], "amount" => $payment->amount];
-			    if (!Funds::topUpFund($data)) throw new Exception("Error Toping Up Fund For User ". $data['user']);
-			}
+		    $payment = self::getPaymentByReference(['reference' => $reference]);
+		    $user = empty($payment->user) ? 0 : $payment->user;
+		    $amount = empty($payment->amount) ? 0 : $payment->amount;
+			$fields = ['status' => 'paid', 'reference' => $reference, 'user' => $user];
+			if (!self::updatePaymentStatus($fields)) throw new Exception('Error Updating Payment Status For User '. $data['user']);
+			Funds::creditFund(['user' => $fields['user'], 'amount' => $amount]);
 			$database->commit();
             return true;
 		} catch (Exception $error) {
@@ -70,7 +70,7 @@ class Payments extends Model {
 			$table = self::$table;
 			$database->prepare("UPDATE {$table} SET status = :status WHERE user = :user AND reference = :reference LIMIT 1");
 			$database->execute($fields);
-			return $database->rowCount() > 0 ? true : false;
+			return $database->rowCount() > 0;
 		} catch (Exception $error) {
 			Logger::log("UPDATING PAYMENT STATUS ERROR", $error->getMessage(), __FILE__, __LINE__);
 			return false;

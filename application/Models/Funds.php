@@ -20,27 +20,27 @@ class Funds extends Model {
 			$table = self::$table;
 			$database->prepare("INSERT INTO {$table} (user, amount, email) VALUES(:user, :amount, :email)");
 			$database->execute($fields);
-			return $database->rowCount() > 0 ? true : false;
+			return $database->rowCount() > 0;
 	    } catch(Exception $error){
 	        Logger::log("ADDING USER FUND ERROR", $error->getMessage(), __FILE__, __LINE__);
         	return false;
 	    }
 	}
 
-	public static function updateUserFundAmount($fields) {
+	public static function updateFund($data) {
 		try {
 			$database = Database::connect();
 			$table = self::$table;
 			$database->prepare("UPDATE {$table} SET amount = :amount WHERE user = :user LIMIT 1");
-			$database->execute($fields);
-            return $database->rowCount() > 0 ? true : false;
+			$database->execute($data);
+            return $database->rowCount() > 0;
 		} catch (Exception $error) {
 			Logger::log("UPDATING USER FUND ERROR", $error->getMessage(), __FILE__, __LINE__);
 			return false;
 		}
 	}
 
-	public static function getFundByUser($user) {
+	public static function getFund($user) {
 		try {
 			$database = Database::connect();
 			$table = self::$table;
@@ -53,15 +53,20 @@ class Funds extends Model {
 		}
 	}
 
-	public static function topUpFund($fields) {
+	public static function creditFund($data) {
 		try {
-			$fund = self::getFundByUser($fields["user"]);
-			if(empty($fund) || $fund === false) return self::addFund($fields) ? true : false;
-			$currentAmount = empty($fund->amount) ? 0 : $fund->amount;
-			$data = ["user" => $fields["user"], "amount" => $currentAmount + $fields["amount"]];
-			return self::updateUserFundAmount($data) ? true : false;
+			$fund = self::getFund($data['user']);
+			if(empty($fund)) {
+				if(!self::addFund($data)) throw new Exception("Error Adding Fund For User ". $data['user']);
+				return true;
+			}else {
+				$previousBalance = empty($fund->amount) ? 0 : $fund->amount;
+				$newBalance = $data['amount'] + $previousBalance;
+				if(!self::updateFund(['user' => $data['user'], 'amount' => $newBalance])) throw new Exception("Error Crediting Fund For User ". $data['user']);
+				return true;
+			}
 		} catch (Exception $error) {
-			Logger::log("TOPING UP FUND ERROR", $error->getMessage(), __FILE__, __LINE__);
+			Logger::log("CREDITING FUND ERROR", $error->getMessage(), __FILE__, __LINE__);
 			return false;
 		}
 	}
@@ -75,6 +80,30 @@ class Funds extends Model {
             return $database->fetchAll();
 		} catch (Exception $error) {
 			Logger::log("GETTING ALL FUNDS ERROR", $error->getMessage(), __FILE__, __LINE__);
+			return false;
+		}
+	}
+
+	public static function debitFund($data) {
+		try {
+			$fund = self::getFund($data['user']);
+			$previousBalance = empty($fund->amount) ? 0 : $fund->amount;
+			$newBalance = $previousBalance - $data['amount'];
+			if(!self::updateFund(['user' => $data['user'], 'amount' => $newBalance])) throw new Exception("Error Crediting Fund For User ". $data['user']);
+			return true;
+		} catch (Exception $error) {
+			Logger::log("CREDITING FUND ERROR", $error->getMessage(), __FILE__, __LINE__);
+			return false;
+		}
+	}
+
+	public static function isSufficientFunds($data) {
+		try {
+			$fund = self::getFund($data['user']);
+			$previousBalance = empty($fund->amount) ? 0 : $fund->amount;
+			return $previousBalance > $data['amount'];
+		} catch (Exception $error) {
+			Logger::log("CHECKING SUFFICIENT FUNDS ERROR", $error->getMessage(), __FILE__, __LINE__);
 			return false;
 		}
 	}

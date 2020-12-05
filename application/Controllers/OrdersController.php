@@ -20,10 +20,9 @@ class OrdersController extends Controller {
 		if ($this->request->method('get')) {
 			$network = isset($this->request->get()['network']) ? $this->request->get()['network'] : ''; 
 			$phone = isset($this->request->get()['phone']) ? $this->request->get()['phone'] : ''; 
-			$plan = isset($this->request->get()['plan']) ? $this->request->get()['plan'] : ''; 
 			$user = isset($this->request->get()['user']) ? $this->request->get()['user'] : '';
 			$amount = isset($this->request->get()['amount']) ? $this->request->get()['amount'] : '';
-			$data = ['network' => $network, 'phone' => $phone, 'plan' => $plan, 'user' => (int)$user, 'amount' => $amount];
+			$data = ['network' => $network, 'phone' => $phone, 'user' => (int)$user, 'amount' => $amount];
 			$response = Orders::orderData($data);
 			Json::encode($response);
 		}

@@ -6,7 +6,7 @@ use Yabacon\Paystack;
 use Yabacon\Paystack\Exception\ApiException;
 
 
-class Paystacks {
+class PaystackGateway {
 
 	public $paystack;
 

@@ -17,7 +17,7 @@
                             <small class="error name-error text-danger"></small>
                         </div>
                         <div class="form-group input-group-lg col-md-6">
-                            <label class="text-muted">Network Code</label>
+                            <label class="text-muted">System Code</label>
                             <input type="number" name="code" class="form-control code" placeholder="e.g., 03">
                             <small class="error code-error text-danger"></small>
                         </div>

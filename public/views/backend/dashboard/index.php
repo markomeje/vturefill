@@ -4,8 +4,21 @@
 	</div>
     <div class="pt-5">
 	    <div class="container pt-5">
-	    	<div class="row">
-                <div class="col-12 col-md-6 col-lg-6 mb-4">
+	    	<div class="mt-4 d-flex mb-3 justify-content-between align-items-center">
+	    		<?php $currentUrl = empty($activeController) ? '' : $activeController; ?>
+	    		<h5 class="m-0 p-0">
+	    			<a href="<?= DOMAIN; ?>/<?= $currentUrl; ?>">
+	    			<?= ucfirst($currentUrl); ?></a>
+	    		</h5>
+	    		<div class="d-flex align-items-center mt-2">
+	    			<a href="<?= isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : 'javascript:;'; ?>" class="btn btn-sm bg-warning px-4 rounded-pill btn-light text-white previous-url mr-3">
+	    				<i class="icofont-arrow-left"></i> <span class="previous-next-text">Previous</span>
+	    			</a>
+	    			<button class="btn btn-sm bg-info px-4 rounded-pill btn-light text-white next-url">
+	    				<span class="previous-next-text">Next</span> <i class="icofont-arrow-right"></i>
+	    			</button>
+	    		</div>
+                <!-- <div class="col-12 col-md-6 col-lg-6 mb-4">
                     <?php require BACKEND_PATH . DS . 'layouts' . DS . 'links.php'; ?>
                 </div>
 	            <div class="col-12 col-md-6 col-lg-6 mb-4">
@@ -23,7 +36,7 @@
 			                </div>
 			            </div>
 			        </form>
-                </div>
+                </div> -->
 	        </div>
 	    	<div class="row mb-1">
 				<?php require BACKEND_PATH . DS . "dashboard" . DS . "partials" . DS . "panels.php"; ?>

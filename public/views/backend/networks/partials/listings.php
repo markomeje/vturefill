@@ -11,20 +11,20 @@
 				</div>
 			</div>
 			<div class="d-flex justify-content-between">
-				<div class="text-muted">Clubkonnect Code</div>
+				<div class="text-muted">System Code</div>
 				<div><?= empty($network->code) ? 'Nill' : $network->code; ?></div>
 			</div>
 		</div>
-		<div class="card-footer bg-primary d-flex justify-content-between align-items-center">
+		<div class="card-footer bg-prussian d-flex justify-content-between align-items-center">
 			<div class="custom-control custom-switch">
                 <input type="checkbox" class="custom-control-input network-switch" <?= (isset($network->status) && strtolower($network->status) === 'manual') ? 'checked=""' : ''; ?> id="<?= $id; ?>" data-url="<?= DOMAIN; ?>/networks/toggleNetworkStatus/<?= $id; ?>">
                 <label class="custom-control-label" for="<?= $id; ?>"></label>
             </div>
             <div class="d-flex">
-            	<small class="text-white mr-2 cursor-pointer" data-toggle="modal" data-target="#edit-network-<?= $id; ?>">
+            	<small class="text-warning mr-2 cursor-pointer" data-toggle="modal" data-target="#edit-network-<?= $id; ?>">
             		<i class="icofont-edit"></i>
             	</small>
-            	<small class="text-white cursor-pointer" data-url="<?= DOMAIN; ?>/networks/deleteNetwork/<?= $id; ?>">
+            	<small class="text-warning cursor-pointer" data-url="<?= DOMAIN; ?>/networks/deleteNetwork/<?= $id; ?>">
             		<i class="icofont-ui-delete"></i>
             	</small>
             </div>

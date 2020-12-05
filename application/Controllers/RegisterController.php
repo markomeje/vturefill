@@ -14,12 +14,12 @@ class RegisterController extends Controller {
 	}
 
 	public function signup() {
-		if ($this->request->method('get')) {
-			$username = isset($this->request->get()['username']) ? $this->request->get()['username'] : '';
-			$email = isset($this->request->get()['email']) ? $this->request->get()['email'] : '';
-			$password = isset($this->request->get()['password']) ? $this->request->get()['password'] : '';
-			$confirmpassword = isset($this->request->get()['confirmpassword']) ? $this->request->get()['confirmpassword'] : '';
-			$phone = isset($this->request->get()['phone']) ? $this->request->get()['phone'] : '';
+		if ($this->request->method('post')) {
+			$username = isset($this->request->post()['username']) ? $this->request->post()['username'] : '';
+			$email = isset($this->request->post()['email']) ? $this->request->post()['email'] : '';
+			$password = isset($this->request->post()['password']) ? $this->request->post()['password'] : '';
+			$confirmpassword = isset($this->request->post()['confirmpassword']) ? $this->request->post()['confirmpassword'] : '';
+			$phone = isset($this->request->post()['phone']) ? $this->request->post()['phone'] : '';
 			$data = ['username' => $username, 'email' => $email, 'password' => $password, 'confirmpassword' => $confirmpassword, 'phone' => $phone];
 			$response = Register::signup($data);
 		    Json::encode($response);

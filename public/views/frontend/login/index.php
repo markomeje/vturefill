@@ -16,7 +16,7 @@
 							<input type="password" name="password" class="form-control password" placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;">
 							<small class="error password-error text-danger"></small>
 						</div>
-						<button type="submit" class="btn mt-4 btn-lg border-0 bg-dark text-white login-button btn-block">
+						<button type="submit" class="btn mt-4 btn-lg border-0 bg-prussian text-white login-button btn-block">
 							<img src="<?= PUBLIC_URL; ?>/images/banners/spinner.svg" class="mr-2 d-none login-spinner mb-1">
 							Login
 						</button>

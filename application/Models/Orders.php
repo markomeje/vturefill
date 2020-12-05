@@ -23,44 +23,43 @@ class Orders extends Model {
 		}elseif (empty($data['plan'])) {
 			return ['status' => 0, 'message' => 'Invalid data plan'];
 		}elseif (empty($data['user'])) {
-			return ['status' => 0, 'message' => 'Invalid user'];
+			return ['status' => 0, 'message' => 'Invalid user reference'];
 		}elseif(empty($data['amount'])) {
 			return ['status' => 0, 'message' => 'Invalid amount'];
 		}
         try {
-        	$fund = Funds::getFundByUser($data['user']);
-			if (empty($fund->amount) || $fund->amount < $data['amount']) return ['status' => 0, 'message' => 'Insufficient Funds'];
-			Funds::updateUserFundAmount(['amount' => ($fund->amount - $data['amount']), 'user' => $data['user']]);
+        	$where = ['user' => $data['user'], 'amount' => $data['amount']];
+			if (!Funds::isSufficientFunds($where)) return ['status' => 0, 'message' => 'Insufficient Funds'];
+			Funds::debitFund($where);
 			$user = User::getById($data['user']);
+
 			if(strtolower((Networks::getNetworkByCode($data['network']))->status) === 'manual') {
 				$order = self::addOrder(array_merge(['status' => 'pending', 'type' => 'manual'], $data));
 				return ['status' => 1, 'message' => 'Order pending',  'user' => $user, 'order' => self::getOrderById($order['id'])];
 			}
 
-            $response = Clubkonnect::buyDataBundle(['network' => $data['network'], 'phone' => $data['phone'], 'plan' => $data['plan']]);
-			$api = is_string($response) ? Json::decode($response) : [];
-			$fund = Funds::getFundByUser($data['user']);
+            $response = RefillGateway::topUpAirtime(['network' => $data['network'], 'phone' => $data['phone'], 'amount' => $data['amount'], 'reference' => Generate::string()]);
+			$fund = Funds::getFund($data['user']);
 			$refundAmount = $fund->amount + $data['amount'];
-            $apiStatus = isset($api['status']) ? strtoupper($api['status']) : '';
+            $apiStatusCode = isset($response['code']) ? $response['code'] : 0;
           
-			if ($apiStatus === 'ORDER_ONHOLD' || $apiStatus === 'ORDER_RECEIVED') {
-				Clubkonnect::cancelTransaction($api->orderid);
-		        Funds::updateUserFundAmount(['amount' => $refundAmount, 'user' => $data['user']]);
+			if ($apiStatusCode === 103) {
+		        Funds::creditFund($where);
 		        $order = self::addOrder(array_merge(['status' => 'cancelled', 'type' => 'normal'], $data));
 		        return ['status' => 2, 'message' => 'Order Cancelled',  'user' => $user, 'order' => self::getOrderById($order['id'])];
 
-			}else if($apiStatus === 'ORDER_COMPLETED'){
+			}else if($apiStatusCode === 100){
 				$order = self::addOrder(array_merge(['status' => 'success', 'type' => 'normal'], $data));
 		        return ['status' => 1, 'message' => 'Order Successfull',  'user' => $user, 'order' => self::getOrderById($order['id'])];
 
 			}else {
-				Funds::updateUserFundAmount(['amount' => $refundAmount, 'user' => $data['user']]);
+				Funds::creditFund($where);
 		        $order = self::addOrder(array_merge(['status' => 'failed', 'type' => 'normal'], $data));
 		        return ['status' => 0, 'message' => 'Order Failed',  'user' => $user, 'order' => self::getOrderById($order['id'])];
 			}
         } catch (Exception $error) {
         	Logger::log('ADDING ORDER ERROR', $error->getMessage(), __FILE__, __LINE__);
-			Funds::updateUserFundAmount(['amount' => $refundAmount, 'user' => $data['user']]);
+			Funds::creditFund($where);
 		    $order = self::addOrder(array_merge(['status' => 'failed', 'type' => 'normal'], $data));
 		    return ['status' => 0, 'message' => 'Order Failed',  'user' => $user, 'order' => self::getOrderById($order['id'])];
         }

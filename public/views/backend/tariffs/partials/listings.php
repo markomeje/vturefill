@@ -20,7 +20,7 @@
 				</div>
 			</div>	
 		</div>
-		<div class="card-footer bg-dark d-flex justify-content-between align-items-center">
+		<div class="card-footer bg-prussian d-flex justify-content-between align-items-center">
 			<div class="custom-control custom-checkbox">
                 <input type="checkbox" class="custom-control-input" id="<?= $id; ?>">
                 <label class="custom-control-label" for="<?= $id; ?>"></label>

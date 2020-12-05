@@ -9,7 +9,7 @@
 				<?= empty($category->status) ? "Nill" : ucfirst($category->status); ?>
 			</div>
 		</div>
-		<div class="card-footer bg-dark d-flex justify-content-between align-items-center">
+		<div class="card-footer bg-prussian d-flex justify-content-between align-items-center">
 			<div class="custom-control custom-switch">
                 <input type="checkbox" class="custom-control-input" <?= (isset($category->status) && strtolower($category->status) === 'active') ? 'checked=""' : ''; ?> id="<?= $id; ?>">
                 <label class="custom-control-label" for="<?= $id; ?>"></label>
