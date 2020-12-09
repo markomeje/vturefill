@@ -9,7 +9,7 @@ define('SERVER_HTTPS', (isset($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']
 define('DOMAIN',  SERVER_HTTPS === true ? $_ENV['LIVE_WEBSITE_DOMAIN'] : 'http://vturefill.build');
 
 define('PUBLIC_URL', DOMAIN.'/public');
-define('SOFWARE_NAME', 'VTU Refill');
+define('SOFWARE_NAME', 'VTU MOBILE_AIRTIME_NG');
 
 define('LOCAL_DATABASE_HOST', '127.0.0.1');
 define('LOCAL_DATABASE_NAME', 'vturefill');
@@ -31,12 +31,11 @@ define('PAYSTACK_TEST_PUBLIC_KEY', 'pk_test_1526345662bbf69407a146ce5a981c7a3460
 define('PAYSTACK_LIVE_SECRET_KEY', $_ENV['PAYSTACK_LIVE_SECRET_KEY']);
 define('PAYSTACK_LIVE_PUBLIC_KEY', $_ENV['PAYSTACK_LIVE_PUBLIC_KEY']);
 
-define('REFILL_API_KEY', $_ENV['REFILL_API_KEY']);
-define('REFILL_USER_ID', $_ENV['REFILL_USER_ID']);
+define('MOBILE_AIRTIME_NG_API_KEY', $_ENV['MOBILE_AIRTIME_NG_API_KEY']);
+define('MOBILE_AIRTIME_NG_USER_ID', $_ENV['MOBILE_AIRTIME_NG_USER_ID']);
 
-define('REFILL_AIRTIME_TOPUP_URL', 'https://mobileairtimeng.com/httpapi/?');
-define('REFILL_DATA_BUNDLE_API_URL', 'https://www.nellobytesystems.com/APIDatabundleV1.asp');
-define('REFILL_CANCEL_TRANSACTION_URL', 'https://www.nellobytesystems.com/APIQueryV1.asp');
+define('MOBILE_AIRTIME_NG_AIRTIME_TOPUP_URL', 'https://mobileairtimeng.com/httpapi/?');
+define('MOBILE_AIRTIME_NG_MTN_SME_DATA_API_URL', 'https://mobileairtimeng.com/httpapi/datashare?');
 
 define('COOKIE_PATH', '/');
 define('COOKIE_DOMAIN', DOMAIN);

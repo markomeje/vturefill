@@ -7,7 +7,7 @@ use VTURefill\Library\Curl;
 use VTURefill\Core\Json;
 
 
-class RefillGateway {
+class MobileairtimengGateway {
 
 
     public function __construct() {}
@@ -15,9 +15,9 @@ class RefillGateway {
 
 	public static function topUpAirtime($data) {
         try{
-        	$info = ['userid' => REFILL_USER_ID, 'pass' => REFILL_PASSWORD, 'network' => $data['network'], 'phone' => $data['phone'], 'amt' => $data['amount'], 'user_ref' => $data['reference'], 'jsn' => 'json'];
+        	$info = ['userid' => MOBILE_AIRTIME_NG_USER_ID, 'pass' => MOBILE_AIRTIME_NG_API_KEY, 'network' => $data['network'], 'phone' => $data['phone'], 'amt' => $data['amount'], 'user_ref' => $data['reference'], 'jsn' => 'json'];
             $query = http_build_query($info);
-            $response = Curl::get(REFILL_AIRTIME_TOPUP_URL.$query);
+            $response = Curl::get(MOBILE_AIRTIME_NG_AIRTIME_TOPUP_URL.$query);
             return Json::decode($response);
         } catch(Exception $error) {
             Logger::log('REFILL BUY DATA BUNDLE API ERROR', $error->getMessage(), $error->getFile(), $error->getLine());

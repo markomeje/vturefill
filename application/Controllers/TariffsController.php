@@ -45,4 +45,9 @@ class TariffsController extends Controller {
 		}
 	}
 
+	public function getAllTariffs() {
+		$response = Tariffs::getAllTariffs();
+		Json::encode($response);
+	}
+
 }

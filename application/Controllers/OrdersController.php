@@ -16,14 +16,14 @@ class OrdersController extends Controller {
 		View::render('backend', 'orders/index', ['backendLinks' => $this->backendLinks, 'activeController' => $this->activeController, 'allUsersOrders' => Orders::getAllOrders(), 'allUsersOrdersCount' => '']);
 	}
 
-	public function orderData() {
-		if ($this->request->method('get')) {
-			$network = isset($this->request->get()['network']) ? $this->request->get()['network'] : ''; 
-			$phone = isset($this->request->get()['phone']) ? $this->request->get()['phone'] : ''; 
-			$user = isset($this->request->get()['user']) ? $this->request->get()['user'] : '';
-			$amount = isset($this->request->get()['amount']) ? $this->request->get()['amount'] : '';
-			$data = ['network' => $network, 'phone' => $phone, 'user' => (int)$user, 'amount' => $amount];
-			$response = Orders::orderData($data);
+	public function airtime() {
+		if ($this->request->method('post')) {
+			$network = isset($this->request->post()['network']) ? $this->request->post()['network'] : ''; 
+			$phone = isset($this->request->post()['phone']) ? $this->request->post()['phone'] : ''; 
+			$user = isset($this->request->post()['user']) ? $this->request->post()['user'] : '';
+			$amount = isset($this->request->post()['amount']) ? $this->request->post()['amount'] : '';
+			$data = ['network' => $network, 'phone' => str_replace(' ', '', trim($phone)), 'user' => (int)$user, 'amount' => $amount];
+			$response = Orders::orderAirtime($data);
 			Json::encode($response);
 		}
 	}
