@@ -22,9 +22,9 @@ class LoginController extends Controller {
      */
 	public function signin() {
 		if ($this->request->method('post')) {
-			$email = isset($this->request->post()['email']) ? $this->request->post()['email'] : '';
+			$phone = isset($this->request->post()['phone']) ? $this->request->post()['phone'] : '';
 			$password = isset($this->request->post()['password']) ? $this->request->post()['password'] : '';
-			$data = ['email' => $email, 'password' => $password];
+			$data = ['phone' => $phone, 'password' => $password];
 			$response = Login::signin($data);
 		    Json::encode($response);
 		}

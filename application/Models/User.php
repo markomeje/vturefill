@@ -68,4 +68,17 @@ class User extends Model {
 		}
 	}
 
+	public static function getByPhone($phone) {
+		try {
+			$database = Database::connect();
+			$table = self::$table;
+			$database->prepare("SELECT * FROM {$table} WHERE phone = :phone LIMIT 1");
+			$database->execute(['phone' => $phone]);
+            return $database->fetch();
+		} catch (Exception $error) {
+			Logger::log('GETTING USER BY EMAIL ERROR', $error->getMessage(), __FILE__, __LINE__);
+			return false;
+		}
+	}
+
 }

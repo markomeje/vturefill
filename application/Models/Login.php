@@ -17,14 +17,14 @@ class Login extends Model {
      * Login for api
      */
 	public static function signin($posted) {
-		if (empty($posted['email'])) {
+		if (empty($posted['phone'])) {
 			return ['status' => 0, 'message' => 'Email is required'];
 		}elseif (empty($posted['password'])) {
 			return ['status' => 0, 'message' => 'Password is required'];
 		}
 
 		try {
-			$user = User::getByEmail($posted['email']);
+			$user = User::getByPhone($posted['phone']);
 			if(empty($user)) return ['status' => 0, 'message' => 'User not found.'];
 			$password = isset($user->password) ? $user->password : null;
 			$id = isset($user->id) ? $user->id : 0;
