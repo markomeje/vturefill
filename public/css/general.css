@@ -42,10 +42,10 @@ body {
     font-family: "Poppins", serif;
 }
 
-.input-group-prepend,
+/*.input-group-prepend,
 .input-group-append {
     height: 45px;
-}
+}*/
 
 .cursor-pointer {
     cursor: pointer;
@@ -58,7 +58,7 @@ body {
 
 .modal-open .modal {
     -ms-overflow-style: none;
-    /* Internet Explorer 10+ 
+    /* Internet Explorer 10+ */
     scrollbar-width: none;
     /* Firefox */
 }

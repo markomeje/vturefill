@@ -36,6 +36,7 @@ define('MOBILE_AIRTIME_NG_USER_ID', $_ENV['MOBILE_AIRTIME_NG_USER_ID']);
 
 define('MOBILE_AIRTIME_NG_AIRTIME_TOPUP_URL', 'https://mobileairtimeng.com/httpapi/?');
 define('MOBILE_AIRTIME_NG_MTN_SME_DATA_API_URL', 'https://mobileairtimeng.com/httpapi/datashare?');
+define('MOBILE_AIRTIME_NG_DATA_TOP_UP_API_URL', 'https://mobileairtimeng.com/httpapi/datatopup.php?');
 
 define('COOKIE_PATH', '/');
 define('COOKIE_DOMAIN', DOMAIN);

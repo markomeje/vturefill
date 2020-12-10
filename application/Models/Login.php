@@ -4,7 +4,7 @@ namespace VTURefill\Models;
 use VTURefill\Core\{Model};
 use VTURefill\Library\{Validate, Authentication, Generate};
 use VTURefill\Http\Cookie;
-use VTURefill\Models\{Funds};
+
 
 class Login extends Model {
 
@@ -24,13 +24,12 @@ class Login extends Model {
 		}
 
 		try {
-			$user = User::getByPhone($posted['phone']);
+			$user = Users::getByPhone($posted['phone']);
 			if(empty($user)) return ['status' => 0, 'message' => 'User not found.'];
 			$password = isset($user->password) ? $user->password : null;
 			$id = isset($user->id) ? $user->id : 0;
 			if(!password_verify($posted['password'], $password)) return ['status' => 0, 'messsage' => 'Your password is incorrect'];
-			$funds = Funds::getFund($id);
-			return ['status' => 1, 'message' => 'Login successfull', 'user' => User::getById($id), 'token' => Generate::hash(15), 'funds' => empty($funds) ? 0 : $funds];
+			return ['status' => 1, 'message' => 'Login successfull', 'user' => Users::getById($id)];
 		} catch (Exception $error) {
 			Logger::log('USER LOGIN ERROR', $error->getMessage(), __FILE__, __LINE__);
 			return ['status' => 0, 'message' => 'Login falied. Try again.'];
@@ -48,7 +47,7 @@ class Login extends Model {
 		}
 
 		try {
-			$user = User::getByEmail($posted['email']);
+			$user = Users::getByEmail($posted['email']);
 			if(empty($user)) return ['status' => 'invalid-login'];
 			$password = isset($user->password) ? $user->password : null;
 			$id = isset($user->id) ? $user->id : 0;

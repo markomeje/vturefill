@@ -6,7 +6,7 @@ use VTURefill\Library\{Validate, Database};
 use \Exception;
 
 
-class User extends Model {
+class Users extends Model {
 
 
 	private static $table = "users";
@@ -68,6 +68,19 @@ class User extends Model {
 		}
 	}
 
+	public static function phoneExists($phone) {
+		try {
+			$database = Database::connect();
+			$table = self::$table;
+			$database->prepare("SELECT phone FROM {$table} WHERE email = :phone LIMIT 1");
+			$database->execute(["phone" => $phone]);
+            return $database->rowCount() > 0 ? true : false;
+		} catch (Exception $error) {
+			Logger::log("CHECKING USER PHONE NUMBER EXISTS ERROR", $error->getMessage(), __FILE__, __LINE__);
+			return false;
+		}
+	}
+
 	public static function getByPhone($phone) {
 		try {
 			$database = Database::connect();
@@ -77,6 +90,19 @@ class User extends Model {
             return $database->fetch();
 		} catch (Exception $error) {
 			Logger::log('GETTING USER BY EMAIL ERROR', $error->getMessage(), __FILE__, __LINE__);
+			return false;
+		}
+	}
+
+	public static function getAllUsers() {
+		try {
+			$database = Database::connect();
+			$table = self::$table;
+			$database->prepare("SELECT * FROM {$table} ORDER BY date DESC");
+			$database->execute();
+            return $database->fetch();
+		} catch (Exception $error) {
+			Logger::log("GETTING USER BY ID ERROR", $error->getMessage(), __FILE__, __LINE__);
 			return false;
 		}
 	}

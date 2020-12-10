@@ -19,18 +19,20 @@ class Levels extends Model {
 			return ["status" => "invalid-level"];
 		}elseif(self::levelExists($posted["level"]) === true) {
 			return ["status" => "level-exists"];
-	    }elseif (empty($posted["status"])) {
-			return ["status" => "invalid-status"];
+		}elseif (empty($posted['discount'])) {
+			return ['status' => 'invalid-discount'];
 		}elseif (empty($posted["minimum"])) {
 			return ["status" => "invalid-minimum"];
 		}elseif (empty($posted["maximum"])) {
 			return ["status" => "invalid-maximum"];
+		}elseif (empty($posted['description'])) {
+			return ['status' => 'invalid-description'];
 		}
 
 		try {
 			$database = Database::connect();
 			$table = self::$table;
-			$database->prepare("INSERT INTO {$table} (minimum, status, maximum, level) VALUES(:minimum, :status, :maximum, :level)");
+			$database->prepare("INSERT INTO {$table} (minimum, discount, description, maximum, level) VALUES(:minimum, :discount, :description, :maximum, :level)");
 			$database->execute($posted);
 			return ($database->rowCount() > 0) ? ["status" => "success"] : ["status" => "error"];
 		} catch (Exception $error) {
@@ -47,7 +49,7 @@ class Levels extends Model {
 			$database->execute();
             return $database->fetchAll();
 		} catch (Exception $error) {
-			Logger::log("GETTING ALL CATEGORIES ERROR", $error->getMessage(), __FILE__, __LINE__);
+			Logger::log("GETTING ALL LEVELS ERROR", $error->getMessage(), __FILE__, __LINE__);
 			return false;
 		}
 	}
@@ -73,8 +75,34 @@ class Levels extends Model {
 			$database->execute(["level" => $level]);
             return ($database->rowCount() > 0) ? true : false;
 		} catch (Exception $error) {
-			Logger::log("GETTING LEVEL ERROR", $error->getMessage(), __FILE__, __LINE__);
+			Logger::log("LEVEL EXISTS ERROR", $error->getMessage(), __FILE__, __LINE__);
 			return false;
+		}
+	}
+
+	public static function editLevel($posted, $id) {	
+		if (empty($posted["level"])) {
+			return ["status" => "invalid-level"];
+		}elseif (empty($posted['discount'])) {
+			return ['status' => 'invalid-discount'];
+		}elseif (empty($posted["minimum"])) {
+			return ["status" => "invalid-minimum"];
+		}elseif (empty($posted["maximum"])) {
+			return ["status" => "invalid-maximum"];
+		}elseif (empty($posted['description'])) {
+			return ['status' => 'invalid-description'];
+		}
+
+		try {
+			$database = Database::connect();
+			$table = self::$table;
+			$database->prepare("UPDATE {$table} SET minimum = :minimum, discount = :discount, description = :description, maximum = :maximum, level = :level WHERE id = :id LIMIT 1");
+			$merged = array_merge(['id' => $id], $posted);
+			$database->execute($merged);
+			return ($database->rowCount() > 0) ? ["status" => "success"] : ["status" => "error"];
+		} catch (Exception $error) {
+			Logger::log("EDITING LEVEL ERROR", $error->getMessage(), __FILE__, __LINE__);
+			return ["status" => "error"];
 		}
 	}
 

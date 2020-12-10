@@ -3,7 +3,7 @@
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <div class="modal-title text-muted">Add level</div>
+                <div class="modal-title text-muted">Add Level</div>
                 <div class="cursor-pointer" data-dismiss="modal" aria-label="Close">
                     <i class="icofont-close text-danger"></i>
                 </div>
@@ -17,20 +17,9 @@
                             <small class="error level-error text-danger"></small>
                         </div>
                         <div class="form-group input-group-lg col-md-6">
-                            <label class="text-muted">Status</label>
-                            <select class="custom-select status" name="status">
-                                <option value="">Select status</option>
-                                <?php if(empty($levelStatus)): ?>
-                                    <option value="">No status</option>
-                                <?php else: ?>
-                                    <?php foreach($levelStatus as $status): ?>
-                                        <option value="<?= $status; ?>">
-                                            <?= ucfirst($status); ?>
-                                        </option>
-                                    <?php endforeach; ?>
-                                <?php endif; ?>
-                            </select>
-                            <small class="error status-error text-danger"></small>
+                            <label class="text-muted">Discount</label>
+                            <input type="text" name="discount" class="form-control discount" placeholder="e.g., 0.2">
+                            <small class="error discount-error text-danger"></small>
                         </div>
                     </div>
                     <div class="form-row">
@@ -53,6 +42,13 @@
                                 <input type="number" name="maximum" class="form-control maximum" placeholder="e.g., 6000">
                             </div>
                             <small class="error maximum-error text-danger"></small>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-12">
+                            <label class="text-muted">Description</label>
+                            <textarea name="description" class="form-control description" rows="4" placeholder="e.g., For the sake of placeholding."></textarea>
+                            <small class="error description-error text-danger"></small>
                         </div>
                     </div>
                 </div>

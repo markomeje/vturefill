@@ -15,7 +15,7 @@ class Orders extends Model {
 		parent::__construct();
 	}
 
-	public static function orderAirtime($data) {
+	public static function airtimeTopUp($data) {
 		if (empty($data['network'])) {
 			return ['status' => 0, 'message' => 'Invalid mobile network'];
 		}elseif(empty($data['phone'])) {
@@ -25,16 +25,17 @@ class Orders extends Model {
 		}elseif(empty($data['amount'])) {
 			return ['status' => 0, 'message' => 'Invalid amount'];
 		}
+
         try {
         	$where = ['user' => $data['user'], 'amount' => $data['amount']];
 			if (!Funds::isSufficientFunds($where)) return ['status' => 0, 'message' => 'Insufficient Funds'];
 			Funds::debitFund($where);
-			$user = User::getById($data['user']);
+			$user = Users::getById($data['user']);
             $reference = Generate::string(25);
 
 			if(strtolower((Networks::getNetworkByCode($data['network']))->status) === 'manual') {
-				$order = self::addOrder(array_merge(['status' => 'pending', 'type' => 'manual', 'reference' => $reference], $data));
-				return ['status' => 1, 'message' => 'Order pending',  'user' => $user, 'order' => self::getOrderById($order['id'])];
+				self::addOrder(array_merge(['status' => 'pending', 'type' => 'manual', 'reference' => $reference], $data));
+				return ['status' => 1, 'message' => 'Order pending',  'user' => $user, 'order' => self::getOrder($data['user'])];
 			}
              
             $response = MobileairtimengGateway::topUpAirtime(['network' => $data['network'], 'phone' => $data['phone'], 'amount' => $data['amount'], 'reference' => $reference]);
@@ -44,13 +45,55 @@ class Orders extends Model {
             $apiUserRef = isset($response->user_ref) ? $response->user_ref : $reference;
           
 			if($apiStatusCode !== 100) throw new Exception("Airtime Purchase Failed For User " . $data['user'], 1);
-			$order = self::addOrder(array_merge(['status' => 'success', 'type' => 'normal', 'reference' => $apiUserRef], $data));
-		    return ['status' => 1, 'message' => 'Order Successfull',  'user' => $user, 'order' => self::getOrderById($order['id'])];
+			self::addOrder(array_merge(['status' => 'success', 'type' => 'normal', 'reference' => $apiUserRef], $data));
+		    return ['status' => 1, 'message' => 'Order Successfull',  'user' => $user, 'order' => self::getOrder($data['user'])];
         } catch (Exception $error) {
         	Logger::log('ADDING ORDER ERROR', $error->getMessage(), __FILE__, __LINE__);
 			Funds::creditFund($where);
-		    $order = self::addOrder(array_merge(['status' => 'failed', 'type' => 'normal', 'reference' => $apiUserRef], $data));
-		    return ['status' => 0, 'message' => 'Order Failed',  'user' => $user, 'order' => self::getOrderById($order['id'])];
+		    self::addOrder(array_merge(['status' => 'failed', 'type' => 'normal', 'reference' => $apiUserRef], $data));
+		    return ['status' => 0, 'message' => 'Order Failed',  'user' => $user, 'order' => self::getOrder($data['user'])];
+        }
+	}
+
+	public static function mtnSmeData($data) {
+		if (empty($data['network'])) {
+			return ['status' => 0, 'message' => 'Invalid mobile network'];
+		}elseif(empty($data['phone'])) {
+			return ['status' => 0, 'message' => 'Invalid phone number'];
+		}elseif (empty($data['user'])) {
+			return ['status' => 0, 'message' => 'Invalid User'];
+		}elseif(empty($data['plan'])) {
+			return ['status' => 0, 'message' => 'Invalid plan'];
+		}elseif(empty($data['amount'])) {
+			return ['status' => 0, 'message' => 'Invalid amount'];
+		}
+
+        try {
+        	$where = ['user' => $data['user'], 'amount' => $data['amount']];
+			if (!Funds::isSufficientFunds($where)) return ['status' => 0, 'message' => 'Insufficient Funds'];
+			Funds::debitFund($where);
+			$user = Users::getById($data['user']);
+            $reference = Generate::string(25);
+
+			if(strtolower((Networks::getNetworkByCode($data['network']))->status) === 'manual') {
+				self::addOrder(array_merge(['status' => 'pending', 'type' => 'manual', 'reference' => $reference], $data));
+				return ['status' => 1, 'message' => 'Order pending',  'user' => $user, 'order' => self::getOrder($data['user'])];
+			}
+             
+            $response = MobileairtimengGateway::mtnSmeData(['network' => $data['network'], 'phone' => $data['phone'], 'datasize' => $data['plan'], 'reference' => $reference]);
+			$fund = Funds::getFund($data['user']);
+			$refundAmount = $fund->amount + $data['amount'];
+            $apiStatusCode = isset($response->code) ? $response->code : 0;
+            $apiUserRef = isset($response->user_ref) ? $response->user_ref : $reference;
+          
+			if($apiStatusCode !== 100) throw new Exception("Airtime Purchase Failed For User " . $data['user'], 1);
+			$order = self::addOrder(array_merge(['status' => 'success', 'type' => 'normal', 'reference' => $apiUserRef], $data));
+		    return ['status' => 1, 'message' => 'Order Successfull',  'user' => $user, 'order' => self::getOrder($order['id'])];
+        } catch (Exception $error) {
+        	Logger::log('ADDING ORDER ERROR', $error->getMessage(), __FILE__, __LINE__);
+			Funds::creditFund($where);
+		    self::addOrder(array_merge(['status' => 'failed', 'type' => 'normal', 'reference' => $apiUserRef], $data));
+		    return ['status' => 0, 'message' => 'Order Failed',  'user' => $user, 'order' => self::getOrder($data['user'])];
         }
 	}
 
@@ -58,7 +101,7 @@ class Orders extends Model {
 		try {
 			$database = Database::connect();
 			$table = self::$table;
-			$database->prepare("INSERT INTO {$table} (user, network, phone, type, status, amount, reference) VALUES (:user, :network,  :phone, :type, :status, :amount, :reference)");
+			$database->prepare("INSERT INTO {$table} (user, network, phone, type, status, plan, amount, reference) VALUES (:user, :network,  :phone, :type, :plan, :status, :amount, :reference)");
 			$database->execute($fields);
 			return ['count' => $database->rowCount(), 'id' => $database->lastInsertId()];
 		} catch (Exception $error) {
@@ -80,13 +123,13 @@ class Orders extends Model {
 		}
 	}
 
-	public static function getOrderById($id) {
+	public static function getOrder($user) {
 		try {
 			$database = Database::connect();
 			$table = self::$table;
-			$database->prepare("SELECT * FROM {$table} WHERE id = :id LIMIT 1");
-			$database->execute(['id' => $id]);
-            return $database->fetch();
+			$database->prepare("SELECT * FROM {$table} WHERE user = :user ORDER BY date DESC");
+			$database->execute(['user' => $user]);
+            return $database->fetchAll();
 		} catch (Exception $error) {
 			Logger::log('GETTING ORDER BY ID ERROR', $error->getMessage(), __FILE__, __LINE__);
 			return false;

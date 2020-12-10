@@ -24,6 +24,10 @@
 	line-height: 45px;
 }
 
+.backend-content {
+	padding-top: 130px;
+}
+
 @media (max-width: 768px) {
 	.previous-next-text {
 		display: none;
