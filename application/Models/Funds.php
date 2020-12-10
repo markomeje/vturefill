@@ -57,9 +57,9 @@ class Funds extends Model {
 		try {
 			$matched = Levels::getMatchedLevel($data['amount']);
 			$level = empty($matched) ? 1 : $matched->level;
-			$merged = array_merge(['level' => $level], $data);
 			$fund = self::getFund($data['user']);
 			if(empty($fund)) {
+				$merged = array_merge(['level' => $level], $data);
 				if(!self::addFund($merged)) throw new Exception("Error Adding Fund For User ". $data['user']);
 			}else {
 				$previousBalance = empty($fund->amount) ? 0 : $fund->amount;

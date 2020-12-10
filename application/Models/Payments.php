@@ -25,6 +25,8 @@ class Payments extends Model {
 			return ["status" => 0, "message" => "Invalid Payment amount"];
 		}elseif($data["amount"] < self::$minimumPayment) {
 			return ["status" => 0, "message" => "Minimum amount is " . self::$minimumPayment];
+		}elseif(empty($data["level"])) {
+			return ["status" => 0, "message" => "Level is required"];
 		}
 
 		try{
@@ -32,7 +34,7 @@ class Payments extends Model {
 	    	$transaction = (new PaystackGateway)->initialize(["amount" => $data["amount"] * 100, "email" => $email, "reference" => Generate::hash()]);
     		$database = Database::connect();
 			$table = self::$table;
-			$database->prepare("INSERT INTO {$table} (user, amount, reference, status) VALUES(:user, :amount, :reference, :status)");
+			$database->prepare("INSERT INTO {$table} (user, amount, reference, status, level) VALUES(:user, :amount, :reference, :status, :level)");
 			$merged = array_merge($data, ["reference" => $transaction->data->reference, "status" => "initialized"]);
 			$database->execute($merged);
 			return ($database->rowCount() > 0) ? ["status" => 1, "redirect" => $transaction->data->authorization_url] : ["status" => 0, 'message' => 'Payment Failed. Try Again.'];

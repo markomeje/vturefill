@@ -20,8 +20,9 @@ class PaymentsController extends Controller {
 	public function pay() {
 		if ($this->request->method('post')) {
 			$user = isset($this->request->post()['user']) ? $this->request->post()['user'] : '';
-			$amount = isset($this->request->post()['amount']) ? $this->request->post()['amount'] : ''; 
-			$data = ['user' => $user, 'amount' => $amount];
+			$amount = isset($this->request->post()['amount']) ? $this->request->post()['amount'] : '';
+			$level = isset($this->request->post()['level']) ? $this->request->post()['level'] : '';  
+			$data = ['user' => $user, 'amount' => $amount, 'level' => $level];
 			$response = Payments::makePayment($data);
 			(isset($response['status']) && $response['status'] === 1) ? header('Location: '. $response['redirect']) : Json::encode($response);
 		}
