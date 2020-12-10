@@ -1,7 +1,5 @@
 <?php
 
-//https://www.nellobytesystems.com/APIDatabundleV1.asp?UserID=CK7813492&APIKey=PX31277CI5QZ7F6K42YO62DMSF5V42YKI6RM2JKH3206279TMA26J5Z732SQSI86&MobileNetwork=01&DataPlan=1000&MobileNumber=08158212666&CallBackURL=https://vturefill.markomeje.com/orders
-
 date_default_timezone_set("Africa/Lagos");
 /**
  * ROOT - Thats the root of server filesystem eg "C:/xampp/htdocs/herium".
