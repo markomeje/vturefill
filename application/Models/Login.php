@@ -29,7 +29,8 @@ class Login extends Model {
 			$password = isset($user->password) ? $user->password : null;
 			$id = isset($user->id) ? $user->id : 0;
 			if(!password_verify($posted['password'], $password)) return ['status' => 0, 'messsage' => 'Your password is incorrect'];
-			return ['status' => 1, 'message' => 'Login successfull', 'user' => Users::getById($id)];
+			$funds = empty(Funds::getFund($id)) ? 0 : Funds::getFund($id);
+			return ['status' => 1, 'message' => 'Login successfull', 'user' => Users::getById($id), 'funds' => $funds];
 		} catch (Exception $error) {
 			Logger::log('USER LOGIN ERROR', $error->getMessage(), __FILE__, __LINE__);
 			return ['status' => 0, 'message' => 'Login falied. Try again.'];

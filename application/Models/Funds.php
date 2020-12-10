@@ -18,7 +18,7 @@ class Funds extends Model {
 		try{
     		$database = Database::connect();
 			$table = self::$table;
-			$database->prepare("INSERT INTO {$table} (user, amount, email) VALUES(:user, :amount, :email)");
+			$database->prepare("INSERT INTO {$table} (user, amount, level) VALUES(:user, :amount, :level)");
 			$database->execute($fields);
 			return $database->rowCount() > 0;
 	    } catch(Exception $error){
@@ -55,15 +55,16 @@ class Funds extends Model {
 
 	public static function creditFund($data) {
 		try {
+			$matched = Levels::getMatchedLevel($data['amount']);
+			$level = empty($matched) ? 1 : $matched->level;
+			$merged = array_merge(['level' => $level], $data);
 			$fund = self::getFund($data['user']);
 			if(empty($fund)) {
-				if(!self::addFund($data)) throw new Exception("Error Adding Fund For User ". $data['user']);
-				return true;
+				if(!self::addFund($merged)) throw new Exception("Error Adding Fund For User ". $data['user']);
 			}else {
 				$previousBalance = empty($fund->amount) ? 0 : $fund->amount;
 				$newBalance = $data['amount'] + $previousBalance;
 				if(!self::updateFund(['user' => $data['user'], 'amount' => $newBalance])) throw new Exception("Error Crediting Fund For User ". $data['user']);
-				return true;
 			}
 		} catch (Exception $error) {
 			Logger::log("CREDITING FUND ERROR", $error->getMessage(), __FILE__, __LINE__);

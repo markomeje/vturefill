@@ -54,6 +54,19 @@ class Levels extends Model {
 		}
 	}
 
+	public static function getMatchedLevel($amount) {
+		try {
+			$database = Database::connect();
+			$table = self::$table;
+			$database->prepare("SELECT level FROM {$table} WHERE minimum <= :minimum AND maximum >= :maximum LIMIT 1");
+			$database->execute(['minimum' => $amount, 'maximum' => $amount]);
+            return $database->fetch();
+		} catch (Exception $error) {
+			Logger::log("GETTING MATCHED LEVEL ERROR", $error->getMessage(), __FILE__, __LINE__);
+			return false;
+		}
+	}
+
 	public static function getLevelById($id) {
 		try {
 			$database = Database::connect();

@@ -1,44 +1,43 @@
 <?php 
 
 namespace VTURefill\Models;
-use VTURefill\Core\{Model};
+use VTURefill\Core\{Model, Logger};
 use VTURefill\Library\{Validate, Database, Generate, Session,  Authentication};
-use VTURefill\Models\{User};
 use VTURefill\Models\Components\Pagination;
-use VTURefill\Gateways\{Paystacks};
+use VTURefill\Gateways\{PaystackGateway};
+use \Exception;
 
 
 class Payments extends Model {
 
     private static $table = "payments";
-    private static $minimumPayment = 1000;
+    private static $minimumPayment = 100;
 
 	public function __construct() {
 		parent::__construct();
 	}
 
 	public static function makePayment($data) {
-		$user = User::getById($data["user"]);
+		$user = Users::getById($data["user"]);
 		if (empty($data["user"]) || empty($user)) {
 			return ["status" => 0, "message" => "User does not exists"];
 		}elseif(empty($data["amount"])) {
 			return ["status" => 0, "message" => "Invalid Payment amount"];
 		}elseif($data["amount"] < self::$minimumPayment) {
-			return ["status" => 0, "message" => "Minimum amount error"];
+			return ["status" => 0, "message" => "Minimum amount is " . self::$minimumPayment];
 		}
 
 		try{
 			$email = empty($user->email) ? '' : $user->email;
 	    	$transaction = (new PaystackGateway)->initialize(["amount" => $data["amount"] * 100, "email" => $email, "reference" => Generate::hash()]);
-	    	$fields = ["reference" => $transaction->data->reference, "status" => "initialized", 'email' => $email];
     		$database = Database::connect();
 			$table = self::$table;
-			$database->prepare("INSERT INTO {$table} (user, amount, email, reference, status) VALUES(:user, :amount, :email, :reference, :status)");
-			$merged = array_merge($data, $fields);
+			$database->prepare("INSERT INTO {$table} (user, amount, reference, status) VALUES(:user, :amount, :reference, :status)");
+			$merged = array_merge($data, ["reference" => $transaction->data->reference, "status" => "initialized"]);
 			$database->execute($merged);
-			return ($database->rowCount() > 0) ? ["status" => 1, "redirect" => $transaction->data->authorization_url] : ["status" => 0];
+			return ($database->rowCount() > 0) ? ["status" => 1, "redirect" => $transaction->data->authorization_url] : ["status" => 0, 'message' => 'Payment Failed. Try Again.'];
 	    } catch(Exception $error){
-	        Logger::log("PAYSTACK PAYMENT ERROR", $error->getMessage(), __FILE__, __LINE__);
+	        Logger::log("PAYMENT ERROR", $error->getMessage(), __FILE__, __LINE__);
         	return ["status" => "error"];
 	    }
 	}
@@ -49,18 +48,21 @@ class Payments extends Model {
 		    if (strtolower($transaction->data->status) !== 'success') throw new Exception("Error Verifying Paystack Transaction");
 		    $database = Database::connect();
 		    $database->beginTransaction();
-		    $payment = self::getPaymentByReference(['reference' => $reference]);
+		    $payment = self::getPaymentByReference($reference);
 		    $user = empty($payment->user) ? 0 : $payment->user;
 		    $amount = empty($payment->amount) ? 0 : $payment->amount;
-			$fields = ['status' => 'paid', 'reference' => $reference, 'user' => $user];
-			if (!self::updatePaymentStatus($fields)) throw new Exception('Error Updating Payment Status For User '. $data['user']);
-			Funds::creditFund(['user' => $fields['user'], 'amount' => $amount]);
+
+			if (!self::updatePaymentStatus(['status' => 'paid', 'reference' => $reference, 'user' => $user])) {
+				throw new Exception('Error Updating Payment Status For User '. $user);
+			}
+
+			Funds::creditFund(['user' => $user, 'amount' => $amount]);
 			$database->commit();
-            return true;
+            return ['status' => 1, 'message' => 'Payment Verification Successfull'];
 		} catch (Exception $error) {
 			$database->rollback();
 			Logger::log("VERIFYING PAYMENT ERROR", $error->getMessage(), __FILE__, __LINE__);
-			return false;
+			return ['status' => 0, 'message' => 'Payment Verification Failed'];
 		}
 	}
 
@@ -79,12 +81,12 @@ class Payments extends Model {
 
 
 
-	public static function getPaymentByReference($fields) {
+	public static function getPaymentByReference($reference) {
 		try {
 			$database = Database::connect();
 			$table = self::$table;
 			$database->prepare("SELECT * FROM {$table} WHERE reference = :reference LIMIT 1");
-			$database->execute($fields);
+			$database->execute(['reference' => $reference]);
             return $database->fetch();
 		} catch (Exception $error) {
 			Logger::log("GETTING PAYMENT DATA BY REFERENCE ERROR", $error->getMessage(), __FILE__, __LINE__);

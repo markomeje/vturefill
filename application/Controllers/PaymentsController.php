@@ -18,9 +18,9 @@ class PaymentsController extends Controller {
 	}
 
 	public function pay() {
-		if ($this->request->method('get')) {
-			$user = isset($this->request->get()['user']) ? $this->request->get()['user'] : '';
-			$amount = isset($this->request->get()['amount']) ? $this->request->get()['amount'] : ''; 
+		if ($this->request->method('post')) {
+			$user = isset($this->request->post()['user']) ? $this->request->post()['user'] : '';
+			$amount = isset($this->request->post()['amount']) ? $this->request->post()['amount'] : ''; 
 			$data = ['user' => $user, 'amount' => $amount];
 			$response = Payments::makePayment($data);
 			(isset($response['status']) && $response['status'] === 1) ? header('Location: '. $response['redirect']) : Json::encode($response);
@@ -29,7 +29,8 @@ class PaymentsController extends Controller {
 
 	public function verify() {
 		$reference = isset($this->request->get()['reference']) ? $this->request->get()['reference'] : '';
-		View::render('backend', 'payments/verify', ['verifyPayment' => Payments::verifyPayment($reference)]);
+		$response = Payments::verifyPayment($reference);
+		Json::encode($response);
 	}
 
 }
