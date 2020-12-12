@@ -12,7 +12,7 @@ final class Parser {
 
     public function __construct(Request $request) {
         try {
-            $url = (string)$request->get()['route'];
+            $url = isset($request->get()['route']) ? $request->get()['route'] : '';
             $url = empty($url) ? [] : (array)explode('/', filter_var(rtrim(strtolower($url), '/'), FILTER_SANITIZE_URL));
             $controller = (isset($url[0]) && $url[0] !== '') ? ucwords($url[0]) : DEFAULT_CONTROLLER;
             array_shift($url);
