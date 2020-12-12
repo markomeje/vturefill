@@ -4,7 +4,6 @@ define('ENVIROMENT', 'development');
 define('DEFAULT_CONTROLLER', 'login');
 define('DEFAULT_METHOD', 'index');
 
- defined('REFERER', isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '');
 define('SERVER_HTTPS', (isset($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) === 'on') ? true : false);
 define('DOMAIN',  SERVER_HTTPS === true ? $_ENV['LIVE_WEBSITE_DOMAIN'] : 'http://vturefill.build');
 
