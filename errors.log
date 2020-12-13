@@ -1,0 +1,6 @@
+*******************************************************************
+VERIFYING PAYMENT ERROR Logged On December 13, 2020, 2:00 pm
+Error Updating Payment Status For User 11
+At File C:\xampp\htdocs\vturefill\application\Models\Payments.php On Line 61
+*******************************************************************
+

@@ -48,23 +48,19 @@ class Payments extends Model {
 		try {
 		    $transaction = (new PaystackGateway)->verify($reference);
 		    if (strtolower($transaction->data->status) !== 'success') throw new Exception("Error Verifying Paystack Transaction");
-		    $database = Database::connect();
-		    $database->beginTransaction();
 		    $payment = self::getPaymentByReference($reference);
 		    $user = empty($payment->user) ? 0 : $payment->user;
 		    $amount = empty($payment->amount) ? 0 : $payment->amount;
 
-			if (!self::updatePaymentStatus(['status' => 'paid', 'reference' => $reference, 'user' => $user])) {
-				throw new Exception('Error Updating Payment Status For User '. $user);
-			}
+			if (!self::updatePaymentStatus(['status' => 'paid', 'reference' => $reference, 'user' => $user])) throw new Exception('Error Updating Payment Status For User '. $user);
 
 			Funds::creditFund(['user' => $user, 'amount' => $amount]);
-			$database->commit();
-            return ['status' => 1, 'message' => 'Payment Verification Successfull'];
+			$funds = empty(Funds::getFund($user)) ? 0 : Funds::getFund($user);
+            return ['status' => 1, 'message' => 'Payment Verification Successfull', 'funds' => $funds];
 		} catch (Exception $error) {
-			$database->rollback();
 			Logger::log("VERIFYING PAYMENT ERROR", $error->getMessage(), __FILE__, __LINE__);
-			return ['status' => 0, 'message' => 'Payment Verification Failed'];
+			$funds = empty(Funds::getFund($user)) ? 0 : Funds::getFund($user);
+			return ['status' => 0, 'message' => 'Payment Verification Failed', 'funds' => $funds];
 		}
 	}
 
