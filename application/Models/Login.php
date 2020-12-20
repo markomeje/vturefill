@@ -14,7 +14,7 @@ class Login extends Model {
 	}
     
     /**
-     * Login for api
+     * Login for api endpoint
      */
 	public static function signin($posted) {
 		if (empty($posted['phone'])) {
@@ -29,8 +29,11 @@ class Login extends Model {
 			$password = isset($user->password) ? $user->password : null;
 			$id = isset($user->id) ? $user->id : 0;
 			if(!password_verify($posted['password'], $password)) return ['status' => 0, 'messsage' => 'Your password is incorrect'];
-			$funds = empty(Funds::getFund($id)) ? 0 : Funds::getFund($id);
-			return ['status' => 1, 'message' => 'Login successfull', 'user' => Users::getById($id), 'funds' => $funds];
+
+			$funds = empty(Funds::getFund($id)) ? ['level' => null, 'amount' => 0] : (array)Funds::getFund($id);
+			unset($funds['user'], $funds['id'], $funds['date']);
+			$details = (object)array_merge((array)Users::getById($id), $funds);
+			return ['status' => 1, 'message' => 'Login successfull', 'user' => $details];
 		} catch (Exception $error) {
 			Logger::log('USER LOGIN ERROR', $error->getMessage(), __FILE__, __LINE__);
 			return ['status' => 0, 'message' => 'Login falied. Try again.'];

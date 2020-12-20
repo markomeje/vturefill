@@ -4,15 +4,13 @@
 	</div>
     <div class="pt-5">
 	    <div class="container pt-5">
-			<div class="d-flex align-items-center justify-content-between mb-4">
+			<div class="d-flex align-items-center justify-content-between mb-4" style="padding-top: 32px;">
 				<a class="btn btn-sm btn-primary text-white rounded-pill px-4" data-toggle="modal" data-target="#add-category">
-					<small><i class="icofont-plus"></i></small> <span>Add</span>
+					Add Category
 				</a>
-	    		<h6 class="m-0 p-0">
-	    			<a href="<?= DOMAIN; ?>/dashboard">
-	    			    Dashboard <i class="icofont-double-right"></i>
-	    			</a>
-	    		</h6>
+	    		<a href="<?= DOMAIN; ?>/dashboard">
+	    			Dashboard
+	    		</a>
 				<?php require BACKEND_PATH . DS . "categories" . DS . "partials" . DS . "add.php"; ?>
 			</div>
 			<div class="">

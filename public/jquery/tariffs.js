@@ -46,9 +46,9 @@
                 handleButton(button, spinner);
                 handleErrors($('.plan'), $('.plan-error'), 'Data plan is required');
 
-            }else if (response.status === 'invalid-status') {
+            }else if (response.status === 'invalid-type') {
                 handleButton(button, spinner);
-                handleErrors($('.status'), $('.status-error'), 'Status is required');
+                handleErrors($('.type'), $('.type-error'), 'Type is required');
 
             } else if (response.status === 'success') {
                 handleButton(button, spinner);
@@ -119,9 +119,9 @@
                 handleButton(button, spinner);
                 handleErrors($('.plan'), $('.plan-error'), 'Data plan is required');
 
-            }else if (response.status === 'invalid-status') {
+            }else if (response.status === 'invalid-type') {
                 handleButton(button, spinner);
-                handleErrors($('.status'), $('.status-error'), 'Status is required');
+                handleErrors($('.type'), $('.type-error'), 'Type is required');
 
             } else if (response.status === 'success') {
                 handleButton(button, spinner);

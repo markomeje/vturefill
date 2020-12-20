@@ -15,11 +15,11 @@
                 <label class="custom-control-label" for="<?= $id; ?>"></label>
             </div>
             <div class="d-flex">
-            	<small class="text-white mr-2" data-toggle="modal" data-target="#edit-category">
-            		<i class="icofont-edit"></i>
+            	<small class="text-white mr-2 cursor-pointer" data-toggle="modal" data-target="#edit-category">
+            		<i class="icofont-edit text-warning"></i>
             	</small>
-            	<small class="text-white">
-            		<i class="icofont-ui-delete"></i>
+            	<small class="text-white cursor-pointer">
+            		<i class="icofont-ui-delete text-danger"></i>
             	</small>
             </div>
 		</div>

@@ -90,7 +90,7 @@ class Funds extends Model {
 			$fund = self::getFund($data['user']);
 			$previousBalance = empty($fund->amount) ? 0 : $fund->amount;
 			$newBalance = $previousBalance - $data['amount'];
-			if(!self::updateFund(['user' => $data['user'], 'amount' => $newBalance])) throw new Exception("Error Crediting Fund For User ". $data['user']);
+			if(!self::updateFund(['user' => $data['user'], 'amount' => $newBalance])) throw new Exception("Error Debiting Fund For User ". $data['user']);
 			return true;
 		} catch (Exception $error) {
 			Logger::log("CREDITING FUND ERROR", $error->getMessage(), __FILE__, __LINE__);

@@ -13,7 +13,7 @@ class TariffsController extends Controller {
 	}
 
 	public function index() {
-		$data = ['backendLinks' => $this->backendLinks, 'activeController' => $this->activeController, 'allNetworks' => Networks::getAllNetworks(), 'allTariffs' => Tariffs::getAllTariffs(), 'tariffStatus' => Tariffs::$tariffStatus];
+		$data = ['backendLinks' => $this->backendLinks, 'activeController' => $this->activeController, 'allNetworks' => Networks::getAllNetworks(), 'allTariffs' => Tariffs::getAllTariffs(), 'tariffType' => Tariffs::$tariffType];
 		View::render('backend', 'tariffs/index', $data);
 	}
 
@@ -24,8 +24,8 @@ class TariffsController extends Controller {
 			$duration = isset($this->request->post()['duration']) ? $this->request->post()['duration'] : '';
 			$bundle = isset($this->request->post()['bundle']) ? $this->request->post()['bundle'] : '';
 			$plan = isset($this->request->post()['plan']) ? $this->request->post()['plan'] : '';
-			$status = isset($this->request->post()['status']) ? $this->request->post()['status'] : '';
-			$posted = ['network' => $network, 'amount' => $amount, 'duration' => $amount, 'bundle' => $bundle, 'plan' => $plan, 'status' => $status];
+			$type = isset($this->request->post()['type']) ? $this->request->post()['type'] : '';
+			$posted = ['network' => $network, 'amount' => $amount, 'duration' => $amount, 'bundle' => $bundle, 'plan' => $plan, 'type' => $type];
 			$response = Tariffs::addTariff($posted);
 		    Json::encode($response);
 		}
@@ -38,8 +38,8 @@ class TariffsController extends Controller {
 			$duration = isset($this->request->post()['duration']) ? $this->request->post()['duration'] : '';
 			$bundle = isset($this->request->post()['bundle']) ? $this->request->post()['bundle'] : '';
 			$plan = isset($this->request->post()['plan']) ? $this->request->post()['plan'] : '';
-			$status = isset($this->request->post()['status']) ? $this->request->post()['status'] : '';
-			$posted = ['network' => $network, 'amount' => $amount, 'duration' => $duration, 'bundle' => $bundle, 'plan' => $plan, 'status' => $status];
+			$type = isset($this->request->post()['type']) ? $this->request->post()['type'] : '';
+			$posted = ['network' => $network, 'amount' => $amount, 'duration' => $duration, 'bundle' => $bundle, 'plan' => $plan, 'type' => $type];
 			$response = Tariffs::editTariff($posted, $id);
 		    Json::encode($response);
 		}

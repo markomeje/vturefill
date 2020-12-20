@@ -119,5 +119,18 @@ class Levels extends Model {
 		}
 	}
 
+	public static function getDiscountByLevel($level) {
+		try {
+			$database = Database::connect();
+			$table = self::$table;
+			$database->prepare("SELECT discount FROM {$table} WHERE level = :level LIMIT 1");
+			$database->execute(['level' => $level]);
+            return $database->fetch();
+		} catch (Exception $error) {
+			Logger::log("GETTING LEVEL BY ID ERROR", $error->getMessage(), __FILE__, __LINE__);
+			return false;
+		}
+	}
+
 }
 

@@ -1,8 +1,9 @@
 <?php 
 
 namespace VTURefill\Controllers;
-use VTURefill\Models\Networks;
+use VTURefill\Models\{Networks, Tariffs};
 use VTURefill\Core\{Controller, View, Json};
+use VTURefill\Gateways\MobileairtimengGateway;
 
 
 class AdminController extends Controller {
@@ -16,7 +17,8 @@ class AdminController extends Controller {
 
 	public function setup() {
 		if ($this->request->method('get')) {
-			$data = ['allNetworks' => Networks::getAllNetworks(), 'contact' => ['email' => 'dikekingsely@vturefill.com', 'phone' => '0700000000']];
+			$power = MobileairtimengGateway::powerLists();
+			$data = ['allNetworks' => Networks::getAllNetworks(), 'contact' => ['email' => 'dikekingsely@vturefill.com', 'phone' => '0700000000'], 'data' => ['sme' => Tariffs::getTariffsByType('sme'), 'direct' => Tariffs::getTariffsByType('direct')], 'electricity' => $power, 'tv' => ['GOTV', 'DSTV', 'STARTIMES']];
 		    Json::encode($data);
 		}
 	}

@@ -36,12 +36,24 @@ class MobileairtimengGateway {
             return false;
         }
     }
-
-    public static function dataTopUp($data) {
+    
+    public static function directTopUp($data) {
         try{
-            $info = ['userid' => MOBILE_AIRTIME_NG_USER_ID, 'pass' => MOBILE_AIRTIME_NG_API_KEY, 'network' => $data['network'], 'phone' => $data['phone'], 'amt' => $data['amount'], 'jsn' => 'json'];
+            $info = ['userid' => MOBILE_AIRTIME_NG_USER_ID, 'pass' => MOBILE_AIRTIME_NG_API_KEY, 'network' => $data['network'], 'phone' => $data['phone'], 'user_ref' => $data['reference'], 'jsn' => 'json'];
             $query = http_build_query($info);
             $response = Curl::get(MOBILE_AIRTIME_NG_DATA_TOP_UP_API_URL.$query);
+            return Json::decode($response);
+        } catch(Exception $error) {
+            Logger::log('DATA TOP UP API ERROR', $error->getMessage(), $error->getFile(), $error->getLine());
+            return false;
+        }
+    }
+
+    public static function powerLists() {
+        try{
+            $info = ['userid' => MOBILE_AIRTIME_NG_USER_ID, 'pass' => MOBILE_AIRTIME_NG_API_KEY];
+            $query = http_build_query($info);
+            $response = Curl::get(MOBILE_AIRTIME_NG_POWER_LISTS_API_URL.$query);
             return Json::decode($response);
         } catch(Exception $error) {
             Logger::log('DATA TOP UP API ERROR', $error->getMessage(), $error->getFile(), $error->getLine());

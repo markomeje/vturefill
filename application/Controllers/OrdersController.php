@@ -41,4 +41,17 @@ class OrdersController extends Controller {
 		}
 	}
 
+	public function directData() {
+		if ($this->request->method('post')) {
+			$network = isset($this->request->post()['network']) ? $this->request->post()['network'] : ''; 
+			$phone = isset($this->request->post()['phone']) ? $this->request->post()['phone'] : ''; 
+			$user = isset($this->request->post()['user']) ? $this->request->post()['user'] : '';
+			$plan = isset($this->request->post()['plan']) ? $this->request->post()['plan'] : '';
+			$amount = isset($this->request->post()['amount']) ? $this->request->post()['amount'] : '';
+			$data = ['network' => $network, 'phone' => str_replace(' ', '', trim($phone)), 'user' => (int)$user, 'plan' => $plan, 'amount' => $amount];
+			$response = Orders::directDataTopUp($data);
+			Json::encode($response);
+		}
+	}
+
 }

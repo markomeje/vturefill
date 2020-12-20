@@ -7,6 +7,8 @@ define('DEFAULT_METHOD', 'index');
 define('SERVER_HTTPS', (isset($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) === 'on') ? true : false);
 define('DOMAIN',  SERVER_HTTPS === true ? $_ENV['LIVE_WEBSITE_DOMAIN'] : 'http://vturefill.build');
 
+define('REFERER', isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '');
+
 define('PUBLIC_URL', DOMAIN.'/public');
 define('SOFWARE_NAME', 'VTU MOBILE_AIRTIME_NG');
 
@@ -36,6 +38,7 @@ define('MOBILE_AIRTIME_NG_USER_ID', $_ENV['MOBILE_AIRTIME_NG_USER_ID']);
 define('MOBILE_AIRTIME_NG_AIRTIME_TOPUP_URL', 'https://mobileairtimeng.com/httpapi/?');
 define('MOBILE_AIRTIME_NG_MTN_SME_DATA_API_URL', 'https://mobileairtimeng.com/httpapi/datashare?');
 define('MOBILE_AIRTIME_NG_DATA_TOP_UP_API_URL', 'https://mobileairtimeng.com/httpapi/datatopup.php?');
+define('MOBILE_AIRTIME_NG_POWER_LISTS_API_URL', 'http://mobileairtimeng.com/httpapi/power-lists?');
 
 define('COOKIE_PATH', '/');
 define('COOKIE_DOMAIN', DOMAIN);

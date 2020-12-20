@@ -58,20 +58,20 @@
                             <small class="error plan-error text-danger"></small>
                         </div>
                         <div class="form-group input-group-lg col-md-6">
-                            <label class="text-muted">Status</label>
-                            <select class="custom-select status" name="status">
-                                <option value="">Select status</option>
-                                <?php if(empty($tariffStatus)): ?>
-                                    <option value="">No status</option>
+                            <label class="text-muted">Type</label>
+                            <select class="custom-select type" name="type">
+                                <option value="">Select Type</option>
+                                <?php if(empty($tariffType)): ?>
+                                    <option value="">No Type</option>
                                 <?php else: ?>
-                                    <?php foreach($tariffStatus as $status): ?>
-                                        <option value="<?= $status; ?>" <?= (strtolower($status) === strtolower($tariff->status)) ? "selected" : ""; ?> >
-                                            <?= ucfirst($status); ?>
+                                    <?php foreach($tariffType as $type): ?>
+                                        <option value="<?= $type; ?>" <?= (strtolower($type) === strtolower($tariff->type)) ? "selected" : ""; ?> >
+                                            <?= ucfirst($type); ?>
                                         </option>
                                     <?php endforeach; ?>
                                 <?php endif; ?>
                             </select>
-                            <small class="error status-error text-danger"></small>
+                            <small class="error type-error text-danger"></small>
                         </div>
                     </div>
                 </div>

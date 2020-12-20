@@ -4,7 +4,7 @@
 		<div class="card-body">
 			<div class="d-flex justify-content-between mb-2 pb-2 border-bottom">
 				<a href="javascript:;" class="" data-toggle="modal" data-target="#edit-tariff-<?= $id; ?>">
-					<?= empty($tariff->bundle) ? "Nill" : $tariff->bundle; ?>
+					<?= empty($tariff->bundle) ? "Nill" : $tariff->bundle; ?>, <?= empty($tariff->type) ? "" : ucwords($tariff->type); ?>
 				</a>
 				<div class="text-muted">
 					NGN<?= empty($tariff->amount) ? "Nill" : number_format($tariff->amount); ?>
