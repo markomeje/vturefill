@@ -74,5 +74,37 @@ class Categories extends Model {
 		}
 	}
 
+	public static function editCategory($data) {
+		if (empty($data["category"])) {
+			return ["status" => "invalid-category"];
+		}elseif (empty($data["status"])) {
+			return ["status" => "invalid-status"];
+		}
+
+		try {
+			$database = Database::connect();
+			$table = self::$table;
+			$database->prepare("UPDATE {$table} SET category = :category, status = :status WHERE id = :id LIMIT 1");
+			$database->execute($data);
+			return ($database->rowCount() > 0) ? ["status" => "success"] : ["status" => "error"];
+		} catch (Exception $error) {
+			Logger::log("EDITING CATEGORY ERROR", $error->getMessage(), __FILE__, __LINE__);
+			return ["status" => "error"];
+		}
+	}
+
+	public static function deleteCategory($id) {
+		try {
+			$database = Database::connect();
+			$table = self::$table;
+			$database->prepare("DELETE FROM {$table} WHERE id = :id LIMIT 1");
+			$database->execute(['id' => $id]);
+			return ($database->rowCount() > 0) ? ["status" => "success"] : ["status" => "error"];
+		} catch (Exception $error) {
+			Logger::log("DELETING CATEGORY ERROR", $error->getMessage(), __FILE__, __LINE__);
+			return ["status" => "error"];
+		}
+	}
+
 }
 

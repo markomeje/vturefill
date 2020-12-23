@@ -2,7 +2,7 @@
 	<div class="card">
 		<?php $id = empty($category->id) ? 0 : $category->id; ?>
 		<div class="card-body d-flex justify-content-between">
-			<a href="javascript:;" class="" data-toggle="modal" data-target="#edit-category">
+			<a href="javascript:;" class="" data-toggle="modal" data-target="#edit-category-<?= $id; ?>">
 				<?= empty($category->category) ? "Nill" : ucfirst($category->category); ?>
 			</a>
 			<div class="text-muted">
@@ -15,10 +15,10 @@
                 <label class="custom-control-label" for="<?= $id; ?>"></label>
             </div>
             <div class="d-flex">
-            	<small class="text-white mr-2 cursor-pointer" data-toggle="modal" data-target="#edit-category">
+            	<small class="text-white mr-2 cursor-pointer" data-toggle="modal" data-target="#edit-category-<?= $id; ?>">
             		<i class="icofont-edit text-warning"></i>
             	</small>
-            	<small class="text-white cursor-pointer">
+            	<small class="text-white cursor-pointer delete-category" data-url="<?= DOMAIN; ?>/categories/deleteCategory/<?= $id; ?>">
             		<i class="icofont-ui-delete text-danger"></i>
             	</small>
             </div>

@@ -24,4 +24,19 @@ class CategoriesController extends Controller {
 		}
 	}
 
+	public function editCategory($id) {
+		if ($this->request->method('ajax')) {
+			$data = ['status' => $this->request->post()['status'], 'category' => $this->request->post()['category'], 'id' => $id];
+			$response = Categories::editCategory($data);
+		    Json::encode($response);
+		}
+	}
+
+	public function deleteCategory($id) {
+		if ($this->request->method('ajax')) {
+			$response = Categories::deleteCategory($id);
+		    Json::encode($response);
+		}
+	}
+
 }

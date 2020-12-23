@@ -1,7 +1,7 @@
 <?php 
 
 namespace VTURefill\Models;
-use VTURefill\Core\{Model, Logger};
+use VTURefill\Core\{Model, Logger, Help};
 use VTURefill\Library\{Validate, Database};
 use \Exception;
 
@@ -106,6 +106,24 @@ class Tariffs extends Model {
 		} catch (Exception $error) {
 			Logger::log("EDITING TARIFF ERROR", $error->getMessage(), __FILE__, __LINE__);
 			return ["status" => "error"];
+		}
+	}
+
+	public static function getTariffsByUserLevel($user) {
+		try {
+			$allTariffs = self::getAllTariffs();
+			$fund = Funds::getFund($user);
+            $level = Levels::getDiscountByLevel($fund->level);
+			$newTariffs = [];
+			foreach ($allTariffs as $tariff) {
+				$discount = $tariff->amount * (float)$level->discount;
+				$tariff->amount = $tariff->amount - $discount;
+				$newTariffs[] = $tariff;
+			}
+			return ['discount' => $level->discount, 'level' => $fund->level, 'tariffs' => $newTariffs];
+		} catch (Exception $error) {
+			Logger::log("GETTING ALL TARIFFS BY USER LEVEL ERROR", $error->getMessage(), __FILE__, __LINE__);
+			return false;
 		}
 	}
 

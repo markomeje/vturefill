@@ -8,8 +8,8 @@
 				<a class="btn btn-sm btn-primary text-white rounded-pill px-4" data-toggle="modal" data-target="#add-category">
 					Add Category
 				</a>
-	    		<a href="<?= DOMAIN; ?>/dashboard">
-	    			Dashboard
+	    		<a href="javascript:;" class="btn btn-sm bg-warning text-white rounded-pill px-4">
+	    			Options <i class="icofont-caret-down"></i>
 	    		</a>
 				<?php require BACKEND_PATH . DS . "categories" . DS . "partials" . DS . "add.php"; ?>
 			</div>
@@ -22,6 +22,9 @@
 							<?php require BACKEND_PATH . DS . "categories" . DS . "partials" . DS . "listings.php"; ?> 
 						<?php endforeach; ?>
 					</div>
+					<?php foreach($allCategories as $category): ?>
+						<?php require BACKEND_PATH . DS . "categories" . DS . "partials" . DS . "edit.php"; ?> 
+					<?php endforeach; ?>
 				<?php endif; ?>
 			</div>
 	    </div>

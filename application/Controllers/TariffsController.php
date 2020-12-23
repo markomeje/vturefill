@@ -50,4 +50,9 @@ class TariffsController extends Controller {
 		Json::encode($response);
 	}
 
+	public function getTariffsByUserLevel($user) {
+		$response = Tariffs::getTariffsByUserLevel($user);
+		Json::encode($response);
+	}
+
 }

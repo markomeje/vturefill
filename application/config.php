@@ -10,7 +10,7 @@ define('DOMAIN',  SERVER_HTTPS === true ? $_ENV['LIVE_WEBSITE_DOMAIN'] : 'http:/
 define('REFERER', isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '');
 
 define('PUBLIC_URL', DOMAIN.'/public');
-define('SOFWARE_NAME', 'VTU MOBILE_AIRTIME_NG');
+define('SOFWARE_NAME', 'VTU Refill');
 
 define('LOCAL_DATABASE_HOST', '127.0.0.1');
 define('LOCAL_DATABASE_NAME', 'vturefill');

@@ -36,21 +36,21 @@ class Orders extends Model {
 			if (!Funds::isSufficientFunds($where)) return ['status' => 0, 'message' => 'Insufficient Funds'];
 			Funds::debitFund($where);
             $reference = Generate::string(25);
-            $data['amount'] = $amount;
              
             $response = MobileairtimengGateway::topUpAirtime(['network' => $data['network'], 'phone' => $data['phone'], 'amount' => $data['amount'], 'reference' => $reference]);
             $apiStatusCode = isset($response->code) ? $response->code : 0;
             $apiUserRef = isset($response->user_ref) ? $response->user_ref : $reference;
           
 			if($apiStatusCode !== 100) throw new Exception("Airtime Purchase Failed For User " . $data['user'], 1);
+			$data['amount'] = $amount;
 			self::addOrder(array_merge(['status' => 'success', 'type' => 'normal', 'reference' => $apiUserRef, 'category' => 'data'], $data));
-		    return ['status' => 1, 'message' => 'Order Successfull',  'user' => $user, 'order' => self::getOrder($data['user'])];
+		    return ['status' => 1, 'message' => 'Order Successfull',  'user' => $user, 'order' => self::getOrder($data['user']), 'funds' => Funds::getFund($user->id)];
         } catch (Exception $error) {
         	Logger::log('ADDING ORDER ERROR', $error->getMessage(), __FILE__, __LINE__);
 			Funds::creditFund($where);
 			$data['amount'] = $amount;
 		    self::addOrder(array_merge(['status' => 'failed', 'type' => 'normal', 'reference' => $apiUserRef, 'category' => 'data'], $data));
-		    return ['status' => 0, 'message' => 'Order Failed',  'user' => $user, 'order' => self::getOrder($data['user'])];
+		    return ['status' => 0, 'message' => 'Order Failed',  'user' => $user, 'order' => self::getOrder($data['user']), 'funds' => Funds::getFund($user->id)];
         }
 	}
 
@@ -80,7 +80,7 @@ class Orders extends Model {
 
 			if(strtolower((Networks::getNetworkByCode($data['network']))->status) === 'manual') {
 				self::addOrder(array_merge(['status' => 'pending', 'type' => 'manual', 'reference' => $reference, 'category' => 'data'], $data));
-				return ['status' => 1, 'message' => 'Order pending',  'user' => $user, 'order' => self::getOrder($data['user'])];
+				return ['status' => 1, 'message' => 'Order pending',  'user' => $user, 'order' => self::getOrder($data['user']), 'funds' => Funds::getFund($user->id)];
 			}
              
             $response = MobileairtimengGateway::mtnSmeData(['network' => $data['network'], 'phone' => $data['phone'], 'datasize' => $data['plan'], 'reference' => $reference]);
@@ -89,13 +89,13 @@ class Orders extends Model {
             
 			if($apiStatusCode !== 100) throw new Exception("MTN SME Data Purchase Failed For User " . $data['user'], 1);
 			$order = self::addOrder(array_merge(['status' => 'success', 'type' => 'normal', 'reference' => $apiUserRef, 'category' => 'data'], $data));
-		    return ['status' => 1, 'message' => 'Order Successfull',  'user' => $user, 'order' => self::getOrder($data['user'])];
+		    return ['status' => 1, 'message' => 'Order Successfull',  'user' => $user, 'order' => self::getOrder($data['user']), 'funds' => Funds::getFund($user->id)];
         } catch (Exception $error) {
         	Logger::log('ADDING ORDER ERROR', $error->getMessage(), __FILE__, __LINE__);
 			Funds::creditFund($where);
 			$data['amount'] = $amount;
 		    self::addOrder(array_merge(['status' => 'failed', 'type' => 'normal', 'reference' => $apiUserRef, 'category' => 'data'], $data));
-		    return ['status' => 0, 'message' => 'Order Failed',  'user' => $user, 'order' => self::getOrder($data['user'])];
+		    return ['status' => 0, 'message' => 'Order Failed',  'user' => $user, 'order' => self::getOrder($data['user']), 'funds' => Funds::getFund($user->id)];
         }
 	}
 
@@ -125,7 +125,7 @@ class Orders extends Model {
 
 			if(strtolower((Networks::getNetworkByCode($data['network']))->status) === 'manual') {
 				self::addOrder(array_merge(['status' => 'pending', 'type' => 'manual', 'reference' => $reference, 'category' => 'data'], $data));
-				return ['status' => 1, 'message' => 'Order pending',  'user' => $user, 'order' => self::getOrder($data['user'])];
+				return ['status' => 1, 'message' => 'Order pending',  'user' => $user, 'order' => self::getOrder($data['user']), 'funds' => Funds::getFund($user->id)];
 			}
              
             $response = MobileairtimengGateway::directTopUp(['network' => $data['network'], 'phone' => $data['phone'], 'reference' => $reference]);
@@ -134,13 +134,13 @@ class Orders extends Model {
 
 			if($apiStatusCode !== 100) throw new Exception("MTN SME Data Purchase Failed For User " . $data['user'], 1);
 			$order = self::addOrder(array_merge(['status' => 'success', 'type' => 'normal', 'reference' => $apiUserRef, 'category' => 'data'], $data));
-		    return ['status' => 1, 'message' => 'Order Successfull',  'user' => $user, 'order' => self::getOrder($data['user'])];
+		    return ['status' => 1, 'message' => 'Order Successfull',  'user' => $user, 'order' => self::getOrder($data['user']), 'funds' => Funds::getFund($user->id)];
         } catch (Exception $error) {
         	Logger::log('ADDING ORDER ERROR', $error->getMessage(), __FILE__, __LINE__);
 			Funds::creditFund($where);
 			$data['amount'] = $amount;
 		    self::addOrder(array_merge(['status' => 'failed', 'type' => 'normal', 'reference' => $apiUserRef, 'category' => 'data'], $data));
-		    return ['status' => 0, 'message' => 'Order Failed',  'user' => $user, 'order' => self::getOrder($data['user'])];
+		    return ['status' => 0, 'message' => 'Order Failed',  'user' => $user, 'order' => self::getOrder($data['user']), 'funds' => Funds::getFund($user->id)];
         }
 	}
 
