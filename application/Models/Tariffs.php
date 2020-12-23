@@ -112,6 +112,7 @@ class Tariffs extends Model {
 	public static function getTariffsByUserLevel($user) {
 		try {
 			$allTariffs = self::getAllTariffs();
+			if(empty(Users::getById($user))) return ['status' => 0, 'message' => 'User Not Found'];
 			$fund = Funds::getFund($user);
             $level = Levels::getDiscountByLevel($fund->level);
 			$newTariffs = [];
