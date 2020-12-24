@@ -15,7 +15,8 @@ class DashboardController extends Controller {
 	public function index() {
 		$allNetworks = Networks::getAllNetworks();
 		$allPayments = Payments::getAllPayments();
-		View::render("backend", "dashboard/index", ["backendLinks" => $this->backendLinks, "activeController" => $this->activeController, "allNetworks" => $allNetworks, "allNetworksCount" => count($allNetworks), "networkStatus" => Networks::$networkStatus, "allPaymentsCount" => $allPayments['count'], 'allUsersCount' => 0, 'allOrdersCount' => 0, 'allCategoriesCount' => 0, 'allTariffsCount' => 0, 'allFundsCount' => 0, 'allLevelsCount' => 0]);
+		$data = ["backendLinks" => $this->backendLinks, "activeController" => $this->activeController, "allNetworks" => $allNetworks, "allNetworksCount" => count($allNetworks), "networkStatus" => Networks::$networkStatus, "allPaymentsCount" => $allPayments['count'], 'allUsersCount' => 0, 'allOrdersCount' => 0, 'allCategoriesCount' => 0, 'allTariffsCount' => 0, 'allFundsCount' => 0, 'allLevelsCount' => 0];
+		View::render("backend", "dashboard/index", $data);
 	}
 
 }
