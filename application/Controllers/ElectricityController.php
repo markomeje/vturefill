@@ -5,7 +5,7 @@ use VTURefill\Core\{Controller, View, Json};
 use VTURefill\Gateways\MobileairtimengGateway;
 
 
-class TvController extends Controller {
+class ElectricityController extends Controller {
 
 	
 	public function __construct() {
