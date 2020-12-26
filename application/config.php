@@ -39,6 +39,7 @@ define('MOBILE_AIRTIME_NG_AIRTIME_TOPUP_URL', 'https://mobileairtimeng.com/httpa
 define('MOBILE_AIRTIME_NG_MTN_SME_DATA_API_URL', 'https://mobileairtimeng.com/httpapi/datashare?');
 define('MOBILE_AIRTIME_NG_DATA_TOP_UP_API_URL', 'https://mobileairtimeng.com/httpapi/datatopup.php?');
 define('MOBILE_AIRTIME_NG_POWER_LISTS_API_URL', 'http://mobileairtimeng.com/httpapi/power-lists?');
+define('MOBILE_AIRTIME_NG_VALIDATE_METER_NUMBER_API_URL', 'https://mobileairtimeng.com/httpapi/customercheck?');
 
 define('COOKIE_PATH', '/');
 define('COOKIE_DOMAIN', DOMAIN);

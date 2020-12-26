@@ -56,7 +56,19 @@ class MobileairtimengGateway {
             $response = Curl::get(MOBILE_AIRTIME_NG_POWER_LISTS_API_URL.$query);
             return Json::decode($response);
         } catch(Exception $error) {
-            Logger::log('DATA TOP UP API ERROR', $error->getMessage(), $error->getFile(), $error->getLine());
+            Logger::log('GETTING POWER LISTS API ERROR', $error->getMessage(), $error->getFile(), $error->getLine());
+            return false;
+        }
+    }
+
+    public static function validateMeterNumber($data) {
+        try{
+            $info = ['userid' => MOBILE_AIRTIME_NG_USER_ID, 'pass' => MOBILE_AIRTIME_NG_API_KEY, 'bill' => $data['bill'], 'smartno' => $data['smartno'], 'jsn' => 'json'];
+            $query = http_build_query($info);
+            $response = Curl::get(MOBILE_AIRTIME_NG_VALIDATE_METER_NUMBER_API_URL.$query);
+            return Json::decode($response);
+        } catch(Exception $error) {
+            Logger::log('VALIDATING METER NUMBER API ERROR', $error->getMessage(), $error->getFile(), $error->getLine());
             return false;
         }
     }
