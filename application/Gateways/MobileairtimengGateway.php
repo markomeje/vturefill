@@ -17,7 +17,7 @@ class MobileairtimengGateway {
         try{
         	$info = ['userid' => MOBILE_AIRTIME_NG_USER_ID, 'pass' => MOBILE_AIRTIME_NG_API_KEY, 'network' => $data['network'], 'phone' => $data['phone'], 'amt' => $data['amount'], 'user_ref' => $data['reference'], 'jsn' => 'json'];
             $query = http_build_query($info);
-            $response = Curl::get(MOBILE_AIRTIME_NG_AIRTIME_TOPUP_URL.$query);
+            $response = Curl::get(MOBILE_AIRTIME_NG_AIRTIME_TOPUP_API_URL.$query);
             return Json::decode($response);
         } catch(Exception $error) {
             Logger::log('TOP UP AIRTIME API ERROR', $error->getMessage(), $error->getFile(), $error->getLine());
@@ -61,14 +61,38 @@ class MobileairtimengGateway {
         }
     }
 
-    public static function validateMeterNumber($data) {
+    public static function validateTvMeterNumber($data) {
         try{
             $info = ['userid' => MOBILE_AIRTIME_NG_USER_ID, 'pass' => MOBILE_AIRTIME_NG_API_KEY, 'bill' => $data['bill'], 'smartno' => $data['smartno'], 'jsn' => 'json'];
             $query = http_build_query($info);
-            $response = Curl::get(MOBILE_AIRTIME_NG_VALIDATE_METER_NUMBER_API_URL.$query);
+            $response = Curl::get(MOBILE_AIRTIME_NG_VALIDATE_TV_METER_NUMBER_API_URL.$query);
             return Json::decode($response);
         } catch(Exception $error) {
-            Logger::log('VALIDATING METER NUMBER API ERROR', $error->getMessage(), $error->getFile(), $error->getLine());
+            Logger::log('VALIDATING TV METER NUMBER API ERROR', $error->getMessage(), $error->getFile(), $error->getLine());
+            return false;
+        }
+    }
+
+    public static function validateElectricityMeterNumber($data) {
+        try{
+            $info = ['userid' => MOBILE_AIRTIME_NG_USER_ID, 'pass' => MOBILE_AIRTIME_NG_API_KEY, 'service' => $data['service'], 'meterno' => $data['meterno'], 'jsn' => 'json'];
+            $query = http_build_query($info);
+            $response = Curl::get(MOBILE_AIRTIME_NG_VALIDATE_ELECTRICITY_METER_NUMBER_API_URL.$query);
+            return Json::decode($response);
+        } catch(Exception $error) {
+            Logger::log('VALIDATING ELECTRICITY METER NUMBER API ERROR', $error->getMessage(), $error->getFile(), $error->getLine());
+            return false;
+        }
+    }
+
+    public static function buyElectricity($data) {
+        try{
+            $info = ['userid' => MOBILE_AIRTIME_NG_USER_ID, 'pass' => MOBILE_AIRTIME_NG_API_KEY, 'service' => $data['service'], 'meterno' => $data['meterno'], 'mtype' => $data['mtype'], 'amt' => $data['amount'], 'user_ref' => $data['reference'], 'jsn' => 'json'];
+            $query = http_build_query($info);
+            $response = Curl::get(MOBILE_AIRTIME_NG_BUY_ELECTRICITY_API_URL.$query);
+            return Json::decode($response);
+        } catch(Exception $error) {
+            Logger::log('BUYING ELECTRICITY API ERROR', $error->getMessage(), $error->getFile(), $error->getLine());
             return false;
         }
     }
