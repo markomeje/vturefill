@@ -1,7 +1,7 @@
 <?php 
 
 namespace VTURefill\Models;
-use VTURefill\Core\{Model};
+use VTURefill\Core\{Model, Logger};
 use VTURefill\Library\{Validate, Database, Generate};
 use \Exception;
 use VTURefill\Gateways\MobileairtimengGateway;
@@ -51,7 +51,7 @@ class Electricity extends Model {
 		}elseif(empty($data['meterno'])) {
 			return ['status' => 0, 'message' => 'Empty meter number'];
 		}elseif (empty($data['mtype']) || !in_array($data['mtype'], [1, 0])) {
-			return ['status' => 0, 'message' => 'Invalid meter number'];
+			return ['status' => 0, 'message' => 'Invalid meter type'];
 		}elseif (empty($data['user'])) {
 			return ['status' => 0, 'message' => 'Invalid User'];
 		}elseif(empty($data['amount'])) {
@@ -59,11 +59,9 @@ class Electricity extends Model {
 		}
 
         try {
-        	$database = Database::connect();
-        	$database->beginTransaction();
         	$user = Users::getById($data['user']);
         	if(empty($user)) return ['status' => 0, 'message' => 'User not found'];
-        	$where = ['user' => $user->id, 'amount' => $amount];
+        	$where = ['user' => $user->id, 'amount' => $data['amount']];
 			if (!Funds::isSufficientFunds($where)) return ['status' => 0, 'message' => 'Insufficient Funds'];
 			Funds::debitFund($where);
             $reference = Generate::string(25);
@@ -72,20 +70,18 @@ class Electricity extends Model {
              
             $response = MobileairtimengGateway::buyElectricity(['service' => $data['service'], 'meterno' => $data['meterno'], 'mtype' => $data['mtype'], 'amount' => $data['amount'], 'reference' => $reference]);
             $apiStatusCode = isset($response->code) ? $response->code : 0;
-          
+            $details = ['id' => $user->id, 'username' => $user->username, 'email' => $user->email, 'funds' => $funds->amount, 'level' => $funds->level];
+             $apiStatusCode = 100;
 			if($apiStatusCode !== 100) throw new Exception("Electricity Recharge Failed For User " . $user->id);
-			$table = self::$table;
-			$database->prepare("INSERT INTO {$table} (user, service, meterno, mtype, status, amount, reference) VALUES (:user, :service,  :meterno, :mtype, :status,  :amount, :reference)");
-			$fields = array_merge($data, ['reference' => $reference, 'status' => 'success']);
-			$database->execute($fields);
-			$database->commit();
 
-		    return $database->rowCount() > 0 ? ['status' => 1, 'message' => 'Order Successfull',  'user' => $user, 'orders' => $orders, 'funds' => $funds] : throw new Exception("Electricity Recharge Failed For User " . $user->id);
+			self::addUserElectricityOrder(array_merge($data, ['reference' => $reference, 'status' => 'success']));
+		    return ['status' => 1, 'message' => 'Order Successfull',  'user' => $details, 'orders' => $orders];
+
         } catch (Exception $error) {
-        	$database->rollback();
         	Logger::log('ADDING ELECTRICITY ORDER ERROR', $error->getMessage(), __FILE__, __LINE__);
 			Funds::creditFund($where);
-		    return ['status' => 0, 'message' => 'Order Failed',  'user' => $user, 'orders' => $orders, 'funds' => $funds];
+			self::addUserElectricityOrder(array_merge($data, ['reference' => $reference, 'status' => 'failed']));
+		    return ['status' => 0, 'message' => 'Order Failed',  'user' => $details, 'orders' => $orders];
         }
 	}
 
@@ -98,6 +94,19 @@ class Electricity extends Model {
             return $database->fetchAll();
 		} catch (Exception $error) {
 			Logger::log('GETTING USER ELECTRICITY ORDERS ERROR', $error->getMessage(), __FILE__, __LINE__);
+			return false;
+		}
+	}
+
+	public static function addUserElectricityOrder($fields) {
+		try {
+			$database = Database::connect();
+			$table = self::$table;
+			$database->prepare("INSERT INTO {$table} (user, service, meterno, mtype, status, amount, reference) VALUES (:user, :service,  :meterno, :mtype, :status,  :amount, :reference)");
+			$database->execute($fields);
+			return $database->rowCount() > 0;
+		} catch (Exception $error) {
+			Logger::log('ADDING USER ELECTRICITY ORDER ERROR', $error->getMessage(), __FILE__, __LINE__);
 			return false;
 		}
 	}

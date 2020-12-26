@@ -31,7 +31,7 @@ class ElectricityController extends Controller {
 		}
 	}
 
-	public static function buy() {
+	public function buy() {
 		if ($this->request->method('post')) {
 			$service = isset($this->request->post()['service']) ? $this->request->post()['service'] : '';
 			$meterno = isset($this->request->post()['meterno']) ? $this->request->post()['meterno'] : '';
