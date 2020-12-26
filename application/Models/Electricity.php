@@ -71,9 +71,8 @@ class Electricity extends Model {
             $response = MobileairtimengGateway::buyElectricity(['service' => $data['service'], 'meterno' => $data['meterno'], 'mtype' => $data['mtype'], 'amount' => $data['amount'], 'reference' => $reference]);
             $apiStatusCode = isset($response->code) ? $response->code : 0;
             $details = ['id' => $user->id, 'username' => $user->username, 'email' => $user->email, 'funds' => $funds->amount, 'level' => $funds->level];
-             $apiStatusCode = 100;
-			if($apiStatusCode !== 100) throw new Exception("Electricity Recharge Failed For User " . $user->id);
 
+			if($apiStatusCode !== 100) throw new Exception("Electricity Recharge Failed For User " . $user->id);
 			self::addUserElectricityOrder(array_merge($data, ['reference' => $reference, 'status' => 'success']));
 		    return ['status' => 1, 'message' => 'Order Successfull',  'user' => $details, 'orders' => $orders];
 
