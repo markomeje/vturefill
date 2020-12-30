@@ -46,14 +46,14 @@ class TariffsController extends Controller {
 	}
 
 	public function getAllTariffs() {
-		if ($this->request->method('get')) {
+		if ($this->request->method('post')) {
 			$response = Tariffs::getAllTariffs();
 			Json::encode($response);
 		}
 	}
 
 	public function getTariffsByUserLevel($user) {
-		if ($this->request->method('get')) {
+		if ($this->request->method('post')) {
 			$response = Tariffs::getTariffsByUserLevel($user);
 		    Json::encode($response);
 		}
