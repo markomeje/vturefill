@@ -17,12 +17,12 @@ class DataController extends Controller {
 	}
 
 	public function mtnsme() {
-		if ($this->request->method('get')) {
-			$network = isset($this->request->get()['network']) ? $this->request->get()['network'] : ''; 
-			$phone = isset($this->request->get()['phone']) ? $this->request->get()['phone'] : ''; 
-			$user = isset($this->request->get()['user']) ? $this->request->get()['user'] : '';
-			$plan = isset($this->request->get()['plan']) ? $this->request->get()['plan'] : '';
-			$amount = isset($this->request->get()['amount']) ? $this->request->get()['amount'] : '';
+		if ($this->request->method('post')) {
+			$network = isset($this->request->post()['network']) ? $this->request->post()['network'] : ''; 
+			$phone = isset($this->request->post()['phone']) ? $this->request->post()['phone'] : ''; 
+			$user = isset($this->request->post()['user']) ? $this->request->post()['user'] : '';
+			$plan = isset($this->request->post()['plan']) ? $this->request->post()['plan'] : '';
+			$amount = isset($this->request->post()['amount']) ? $this->request->post()['amount'] : '';
 			$data = ['network' => $network, 'phone' => str_replace(' ', '', trim($phone)), 'user' => (int)$user, 'plan' => $plan, 'amount' => $amount];
 			$response = Data::mtnSmeData($data);
 			Json::encode($response);
@@ -30,12 +30,12 @@ class DataController extends Controller {
 	}
 
 	public function direct() {
-		if ($this->request->method('get')) {
-			$network = isset($this->request->get()['network']) ? $this->request->get()['network'] : ''; 
-			$phone = isset($this->request->get()['phone']) ? $this->request->get()['phone'] : ''; 
-			$user = isset($this->request->get()['user']) ? $this->request->get()['user'] : '';
-			$plan = isset($this->request->get()['plan']) ? $this->request->get()['plan'] : '';
-			$amount = isset($this->request->get()['amount']) ? $this->request->get()['amount'] : '';
+		if ($this->request->method('post')) {
+			$network = isset($this->request->post()['network']) ? $this->request->post()['network'] : ''; 
+			$phone = isset($this->request->post()['phone']) ? $this->request->post()['phone'] : ''; 
+			$user = isset($this->request->post()['user']) ? $this->request->post()['user'] : '';
+			$plan = isset($this->request->post()['plan']) ? $this->request->post()['plan'] : '';
+			$amount = isset($this->request->post()['amount']) ? $this->request->post()['amount'] : '';
 			$data = ['network' => $network, 'phone' => str_replace(' ', '', trim($phone)), 'user' => (int)$user, 'plan' => $plan, 'amount' => $amount];
 			$response = Data::directDataTopUp($data);
 			Json::encode($response);
