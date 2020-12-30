@@ -17,8 +17,7 @@ class AdminController extends Controller {
 
 	public function setup() {
 		if ($this->request->method('get')) {
-			$power = MobileairtimengGateway::powerLists();
-			$data = ['allNetworks' => Networks::getAllNetworks(), 'contact' => ['email' => 'dikekingsely@vturefill.com', 'phone' => '0700000000'], 'data' => ['sme' => Tariffs::getTariffsByType('sme'), 'direct' => Tariffs::getTariffsByType('direct')], 'electricity' => $power, 'tv' => ['GOTV', 'DSTV', 'STARTIMES']];
+			$data = ['allNetworks' => Networks::getAllNetworks(), 'contact' => ['email' => 'contact@vturefill.com', 'phone' => '08147067514'], 'data' => ['sme' => Tariffs::getTariffsByType('sme'), 'direct' => Tariffs::getTariffsByType('direct')], 'electricity' => MobileairtimengGateway::powerLists(), 'tv' => ['GOTV', 'DSTV', 'STARTIMES']];
 		    Json::encode($data);
 		}
 	}

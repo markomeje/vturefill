@@ -41,7 +41,7 @@ class OrdersController extends Controller {
 		}
 	}
 
-	public function directData() {
+	public function direct() {
 		if ($this->request->method('post')) {
 			$network = isset($this->request->post()['network']) ? $this->request->post()['network'] : ''; 
 			$phone = isset($this->request->post()['phone']) ? $this->request->post()['phone'] : ''; 

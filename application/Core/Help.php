@@ -106,7 +106,7 @@ class Help {
 
 	public static function getPercentValue($percent, $number) {
 		$value = (($percent/100) * $number);
-		return round($value);
+		return $value;
 	}
 
 	public static function getNigerianStates() {
