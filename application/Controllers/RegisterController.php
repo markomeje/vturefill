@@ -13,6 +13,8 @@ class RegisterController extends Controller {
 		parent::__construct();
 	}
 
+	public function index() {}
+
 	public function signup() {
 		if ($this->request->method('post')) {
 			$username = isset($this->request->post()['username']) ? $this->request->post()['username'] : '';

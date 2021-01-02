@@ -37,6 +37,7 @@ class Register extends Model {
 			$result = Users::register($merged);
 			if (isset($result['count']) && $result['count'] > 0) {
 				$id = empty($result['id']) ? 0 : $result['id'];
+				Funds::addFund(['user' => $id, 'amount' => 0, 'level' => (Levels::getLowestLevel())->minimum]);
 				return ['status' => 1, 'message' => 'Registration successfull', 'user' => Users::getById($id)];
 			}else {
 				return ['status' => 0, 'message' => 'Registration falied. Try again.'];

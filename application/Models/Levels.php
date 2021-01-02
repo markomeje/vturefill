@@ -127,7 +127,20 @@ class Levels extends Model {
 			$database->execute(['level' => $level]);
             return $database->fetch();
 		} catch (Exception $error) {
-			Logger::log("GETTING LEVEL BY ID ERROR", $error->getMessage(), __FILE__, __LINE__);
+			Logger::log("GETTING DISCOUNT BY LEVEL ERROR", $error->getMessage(), __FILE__, __LINE__);
+			return false;
+		}
+	}
+
+	public static function getLowestLevel() {
+		try {
+			$database = Database::connect();
+			$table = self::$table;
+			$database->prepare("SELECT MIN(level) as minimum FROM {$table} LIMIT 1");
+			$database->execute();
+            return $database->fetch();
+		} catch (Exception $error) {
+			Logger::log("GETTING LOWEST LEVEL ERROR", $error->getMessage(), __FILE__, __LINE__);
 			return false;
 		}
 	}
