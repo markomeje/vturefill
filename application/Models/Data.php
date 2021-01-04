@@ -51,7 +51,7 @@ class Data extends Model {
             $response = MobileairtimengGateway::mtnSmeData(['network' => $data['network'], 'phone' => $data['phone'], 'datasize' => $data['plan'], 'reference' => $reference]);
             $apiStatusCode = isset($response->code) ? $response->code : 0;
             
-			if($apiStatusCode !== 100) { throw new Exception("MTN SME Data Purchase Failed For User " . $user->id);
+			if($apiStatusCode !== 100) { throw new Exception("MTN SME Data Purchase Failed For User " . $user->id . " With Status Code " . $apiStatusCode);
 		    }else {
 		    	$order = self::addUserDataOrder(array_merge(['status' => 'success', 'type' => 'normal', 'reference' => $reference, 'category' => 'sme'], $data));
 		        return ['status' => 1, 'message' => 'Order Successfull',  'user' => $details, 'order' => self::getDataOrderById($order['id'])];
