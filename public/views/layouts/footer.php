@@ -24,5 +24,7 @@
 <script src="<?= PUBLIC_URL; ?>/jquery/levels.js" type="text/javascript"></script>
 <!-- networks-->
 <script src="<?= PUBLIC_URL; ?>/jquery/networks.js" type="text/javascript"></script>
+<!-- subscriptions-->
+<script src="<?= PUBLIC_URL; ?>/jquery/subscriptions.js" type="text/javascript"></script>
 </body>
 </html>

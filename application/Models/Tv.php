@@ -45,5 +45,7 @@ class Tv extends Model {
 		}
 	}
 
+	public static function getStartimesPlans() {}
+
 }
 

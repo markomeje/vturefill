@@ -52,9 +52,12 @@ class TariffsController extends Controller {
 		}
 	}
 
-	public function getTariffsByUserLevel($user = '') {
-		$response = Tariffs::getTariffsByUserLevel($user);
-		Json::encode($response);
+	public function getTariffsByUserLevel() {
+		if ($this->request->method('get')) {
+			$user = isset($this->request->get()['user']) ? $this->request->get()['user'] : '';
+			$response = Tariffs::getTariffsByUserLevel($user);
+			Json::encode($response);
+		}
 	}
 
 }

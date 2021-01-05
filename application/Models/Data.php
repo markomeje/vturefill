@@ -102,9 +102,13 @@ class Data extends Model {
             $response = MobileairtimengGateway::directTopUp(['network' => $data['network'], 'phone' => $data['phone'], 'reference' => $reference]);
             $apiStatusCode = isset($response->code) ? $response->code : 0;
 
-			if($apiStatusCode !== 100) throw new Exception("MTN SME Data Purchase Failed For User " . $data['user'], 1);
-			$order = self::addUserDataOrder(array_merge(['status' => 'success', 'type' => 'normal', 'reference' => $reference, 'category' => 'direct'], $data));
-		    return ['status' => 1, 'message' => 'Order Successfull',  'user' => $details, 'order' => self::getDataOrderById($order['id'])];
+			if($apiStatusCode !== 100) {
+			    throw new Exception("MTN SME Data Purchase Failed For User " . $data['user'], 1);
+			}else {
+				$order = self::addUserDataOrder(array_merge(['status' => 'success', 'type' => 'normal', 'reference' => $reference, 'category' => 'direct'], $data));
+		        return ['status' => 1, 'message' => 'Order Successfull',  'user' => $details, 'order' => self::getDataOrderById($order['id'])];
+			}
+			
         } catch (Exception $error) {
         	Logger::log('BUYING DIRECT DATA ERROR', $error->getMessage(), __FILE__, __LINE__);
 			Funds::creditFund($where);
