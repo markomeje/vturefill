@@ -2,7 +2,7 @@
 
 namespace VTURefill\Controllers;
 use VTURefill\Core\{Controller, View, Json};
-use VTURefill\Models\Tv;
+use VTURefill\Models\{Tv, Subscriptions};
 
 
 class TvController extends Controller {
@@ -14,7 +14,7 @@ class TvController extends Controller {
 
 	public function index() {
 		if ($this->request->method('get')) {
-			$response = ['tv' => ['Startimes', 'DSTV', 'GOTV']];
+			$response = ['tv' => Subscriptions::$tvs];
 			Json::encode($response);
 		}	
 	}
