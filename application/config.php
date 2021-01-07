@@ -34,16 +34,7 @@ define('PAYSTACK_LIVE_PUBLIC_KEY', $_ENV['PAYSTACK_LIVE_PUBLIC_KEY']);
 
 define('MOBILE_AIRTIME_NG_API_KEY', $_ENV['MOBILE_AIRTIME_NG_API_KEY']);
 define('MOBILE_AIRTIME_NG_USER_ID', $_ENV['MOBILE_AIRTIME_NG_USER_ID']);
-
-define('MOBILE_AIRTIME_NG_AIRTIME_TOPUP_API_URL', 'https://mobileairtimeng.com/httpapi/?');
-define('MOBILE_AIRTIME_NG_MTN_SME_DATA_API_URL', 'https://mobileairtimeng.com/httpapi/datashare?');
-define('MOBILE_AIRTIME_NG_DATA_TOP_UP_API_URL', 'https://mobileairtimeng.com/httpapi/datatopup.php?');
-define('MOBILE_AIRTIME_NG_POWER_LISTS_API_URL', 'http://mobileairtimeng.com/httpapi/power-lists?');
-define('MOBILE_AIRTIME_NG_VALIDATE_TV_METER_NUMBER_API_URL', 'https://mobileairtimeng.com/httpapi/customercheck?');
-define('MOBILE_AIRTIME_NG_VALIDATE_ELECTRICITY_METER_NUMBER_API_URL', 'http://mobileairtimeng.com/httpapi/power-validate?');
-define('MOBILE_AIRTIME_NG_BUY_ELECTRICITY_API_URL', 'http://mobileairtimeng.com/httpapi/power-pay?');
-define('MOBILE_AIRTIME_NG_GOTV_DSTV_RECHARGE_API', 'https://mobileairtimeng.com/httpapi/multichoice?');
-define('MOBILE_AIRTIME_NG_STARTIMES_RECHARGE_API', 'https://mobileairtimeng.com/httpapi/startimes?');
+define('MOBILE_AIRTIME_NG_API_BASE_URL', 'https://mobileairtimeng.com/httpapi');
 
 define('COOKIE_PATH', '/');
 define('COOKIE_DOMAIN', DOMAIN);

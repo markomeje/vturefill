@@ -13,14 +13,14 @@ class TvController extends Controller {
 	}
 
 	public function startimes() {
-		if ($this->request->method('get')) {
-			$phone = isset($this->request->get()['phone']) ? $this->request->get()['phone'] : '';
-			$amount = isset($this->request->get()['amount']) ? $this->request->get()['amount'] : '';
-			$smartno = isset($this->request->get()['smartno']) ? $this->request->get()['smartno'] : '';
-			$customer = isset($this->request->get()['customer']) ? $this->request->get()['customer'] : '';
-			$invoice = isset($this->request->get()['invoice']) ? $this->request->get()['invoice'] : '';
-			$customernumber = isset($this->request->get()['customernumber']) ? $this->request->get()['customernumber'] : '';
-			$user = isset($this->request->get()['user']) ? $this->request->get()['user'] : '';
+		if ($this->request->method('post')) {
+			$phone = isset($this->request->post()['phone']) ? $this->request->post()['phone'] : '';
+			$amount = isset($this->request->post()['amount']) ? $this->request->post()['amount'] : '';
+			$smartno = isset($this->request->post()['smartno']) ? $this->request->post()['smartno'] : '';
+			$customer = isset($this->request->post()['customer']) ? $this->request->post()['customer'] : '';
+			$invoice = isset($this->request->post()['invoice']) ? $this->request->post()['invoice'] : '';
+			$customernumber = isset($this->request->post()['customernumber']) ? $this->request->post()['customernumber'] : '';
+			$user = isset($this->request->post()['user']) ? $this->request->post()['user'] : '';
 			$data = ['phone' => $phone, 'amount' => $amount, 'smartno' => $smartno, 'customer' => $customer, 'invoice' => $invoice, 'billtype' => 'startimes', 'customernumber' => $customernumber, 'user' => $user];
 			$response = Tv::subscribeStartimes($data);
 			Json::encode($response);
@@ -28,16 +28,16 @@ class TvController extends Controller {
 	}
 
 	public function index() {
-		if ($this->request->method('get')) {
+		if ($this->request->method('post')) {
 			$response = ['tv' => Subscriptions::$tvs];
 			Json::encode($response);
 		}	
 	}
 
 	public function validate() {
-		if ($this->request->method('get')) {
-			$bill = isset($this->request->get()['bill']) ? $this->request->get()['bill'] : '';
-			$smartno = isset($this->request->get()['smartno']) ? $this->request->get()['smartno'] : '';
+		if ($this->request->method('post')) {
+			$bill = isset($this->request->post()['bill']) ? $this->request->post()['bill'] : '';
+			$smartno = isset($this->request->post()['smartno']) ? $this->request->post()['smartno'] : '';
 			$data = ['bill' => $bill, 'smartno' => $smartno];
 			$response = Tv::validateTvMeterNumber($data);
 			Json::encode($response);
@@ -45,15 +45,15 @@ class TvController extends Controller {
 	}
 
 	public function gotvdstv() {
-		if ($this->request->method('get')) {
-			$phone = isset($this->request->get()['phone']) ? $this->request->get()['phone'] : '';
-			$amount = isset($this->request->get()['amount']) ? $this->request->get()['amount'] : '';
-			$smartno = isset($this->request->get()['smartno']) ? $this->request->get()['smartno'] : '';
-			$customer = isset($this->request->get()['customer']) ? $this->request->get()['customer'] : '';
-			$invoice = isset($this->request->get()['invoice']) ? $this->request->get()['invoice'] : '';
-			$billtype = isset($this->request->get()['billtype']) ? $this->request->get()['billtype'] : '';
-			$customernumber = isset($this->request->get()['customernumber']) ? $this->request->get()['customernumber'] : '';
-			$user = isset($this->request->get()['user']) ? $this->request->get()['user'] : '';
+		if ($this->request->method('post')) {
+			$phone = isset($this->request->post()['phone']) ? $this->request->post()['phone'] : '';
+			$amount = isset($this->request->post()['amount']) ? $this->request->post()['amount'] : '';
+			$smartno = isset($this->request->post()['smartno']) ? $this->request->post()['smartno'] : '';
+			$customer = isset($this->request->post()['customer']) ? $this->request->post()['customer'] : '';
+			$invoice = isset($this->request->post()['invoice']) ? $this->request->post()['invoice'] : '';
+			$billtype = isset($this->request->post()['billtype']) ? $this->request->post()['billtype'] : '';
+			$customernumber = isset($this->request->post()['customernumber']) ? $this->request->post()['customernumber'] : '';
+			$user = isset($this->request->post()['user']) ? $this->request->post()['user'] : '';
 			$data = ['phone' => $phone, 'amount' => $amount, 'smartno' => $smartno, 'customer' => $customer, 'invoice' => $invoice, 'billtype' => $billtype, 'customernumber' => $customernumber, 'user' => $user];
 			$response = Tv::subscribeGotvDstv($data);
 			Json::encode($response);
