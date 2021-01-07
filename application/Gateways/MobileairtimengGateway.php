@@ -97,4 +97,28 @@ class MobileairtimengGateway {
         }
     }
 
+    public static function subscribeGotvDstv($data) {
+        try{
+            $info = ['userid' => MOBILE_AIRTIME_NG_USER_ID, 'pass' => MOBILE_AIRTIME_NG_API_KEY, 'phone' => $data['phone'], 'smartno' => $data['smartno'], 'customer' => $data['customer'], 'amt' => $data['amount'], 'invoice' => $data['invoice'], 'billtype' => $data['billtype'], 'customernumber' => $data['customernumber'], 'user_ref' => $data['reference'], 'jsn' => 'json'];
+            $query = http_build_query($info);
+            $response = Curl::get(MOBILE_AIRTIME_NG_GOTV_DSTV_RECHARGE_API.$query);
+            return Json::decode($response);
+        } catch(Exception $error) {
+            Logger::log('SUBSCRIBING FOR '. strtoupper($data['billtype']) .' API ERROR', $error->getMessage(), $error->getFile(), $error->getLine());
+            return false;
+        }
+    }
+
+    public static function subscribeStartimes($data) {
+        try{
+            $info = ['userid' => MOBILE_AIRTIME_NG_USER_ID, 'pass' => MOBILE_AIRTIME_NG_API_KEY, 'phone' => $data['phone'], 'smartno' => $data['smartno'], 'amt' => $data['amount'], 'user_ref' => $data['reference'], 'jsn' => 'json'];
+            $query = http_build_query($info);
+            $response = Curl::get(MOBILE_AIRTIME_NG_STARTIMES_RECHARGE_API.$query);
+            return Json::decode($response);
+        } catch(Exception $error) {
+            Logger::log('SUBSCRIBING FOR STARTIMES API ERROR', $error->getMessage(), $error->getFile(), $error->getLine());
+            return false;
+        }
+    }
+
 }

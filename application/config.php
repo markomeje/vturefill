@@ -42,6 +42,8 @@ define('MOBILE_AIRTIME_NG_POWER_LISTS_API_URL', 'http://mobileairtimeng.com/http
 define('MOBILE_AIRTIME_NG_VALIDATE_TV_METER_NUMBER_API_URL', 'https://mobileairtimeng.com/httpapi/customercheck?');
 define('MOBILE_AIRTIME_NG_VALIDATE_ELECTRICITY_METER_NUMBER_API_URL', 'http://mobileairtimeng.com/httpapi/power-validate?');
 define('MOBILE_AIRTIME_NG_BUY_ELECTRICITY_API_URL', 'http://mobileairtimeng.com/httpapi/power-pay?');
+define('MOBILE_AIRTIME_NG_GOTV_DSTV_RECHARGE_API', 'https://mobileairtimeng.com/httpapi/multichoice?');
+define('MOBILE_AIRTIME_NG_STARTIMES_RECHARGE_API', 'https://mobileairtimeng.com/httpapi/startimes?');
 
 define('COOKIE_PATH', '/');
 define('COOKIE_DOMAIN', DOMAIN);

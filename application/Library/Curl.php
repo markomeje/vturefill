@@ -65,12 +65,10 @@ class Curl
      *
      * @return void
      */
-    private static function handleErrors()
-    {
+    private static function handleErrors(){
         self::$error = curl_error(self::$curl);
         self::$errorNo = curl_errno(self::$curl);
         self::$httpStatusCode = curl_getinfo(self::$curl, CURLINFO_HTTP_CODE);
-
         if (0 !== self::$errorNo) {
             throw new \RuntimeException(self::$error, self::$errorNo);
         }
@@ -84,21 +82,15 @@ class Curl
      * @return array
      * @throws \Exception
      */
-    public static function post($url, $data, $headers = [])
-    {
+    public static function post($url, $data, $headers = []){
         new self($url, 'POST');
-        // set post fields here before executing
         curl_setopt(self::$curl, CURLOPT_POSTFIELDS, Json::encode($data));
         if (count($headers)) {
             curl_setopt(self::$curl, CURLOPT_HTTPHEADER, $headers);
         }
-
         self::$response = curl_exec(self::$curl);
-
         self::handleErrors();
-
         curl_close(self::$curl);
-
         return self::$response;
     }
 
@@ -108,8 +100,7 @@ class Curl
      * @param [string] $url
      * @return array
      */
-    public static function get($url)
-    {
+    public static function get($url){
         new self($url, 'GET');
         self::$response = curl_exec(self::$curl);
         self::handleErrors();
@@ -124,18 +115,12 @@ class Curl
      * @param $data
      * @return array
      */
-    public static function put($url, $data)
-    {
+    public static function put($url, $data){
         new self($url, 'PUT');
-
         curl_setopt(self::$curl, CURLOPT_POSTFIELDS, $data);
-
         self::$response = curl_exec(self::$curl);
-
         self::handleErrors();
-
         curl_close(self::$curl);
-
         return self::$response;
     }
 }

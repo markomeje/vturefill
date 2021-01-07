@@ -43,15 +43,15 @@ class SubscriptionsController extends Controller {
 	}
 
 	public function getAllTvSubscriptions() {
-		if ($this->request->method('get')) {
+		if ($this->request->method('post')) {
 			$response = Subscriptions::getAllTvSubscriptions();
 			Json::encode($response);
 		}
 	}
 
 	public function getSubscriptionByTv() {
-		if ($this->request->method('get')) {
-			$tv = isset($this->request->get()['tv']) ? $this->request->get()['tv'] : '';
+		if ($this->request->method('post')) {
+			$tv = isset($this->request->post()['tv']) ? $this->request->post()['tv'] : '';
 			$response = Subscriptions::getSubscriptionByTv($tv);
 			Json::encode($response);
 		}
