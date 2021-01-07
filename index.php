@@ -56,7 +56,7 @@ VTURefill\Library\Session::start();
 | or an exception has been thrown.
 |
 */
-VTURefill\Core\Handler::register();
+//VTURefill\Core\Handler::register();
 
 /**
  * [$request description]

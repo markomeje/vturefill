@@ -115,7 +115,6 @@ class Tariffs extends Model {
 			if(empty(Users::getById($user))) return ['status' => 0, 'message' => 'User Not Found'];
 			$fund = Funds::getFund($user);
             $level = Levels::getDiscountByLevel($fund->level);
-
 			$newTariffs = [];
 			foreach ($allTariffs as $tariff) {
 				$discount = Help::getPercentValue((float)$level->discount, $tariff->amount);

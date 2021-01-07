@@ -72,7 +72,7 @@ class Airtime extends Model {
 		}
 	}
 
-	public static function getUserAirtimeAllOrders() {
+	public static function getAllAirtimeOrders() {
 		try {
 			$database = Database::connect();
 			$table = self::$table;
@@ -93,7 +93,7 @@ class Airtime extends Model {
 			$database->execute(['user' => $user]);
             return $database->fetchAll();
 		} catch (Exception $error) {
-			Logger::log('GETTING ORDER BY ID ERROR', $error->getMessage(), __FILE__, __LINE__);
+			Logger::log('GETTING ALL USER AIRTIME ORDERS ERROR', $error->getMessage(), __FILE__, __LINE__);
 			return false;
 		}
 	}
@@ -110,8 +110,6 @@ class Airtime extends Model {
 			return false;
 		}
 	}
-
-	public static function getAllAirtimeOrders() {}
 
 }
 

@@ -12,6 +12,13 @@ class TvController extends Controller {
 		parent::__construct();
 	}
 
+	public function index() {
+		if ($this->request->method('post')) {
+			$response = ['tv' => Subscriptions::$tvs];
+			Json::encode($response);
+		}	
+	}
+
 	public function startimes() {
 		if ($this->request->method('post')) {
 			$phone = isset($this->request->post()['phone']) ? $this->request->post()['phone'] : '';
@@ -25,13 +32,6 @@ class TvController extends Controller {
 			$response = Tv::subscribeStartimes($data);
 			Json::encode($response);
 		}
-	}
-
-	public function index() {
-		if ($this->request->method('post')) {
-			$response = ['tv' => Subscriptions::$tvs];
-			Json::encode($response);
-		}	
 	}
 
 	public function validate() {

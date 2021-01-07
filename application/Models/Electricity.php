@@ -85,7 +85,7 @@ class Electricity extends Model {
         }
 	}
 
-	public static function getUserElectricityOrders($user) {
+	public static function getAllUserElectricityOrders($user) {
 		try {
 			$database = Database::connect();
 			$table = self::$table;

@@ -108,4 +108,18 @@ class Payments extends Model {
 		}
 	}
 
+	public static function getAllUserPayments($user) {
+		try {
+			$database = Database::connect();
+			$table = self::$table;
+			$database->prepare("SELECT * FROM {$table} WHERE user = :user ORDER BY date DESC");
+			$database->execute(['user' => $user]);
+            return $database->fetchAll();
+		} catch (Exception $error) {
+			Logger::log('GETTING ALL USER PAYMENTS ERROR', $error->getMessage(), __FILE__, __LINE__);
+			return false;
+		}
+	}
+
+
 }

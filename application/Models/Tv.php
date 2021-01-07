@@ -137,7 +137,7 @@ class Tv extends Model {
 		}
 	}
 
-	public static function getUserTvAllOrders() {
+	public static function getAllTvOrders() {
 		try {
 			$database = Database::connect();
 			$table = self::$table;
