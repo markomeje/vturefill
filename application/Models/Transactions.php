@@ -39,7 +39,7 @@ class Transactions extends Model {
 
         	$electricities = [];
         	foreach (Electricity::getAllUserElectricityOrders($user) as $electricity) {
-        		$electricity->scope = 'data';
+        		$electricity->scope = 'electricity';
                 $electricities[] = $electricity;
         	}
 
