@@ -25,10 +25,10 @@ class Tv extends Model {
 		try {
 			$response = MobileairtimengGateway::validateTvMeterNumber($data);
             $apiStatusCode = isset($response->code) ? $response->code : 0;
-			return $apiStatusCode === 100 ? ['status' => 1, 'message' => 'successfull', 'details' => $response] : ['status' => 0, 'message' => 'invalid', 'details' => $response];
+			return $apiStatusCode === 100 ? ['status' => 1, 'details' => $response] : ['status' => 0, 'details' => $response];
 		} catch (Exception $error) {
 			Logger::log("VALIDATING TV METER NUMBER ERROR", $error->getMessage(), __FILE__, __LINE__);
-			return ['status' => 0, 'message' => 'invalid', 'details' => $response];
+			return ['status' => 0, 'details' => $response];
 		}
 	}
 
