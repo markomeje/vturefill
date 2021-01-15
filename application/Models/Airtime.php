@@ -44,7 +44,7 @@ class Airtime extends Model {
             $details = ['id' => $user->id, 'username' => $user->username, 'email' => $user->email, 'funds' => $funds->amount, 'level' => $funds->level];
 
 			if($apiStatusCode !== 100) {
-			    throw new Exception('Airtime Purchase Failed For User ' . $user->id);
+			    throw new Exception('Airtime Purchase Failed For User ' . $user->id . " With Status Code " . $apiStatusCode);
 			}else {
 				$data['amount'] = $discountAmount;
 				$order = self::addUserAirtimeOrder(array_merge(['status' => 'success', 'reference' => $reference], $data));
