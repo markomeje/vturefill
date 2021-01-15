@@ -37,7 +37,7 @@ class Electricity extends Model {
 
 		try {
 			$response = MobileairtimengGateway::validateElectricityMeterNumber($data);
-            $apiStatusCode = isset($response->code) ? $response->code : 0;
+            $apiStatusCode = isset($response->code) ? (int)$response->code : 0;
 			return $apiStatusCode === 100 ? ['status' => 1, 'message' => 'successfull', 'details' => $response] : ['status' => 0, 'message' => 'invalid', 'details' => $response === false ? ['code' => 101, 'message' => 'Invalid Credentials'] : $response];
 		} catch (Exception $error) {
 			Logger::log("VALIDATING ELECTRICITY METER NUMBER ERROR", $error->getMessage(), __FILE__, __LINE__);
@@ -68,13 +68,13 @@ class Electricity extends Model {
             $funds = Funds::getFund($user->id);
              
             $response = MobileairtimengGateway::buyElectricity(['service' => $data['service'], 'meterno' => $data['meterno'], 'mtype' => $data['mtype'], 'amount' => $data['amount'], 'reference' => $reference]);
-            $apiStatusCode = isset($response->code) ? $response->code : 0;
+            $apiStatusCode = isset($response->code) ? (int)$response->code : 0;
             $details = ['id' => $user->id, 'username' => $user->username, 'email' => $user->email, 'funds' => $funds->amount, 'level' => $funds->level];
 
 			if($apiStatusCode !== 100) { 
 				throw new Exception("Electricity Recharge Failed For User " . $user->id);
 			}else {
-				$order = self::addUserElectricityOrder(array_merge($data, ['reference' => $reference, 'pincode' => $response->pincode, 'token' => $response->pinmessage, 'status' => 'success']));
+				$order = self::addUserElectricityOrder(array_merge($data, ['reference' => $reference, 'pincode' => $response->pincode, 'pinmessage' => $response->pinmessage, 'status' => 'success']));
 			    return ['status' => 1, 'message' => 'Order Successfull',  'user' => $details, 'order' => self::getElectricityOrderById($order['id'])];
 		    }
         } catch (Exception $error) {

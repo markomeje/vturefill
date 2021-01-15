@@ -49,7 +49,7 @@ class Data extends Model {
 			}
              
             $response = MobileairtimengGateway::mtnSmeData(['network' => $data['network'], 'phone' => $data['phone'], 'datasize' => $data['plan'], 'reference' => $reference]);
-            $apiStatusCode = isset($response->code) ? $response->code : 0;
+            $apiStatusCode = isset($response->code) ? (int)$response->code : 0;
             
 			if($apiStatusCode !== 100) { throw new Exception("MTN SME Data Purchase Failed For User " . $user->id . " With Status Code " . $apiStatusCode);
 		    }else {
@@ -100,7 +100,7 @@ class Data extends Model {
 			}
              
             $response = MobileairtimengGateway::directTopUp(['network' => $data['network'], 'phone' => $data['phone'], 'reference' => $reference]);
-            $apiStatusCode = isset($response->code) ? $response->code : 0;
+            $apiStatusCode = isset($response->code) ? (int)$response->code : 0;
 
 			if($apiStatusCode !== 100) {
 			    throw new Exception("MTN SME Data Purchase Failed For User " . $data['user'], 1);

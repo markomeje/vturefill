@@ -40,7 +40,7 @@ class Airtime extends Model {
             $reference = Generate::string(25);
              
             $response = MobileairtimengGateway::topUpAirtime(['network' => $data['network'], 'phone' => $data['phone'], 'amount' => $data['amount'], 'reference' => $reference]);
-            $apiStatusCode = isset($response->code) ? $response->code : 0;
+            $apiStatusCode = isset($response->code) ? (int)$response->code : 0;
             $details = ['id' => $user->id, 'username' => $user->username, 'email' => $user->email, 'funds' => $funds->amount, 'level' => $funds->level];
 
 			if($apiStatusCode !== 100) {
@@ -48,14 +48,14 @@ class Airtime extends Model {
 			}else {
 				$data['amount'] = $discountAmount;
 				$order = self::addUserAirtimeOrder(array_merge(['status' => 'success', 'reference' => $reference], $data));
-			    return ['status' => 1, 'message' => 'Order Successfull',  'user' => $details, 'order' => self::getAirtimeOrderById($order['id'])];
+			    return ['status' => 1, 'message' => 'Recharge successful',  'user' => $details, 'order' => self::getAirtimeOrderById($order['id'])];
 			}
         } catch (Exception $error) {
         	Logger::log('ADDING USER AIRTIME ORDER ERROR', $error->getMessage(), __FILE__, __LINE__);
 			Funds::creditFund($where);
 			$data['amount'] = $discountAmount;
 		    $order = self::addUserAirtimeOrder(array_merge(['status' => 'failed', 'reference' => $reference], $data));
-		    return ['status' => 0, 'message' => 'Order Failed',  'user' => $details, 'order' => self::getAirtimeOrderById($order['id'])];
+		    return ['status' => 0, 'message' => 'Recharge Failed',  'user' => $details, 'order' => self::getAirtimeOrderById($order['id'])];
         }
 	}
 
@@ -67,7 +67,7 @@ class Airtime extends Model {
 			$database->execute($fields);
 			return ['count' => $database->rowCount(), 'id' => $database->lastInsertId()];
 		} catch (Exception $error) {
-			Logger::log('ADDING USER AIRTIME ORDER ERROR', $error->getMessage(), __FILE__, __LINE__);
+			Logger::log('ADDING USER AIRTIME RECHARGE ORDER ERROR', $error->getMessage(), __FILE__, __LINE__);
 			return false;
 		}
 	}

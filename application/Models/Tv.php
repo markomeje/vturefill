@@ -62,7 +62,7 @@ class Tv extends Model {
              
             $response = MobileairtimengGateway::subscribeGotvDstv(['phone' => $data['phone'], 'smartno' => $data['smartno'], 'customer' => $data['customer'], 'amount' => $data['amount'], 'invoice' => $data['invoice'], 'billtype' => $data['billtype'], 'customernumber' => $data['customernumber'], 'reference' => $reference]);
 
-            $apiStatusCode = isset($response->code) ? $response->code : 0;
+            $apiStatusCode = isset($response->code) ? (int)$response->code : 0;
             $details = ['id' => $user->id, 'username' => $user->username, 'email' => $user->email, 'funds' => $funds->amount, 'level' => $funds->level];
 
 			if($apiStatusCode !== 100) {
@@ -107,7 +107,7 @@ class Tv extends Model {
              
             $response = MobileairtimengGateway::subscribeStartimes(['phone' => $data['phone'], 'smartno' => $data['smartno'], 'amount' => $data['amount'], 'reference' => $reference]);
 
-            $apiStatusCode = isset($response->code) ? $response->code : 0;
+            $apiStatusCode = isset($response->code) ? (int)$response->code : 0;
             $details = ['id' => $user->id, 'username' => $user->username, 'email' => $user->email, 'funds' => $funds->amount, 'level' => $funds->level];
 
 			if($apiStatusCode === 100) {
