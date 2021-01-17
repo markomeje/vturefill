@@ -17,11 +17,11 @@ class AirtimeController extends Controller {
 	}
 
 	public function buy() {
-		if ($this->request->method('get')) {
-			$network = isset($this->request->get()['network']) ? $this->request->get()['network'] : ''; 
-			$phone = isset($this->request->get()['phone']) ? $this->request->get()['phone'] : ''; 
-			$user = isset($this->request->get()['user']) ? $this->request->get()['user'] : '';
-			$amount = isset($this->request->get()['amount']) ? $this->request->get()['amount'] : '';
+		if ($this->request->method('post')) {
+			$network = isset($this->request->post()['network']) ? $this->request->post()['network'] : ''; 
+			$phone = isset($this->request->post()['phone']) ? $this->request->post()['phone'] : ''; 
+			$user = isset($this->request->post()['user']) ? $this->request->post()['user'] : '';
+			$amount = isset($this->request->post()['amount']) ? $this->request->post()['amount'] : '';
 			$data = ['network' => $network, 'phone' => str_replace(' ', '', trim($phone)), 'user' => (int)$user, 'amount' => $amount];
 			$response = Airtime::airtimeTopUp($data);
 			Json::encode($response);
