@@ -42,7 +42,7 @@ class Airtime extends Model {
             $response = MobileairtimengGateway::topUpAirtime(['network' => $data['network'], 'phone' => $data['phone'], 'amount' => $data['amount'], 'reference' => $reference]);
             $apiStatusCode = isset($response->code) ? (int)$response->code : 0;
             $details = ['id' => $user->id, 'username' => $user->username, 'email' => $user->email, 'funds' => $funds->amount, 'level' => $funds->level];
-
+ 
 			if($apiStatusCode !== 100) {
 			    throw new Exception('Airtime Purchase Failed For User ' . $user->id . " With Status Code " . $apiStatusCode);
 			}else {
@@ -51,7 +51,7 @@ class Airtime extends Model {
 			    return ['status' => 1, 'message' => 'Recharge successful',  'user' => $details, 'order' => self::getAirtimeOrderById($order['id'])];
 			}
         } catch (Exception $error) {
-        	Logger::log('ADDING USER AIRTIME ORDER ERROR', $error->getMessage(), __FILE__, __LINE__);
+        	Logger::log('AIRTIME PURCHASE ORDER ERROR', $error->getMessage(), __FILE__, __LINE__);
 			Funds::creditFund($where);
 			$data['amount'] = $discountAmount;
 		    $order = self::addUserAirtimeOrder(array_merge(['status' => 'failed', 'reference' => $reference], $data));

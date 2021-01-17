@@ -5,9 +5,6 @@
     <div class="pt-5">
 	    <div class="container pt-5">
 	    	<div class="row">
-                <div class="col-12 col-md-6 col-lg-6 mb-4">
-                    <?php require BACKEND_PATH . DS . 'layouts' . DS . 'links.php'; ?>
-                </div>
 	            <div class="col-12 col-md-6 col-lg-6 mb-4">
                     <form action="javascript:;" method="get" class="search-networks">
 			            <div class="row no-gutters">
