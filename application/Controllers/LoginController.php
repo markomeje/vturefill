@@ -35,6 +35,7 @@ class LoginController extends Controller {
      */
 	public function login() {
 		if ($this->request->method('ajax')) {
+			var_dump($_POST);
 			$email = isset($this->request->post()['email']) ? $this->request->post()['email'] : '';
 			$password = isset($this->request->post()['password']) ? $this->request->post()['password'] : '';
 			$rememberme = isset($this->request->post()['rememberme']) ? $this->request->post()['rememberme'] : '';

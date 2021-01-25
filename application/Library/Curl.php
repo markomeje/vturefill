@@ -55,8 +55,8 @@ class Curl
         curl_setopt(self::$curl, CURLOPT_URL, $url);
         curl_setopt(self::$curl, CURLOPT_CUSTOMREQUEST, $method);
         curl_setopt(self::$curl, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt(self::$curl, CURLOPT_CONNECTTIMEOUT, 600); //10 minutes
-        curl_setopt(self::$curl, CURLOPT_TIMEOUT, 1200); //20 minutes
+        curl_setopt(self::$curl, CURLOPT_CONNECTTIMEOUT, 900); //15 minutes
+        curl_setopt(self::$curl, CURLOPT_TIMEOUT, 1800); //30 minutes
         curl_setopt(self::$curl, CURLOPT_SSL_VERIFYPEER, false);
     }
 

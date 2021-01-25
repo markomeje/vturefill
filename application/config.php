@@ -42,7 +42,7 @@ define('COOKIE_SECURE', false);
 define('COOKIE_HTTP', false);
 define('COOKIE_EXPIRY', 3600 * 24 * 15); /** 15 days **/
 
-define('SESSION_COOKIE_NAME', 'hjkrueihi548ysgnk3kdnbm,aoprgahit7483uj');
+define('SESSION_COOKIE_NAME', 'hjkrueihi548ysgnk3kdnbmprgahit7483uj');
 define('SESSION_COOKIE_EXPIRY', 3600 * 24 * 60); /** 60 Days **/
 define('ENCRYPTION_KEY', 'H43ag5js60z4D86tgEsh6w4e385Y');
 define('ACCESS_DENIED_EXPIRY', 3600 * 24); /** 60 Days **/
