@@ -71,7 +71,7 @@ class Electricity extends Model {
             $apiStatusCode = isset($response->code) ? (int)$response->code : 0;
             $details = ['id' => $user->id, 'username' => $user->username, 'email' => $user->email, 'funds' => $funds->amount, 'level' => $funds->level];
 
-			if($apiStatusCode !== 100) { 
+			if($apiStatusCode !== 100 || $apiStatusCode !== 108) { 
 				throw new Exception("Electricity Recharge Failed For User " . $user->id);
 			}else {
 				$order = self::addUserElectricityOrder(array_merge($data, ['reference' => $reference, 'pincode' => $response->pincode, 'pinmessage' => $response->pinmessage, 'status' => 'success']));

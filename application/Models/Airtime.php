@@ -43,7 +43,7 @@ class Airtime extends Model {
             $apiStatusCode = isset($response->code) ? (int)$response->code : 0;
             $details = ['id' => $user->id, 'username' => $user->username, 'email' => $user->email, 'funds' => $funds->amount, 'level' => $funds->level];
  
-			if($apiStatusCode !== 100) {
+			if($apiStatusCode !== 100 || $apiStatusCode !== 108) {
 			    throw new Exception('Airtime Purchase Failed For User ' . $user->id . " With Status Code " . $apiStatusCode);
 			}else {
 				$data['amount'] = $discountAmount;

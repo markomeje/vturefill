@@ -36,7 +36,7 @@ define('MOBILE_AIRTIME_NG_API_KEY', $_ENV['MOBILE_AIRTIME_NG_API_KEY']);
 define('MOBILE_AIRTIME_NG_USER_ID', $_ENV['MOBILE_AIRTIME_NG_USER_ID']);
 define('MOBILE_AIRTIME_NG_API_BASE_URL', 'https://mobileairtimeng.com/httpapi');
 
-define('COOKIE_PATH', '/');
+define('COOKIE_PATH', '/'); 
 define('COOKIE_DOMAIN', DOMAIN);
 define('COOKIE_SECURE', false);
 define('COOKIE_HTTP', false);

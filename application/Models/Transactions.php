@@ -33,26 +33,26 @@ class Transactions extends Model {
 
         	$datas = [];
         	foreach (Data::getAllUserDataOrders($user) as $data) {
-        		$data->scope = 'data';
-                $datas[] = $data;
+                    $data->scope = 'data';
+                    $datas[] = $data;
         	}
 
         	$electricities = [];
         	foreach (Electricity::getAllUserElectricityOrders($user) as $electricity) {
-        		$electricity->scope = 'electricity';
-                $electricities[] = $electricity;
+                    $electricity->scope = 'electricity';
+                    $electricities[] = $electricity;
         	}
 
         	$tvs = [];
         	foreach (Tv::getAllUserTvOrders($user) as $tv) {
-        		$tv->scope = 'tv';
-                $tvs[] = $tv;
+                    $tv->scope = 'tv';
+                    $tvs[] = $tv;
         	}
 
         	return array_merge_recursive($airtimes, $payments, $datas, $electricities, $tvs);
 		} catch (Exception $error) {
-			Logger::log('GETTING ALL USER TRANSACTIONS ERROR', $error->getMessage(), __FILE__, __LINE__);
-			return ['status' => 0, 'message' => 'Try again.'];
+		    Logger::log('GETTING ALL USER TRANSACTIONS ERROR', $error->getMessage(), __FILE__, __LINE__);
+		    return ['status' => 0, 'message' => 'Try again.'];
 		}
 	}
 
